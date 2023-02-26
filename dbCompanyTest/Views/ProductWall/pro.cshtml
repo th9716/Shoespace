@@ -1,0 +1,43 @@
+﻿@using X.PagedList
+@using X.PagedList.Web.Common
+@using X.PagedList.Mvc.Core
+@model IPagedList<dbCompanyTest.ViewModels.ProductWallViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-3 p-2 ">
+        <a asp-action="Details" asp-route-id="@item.商品id" asp-route-colorID="@item.商品顏色id">
+            <div class="card mb-4 product-wap rounded-0">
+                <div class="card rounded-0">
+                    <div>
+                        @{
+                            if (@item.產品圖片1 != null)
+                            {
+                                <img class="card-img rounded-0 img-fluid" src="~/images/@item.產品圖片1" width="236" height="324" />
+                            }
+                            else
+                            {
+                                <img class="card-img rounded-0 img-fluid" src="~/images/404.jpg" width="236" height="324" />
+                            }
+                        }
+                    </div>
+                    <div class="card-body">
+                        <a class="g-item" asp-action="Details" asp-route-id="@item.商品id" asp-route-colorID="@item.商品顏色id">@item.商品名稱  @item.顏色名稱</a>
+
+                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0 price-box">
+                            @{
+                                decimal 價格 = item.商品價格;
+                                <li>@價格.ToString("###,###,##0")$</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+<nav>
+    <ul class="pagination justify-content-center ">
+      @Html.PagedListPager((IPagedList)Model, page=>Url.Action("Index",new {page}))
+    </ul>
+</nav>

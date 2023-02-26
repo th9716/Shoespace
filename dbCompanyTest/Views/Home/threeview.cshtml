@@ -1,0 +1,1282 @@
+﻿
+@section Style{
+	<link rel="stylesheet" href="~/css/donutstyle.css">
+	<link rel="stylesheet" href="~/css/model.css">
+    <style>
+        footer{
+            display:none;
+        }
+    </style>
+}
+
+    
+
+
+<canvas class="webgl"></canvas>
+<div class="loading-bar"></div>
+
+
+
+<div id="txt" >
+    <section class="one" >
+	<div class="container">
+		<div class="hero hero1">
+			<h2>Gracegift is Cool.</h2>
+			<h3>But have you ever tried Shoespace?</h3>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque aliquid culpa, <br>
+				providentvoluptatem excepturi id in quasi ea hic voluptate dicta amet explicabo <br>
+				expedita ratione velit modi. Nisiquaerat illum amet quisquam iusto perferendis <br>
+				ducimus aspernatur quia, repellendus beatae fugiat!
+			</p>
+
+		</div>
+	</div>
+</section>
+
+@*<section class="two">
+	<div class="container">
+		<div class="hero" hidden>
+			<h2>How we do</h2>
+			<h3>Experiment width tasty <br>Shoespace     recipe everytime</h3>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque aliquid culpa, <br>
+				providentvoluptatem excepturi id in quasi ea hic voluptate dicta amet explicabo <br>
+				expedita ratione velit modi. Nisiquaerat illum amet quisquam iusto perferendis <br>
+				ducimus aspernatur quia, repellendus beatae fugiat!
+			</p>
+
+		</div>
+	</div>
+</section>
+*@
+@*<section class="three">
+	<h1 hidden>SHOESPACE.</h1>
+</section>
+*@
+</div>
+
+
+    <div class="info" id="info" style="display:none;">
+        <div class="container">
+            <div class="hero">
+                <h3 id="title"></h3>
+                <div class="bt">
+                    <input type="button" class="btn btn-danger" value="NO" id="no"/>
+                    <input type="button" class="btn btn-primary" value="YES" id="yes"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <video
+        id="video"
+        playsinline
+        webkit-playsinline
+        muted
+        loop
+        autoplay
+        width="1290"
+        height="1040"
+        src="~/3d/videoplayback.mp4"
+        style="display:none"
+    ></video>
+
+    <video
+        id="video2"
+        playsinline
+        webkit-playsinline
+        muted
+        loop
+        autoplay
+        width="1920"
+        height="1080"
+        src="~/3d/pc02.mp4"
+        style="display:none"
+    ></video>
+
+    <video
+        id="video3"
+        playsinline
+        webkit-playsinline
+        muted
+        loop
+        autoplay
+        width="1920"
+        height="1080"
+        src="~/3d/Untitled.mp4"
+        style="display:none"
+    ></video>
+
+
+    @*@*card*@
+    @*<div class="card" id="info" style="display:none;">
+        <div class="card__img">
+            <div class="scene" id="img">
+                <img src="~/images/image130i117-lxq4-300w.png" />
+            </div>
+        </div>
+        <div class="card__description">
+
+            <div class="card__container">
+                <!--  -->
+                <div class="card__info">
+                    <div class="card__header">
+                        <div class="card__rating">
+                            <svg height="25" width="23" class="star rating" data-rating="1">
+                                <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
+                            </svg>
+                            <svg height="25" width="23" class="star rating" data-rating="1">
+                                <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
+                            </svg>
+                            <svg height="25" width="23" class="star rating" data-rating="1">
+                                <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
+                            </svg>
+                            <svg height="25" width="23" class="star rating" data-rating="1">
+                                <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
+                            </svg>
+                            <svg height="25" width="23" class="star rating" data-rating="1">
+                                <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
+                            </svg>
+                        </div>
+                        <p class="card__price">$220</p>
+                    </div>
+                    <h1 class="card__title" id="title">Futuristic Drone</h1>
+                    <h2 class="card__subtitle">FHC - 250x</h2>
+                </div>
+                <!--  -->
+                <div class="colors">
+                    <span class="color__title">COLOR</span>
+                    <div class="color__container">
+                        <div class="color__item"></div>
+                        <div class="color__item"></div>
+                        <div class="color__item"></div>
+                        <div class="color__item"></div>
+                        <div class="color__item"></div>
+                    </div>
+                </div>
+                <!--  -->
+                <div>
+                     <a class="card__button" id="yes">GO</a>
+                     <a class="card__button" id="no">BACK</a>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts{
+	<script src="https://unpkg.com/three@0.146.0/build/three.min.js"></script>
+	<script src="https://unpkg.com/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js" ></script>
+    <script src="~/js/orbitcontrols.js"></script>
+@*    <script src="https://unpkg.com/browse/cannon@0.6.2/tools/threejs/CannonDebugRenderer.js"></script>
+*@	@*gsap*@
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+
+    @*shader*@
+    <script id="fragment_shader4" type="x-shader/x-fragment">
+			uniform float time;
+			uniform vec2 resolution;
+			varying vec2 vUv;
+			void main( void ) {
+				vec2 position = -1.0 + 2.0 * vUv;
+				float red = abs( sin( position.x * position.y + time / 5.0 ) );
+				float green = abs( sin( position.x * position.y + time / 4.0 ) );
+				float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+				gl_FragColor = vec4( red, green, blue, 1.0 );
+			}
+		</script>
+
+        <script id="vertexShader" type="x-shader/x-vertex">
+			varying vec2 vUv;
+			void main()
+			{
+				vUv = uv;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+		</script>
+
+	<script >
+
+
+        // Cannon.js
+        let world
+        let groundBody
+        let sphereBody
+        let shibaBody
+        let sphere
+        let shiba1
+        let friction = 0.5
+        let restitution = 0.7
+        let sphereGroundContact
+        let shibaGroundContact
+        let controls
+
+        
+
+
+
+		            /**
+             * Base
+             */
+            // Canvas
+            const canvas = document.querySelector('canvas.webgl')
+
+            /**
+             * Loaders
+             */
+            const loadingBarElement = document.querySelector('.loading-bar')
+            const bodyElement = document.querySelector('body')
+            const loadingManager = new THREE.LoadingManager(
+                () => {
+                    window.setTimeout(() => {
+                        gsap.to(overlayMaterial.uniforms.uAlpha, {
+                            duration: 3,
+                            value: 0,
+                            delay: 1
+                        })
+                        gsap.to(overlayMaterial.uniforms.uAlpha, {
+                            duration: 3,
+                            value: 0,
+                            delay: 1
+                        })
+
+                        loadingBarElement.classList.add('ended')
+                        bodyElement.classList.add('loaded')
+                        loadingBarElement.style.transform = ''
+
+                    }, 500)
+                },
+                (itemUrl, itemsLoaded, itemsTotal) => {
+                    console.log(itemUrl, itemsLoaded, itemsTotal)
+                    const progressRatio = itemsLoaded / itemsTotal
+                    loadingBarElement.style.transform = `scaleX(${progressRatio})`
+                    console.log(progressRatio)
+                },
+                () => {
+
+                }
+            )
+            const gltfLoader = new THREE.GLTFLoader(loadingManager)
+
+            /**
+             *  Textures
+             */
+            const textureLoader = new THREE.TextureLoader()
+            const alphaShadow = textureLoader.load('/assets/texture/simpleShadow.jpg');
+
+            // Scene
+            const scene = new THREE.Scene()
+
+            const sphereShadow = new THREE.Mesh(
+                new THREE.PlaneGeometry(1.5, 1.5),
+                new THREE.MeshBasicMaterial({
+                    transparent: true,
+                    color: 0x000000,
+                    opacity: 0.5,
+                    alphaMap: alphaShadow
+                })
+            )
+
+            sphereShadow.rotation.x = -Math.PI * 0.5
+
+            sphereShadow.position.y = -1
+            sphereShadow.position.x = 1.5;
+
+            scene.add(sphereShadow)
+
+            /**
+             * Overlay
+             */
+            const overlayGeometry = new THREE.PlaneGeometry(2, 2, 1, 1)
+            const overlayMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    void main() {
+                        gl_Position = vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float uAlpha;
+                    void main() {
+                        gl_FragColor = vec4(0.0, 0.0, 0.0, uAlpha);
+                        // gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+                    }
+                `,
+                uniforms: {
+                    uAlpha: {
+                        value: 1.0
+                    }
+                },
+                transparent: true
+            })
+            const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial);
+            scene.add(overlay)
+
+
+        /**
+         * Random background color
+         */
+        //var uniforms1;
+
+        //uniforms1 = {
+        //    time: {
+        //        type: "f",
+        //        value: 1.0
+        //    },
+        //    resolution: {
+        //        type: "v2",
+        //        value: new THREE.Vector2()
+        //    }
+        //};
+        //var params = [
+
+        //    ['fragment_shader4', uniforms1]
+        //];
+
+      
+        //var bkmaterial = new THREE.ShaderMaterial({
+        //    uniforms: params[0][1],
+        //    vertexShader: document.getElementById('vertexShader').textContent,
+        //    fragmentShader: document.getElementById(params[0][0]).textContent
+        //});
+
+
+        //const shadertoyCamera = new THREE.OrthographicCamera(
+        //    -1, // left
+        //    1, // right
+        //    1, // top
+        //    -1, // bottom
+        //    -1, // near,
+        //    0, // far
+        //);
+        //const shadertoyScene = new THREE.Scene();
+        //const bkplane = new THREE.PlaneBufferGeometry(3, 3);
+        //shadertoyScene.add(new THREE.Mesh(bkplane, bkmaterial));
+ 
+
+
+         
+
+
+        /**
+         * skybox
+         */
+        //const skybox=new BoxGeometry(200,200,200);
+        //const skyboxMaterial=[
+        //    new THREE.MeshBasicMaterial({})
+        //];
+        //const skyboxMesh=new THREE.Mesh(skybox,skyboxMaterial);
+
+
+            /**
+             * GLTF Model
+             */
+
+            let shiba = null
+            let shoes = null
+            let shoes2 = null
+            let tv = null
+            let cloud = null
+            let rocket = null
+            let base = new THREE.Object3D()
+            let mixer;
+            scene.add(base)
+            //抓取3d檔
+            gltfLoader.load(
+            'https://rawcdn.githack.com/th9716/3dglb/74295803c84c9cfd16e7c8f90e2202e0409ff2e4/shibanew.glb',
+                (gltf) => {
+                    console.log(gltf);
+
+                    shiba = gltf.scene
+
+                    const radius =9
+
+                    shiba.position.x = 0;
+                    shiba.position.y = 600;
+                    //shiba.position.z = 200;
+
+                    shiba.rotation.y =-1.5;
+                    //shiba.rotation.z =  Math.PI * 0.15
+
+                    shiba.scale.set(radius, radius, radius)
+
+                    //base.add(donut)
+                    scene.add(shiba)
+                    console.log(shiba.position)
+
+
+                    //獲取模型外框範圍
+                    //let bbox = new THREE.Box3().setFromObject(donut);
+                    //let helper = new THREE.Box3Helper(bbox, new THREE.Color(0, 255, 0));
+                    //let size = bbox.getSize(new THREE.Vector3());
+                    //scene.add(helper);
+
+                    //mixer
+                mixer = new THREE.AnimationMixer(shiba);
+                mixer.clipAction(gltf.animations[1]).setDuration(1.2).play();
+
+                },
+                (progress) => {
+                    console.log(progress);
+                },
+                (error) => {
+                    console.error(error);
+                }
+            )
+
+        gltfLoader.load(
+            'https://rawcdn.githack.com/th9716/3dglb/2cf9309613dcec6907190901aafdd7510b5d18e6/shoes1new.glb',
+            (gltf) => {
+                shoes = gltf.scene
+                shoes.position.x = 0;
+                shoes.position.y = -400;
+                shoes.position.z = 150;
+
+                shoes.rotation.x = 0;
+                shoes.rotation.y = 89.6;
+                shoes.rotation.z = 0;
+
+                shoes.scale.set(10, 10, 10)
+
+                scene.add(shoes)
+
+            },
+            (progress) => {
+                console.log(progress);
+            },
+            (error) => {
+                console.error(error);
+            }
+        )
+        gltfLoader.load(
+            'https://rawcdn.githack.com/th9716/3dglb/2019abf682a579d259c44690ab16149f61993cb0/shoes2.glb',
+            (gltf) => {
+                shoes2 = gltf.scene
+                shoes2.position.x = 0;
+                shoes2.position.y = -400;
+                shoes2.position.z = 120;
+
+                shoes2.rotation.x = 0;
+                shoes2.rotation.y = 89.6;
+                shoes2.rotation.z = 0;
+
+                shoes2.scale.set(10, 10, 10)
+
+                console.log(shoes2.children[0])
+
+                scene.add(shoes2)
+
+            },
+            (progress) => {
+                console.log(progress);
+            },
+            (error) => {
+                console.error(error);
+            }
+        )
+
+        //tv
+        gltfLoader.load(
+            'https://rawcdn.githack.com/th9716/3dglb/9426a24f1d6023f3a08876a71bcb456665f6b47c/tv1/tv.glb',
+            (gltf) => {
+                tv = gltf.scene
+                //tv.position.x = 0;
+                tv.position.y = 400;
+                //tv.position.z = 200;
+
+                tv.rotation.y = 4.7;
+
+                tv.scale.set(4, 4, 6)
+
+                scene.add(tv)
+                
+            },
+            (progress) => {
+                console.log(progress);
+            },
+            (error) => {
+                console.error(error);
+            }
+        )
+
+  
+
+
+        //------------------------------- particle
+
+        var sceneGruop = new THREE.Object3D();
+        var particularGruop = new THREE.Object3D();
+        var modularGruop = new THREE.Object3D();
+
+
+        function generateParticle(num, amp = 2) {
+          var gmaterial = new THREE.MeshPhysicalMaterial({color:0xFFFFFF, side:THREE.DoubleSide});
+
+          var gparticular = new THREE.CircleGeometry(30,8);
+
+          for (var i = 1; i < num; i++) {
+            var pscale = 0.001+Math.abs(mathRandom(0.2));
+            var particular = new THREE.Mesh(gparticular, gmaterial);
+            particular.position.set(mathRandom(amp),mathRandom(amp),mathRandom(amp));
+            particular.rotation.set(mathRandom(),mathRandom(),mathRandom());
+            particular.scale.set(pscale,pscale,pscale);
+            particular.speedValue = mathRandom(1);
+
+            particularGruop.add(particular);
+          }
+        }
+        generateParticle(500, 2000);
+
+        sceneGruop.add(particularGruop);
+        scene.add(sceneGruop);
+
+        function mathRandom(num = 1) {
+          var setNumber = - Math.random() * num + Math.random() * num;
+          return setNumber;
+        }
+
+
+
+
+
+            /**
+             * Light
+             */
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+            scene.add(ambientLight)
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
+            directionalLight.position.set(1, 1000, 0)
+
+            directionalLight.castShadow = true
+            scene.add(directionalLight)
+
+            /**
+             * Sizes
+             */
+            const sizes = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+
+            ///**
+            // * Scroll
+            // */
+            //let scrollY = window.scrollY
+            //let currentSection = 0
+
+            //const transformDonut = [{
+            //        rotationY: -1.5,
+            //        positionX: 0
+            //    },
+            //    {
+            //        rotationY: -1.3,
+            //        positionX: 0
+            //    },
+            //    {
+            //        rotationY: 0.6314,
+            //        positionX: 0
+            //    },
+            //    {
+            //        rotationY: 0.6314,
+            //        positionX: 0
+            //    },
+            //]
+
+            //window.addEventListener('scroll', () => {
+
+            //    scrollY = window.scrollY
+            //    const newSection = Math.round(scrollY / sizes.height)
+
+            //    console.log(newSection);
+            ////console.log(donut.position)
+            ////console.log(donut.rotation)
+            //    if (newSection != currentSection) {
+            //        currentSection = newSection
+
+            //        if (!!shiba) {
+            //            gsap.to(
+            //                shiba.rotation, {
+            //                    duration: 1.5,
+            //                    ease: 'power2.inOut',
+            //                    y: transformDonut[currentSection].rotationY
+            //                }
+            //            )
+            //            //gsap.to(
+            //            //    donut.position, {
+            //            //        duration: 1.5,
+            //            //        ease: 'power2.inOut',
+            //            //        x: transformDonut[currentSection].positionX
+            //            //    }
+            //            //)
+
+            //            gsap.to(
+            //                sphereShadow.position, {
+            //                    duration: 1.5,
+            //                    ease: 'power2.inOut',
+            //                    x: transformDonut[currentSection].positionX - 0.2
+            //                }
+            //            )
+            //        }
+            //    }
+            //})
+
+
+        /**
+         * Camera
+         */
+        // Base camera
+        const camera = new THREE.PerspectiveCamera(90, sizes.width / sizes.height, 0.1, 100000) //視野角度 長寬比 近截角 遠截角
+        camera.position.y = 350;
+        camera.position.z = 1600;
+        scene.add(camera)
+        camera.lookAt(scene.position);
+
+        // controls
+
+        controls = new THREE.OrbitControls(camera);
+
+        controls.enableDamping = true // 啟用阻尼效果
+        controls.dampingFactor = 0.25 // 阻尼系數
+        controls.autoRotate = true    // 啟用自動旋轉
+        /**
+         * Renderer
+         */
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: true,
+            //alpha: true
+        })
+
+        renderer.autoClear = false;
+        renderer.shadowMap.enabled = true
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap
+        renderer.setSize(sizes.width, sizes.height)
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        renderer.outputEncoding = THREE.sRGBEncoding; //修正模型暗沉
+
+
+
+
+
+        // TV Texture SET
+
+        let video = document.getElementById('video');
+        let videoTexture = new THREE.VideoTexture(video);
+
+        let video2 = document.getElementById('video2');
+        let videoTexture2 = new THREE.VideoTexture(video2);
+
+        let video3 = document.getElementById('video3');
+        let videoTexture3 = new THREE.VideoTexture(video3);
+
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+
+        videoTexture2.minFilter = THREE.LinearFilter;
+        videoTexture2.magFilter = THREE.LinearFilter;
+
+        videoTexture3.minFilter = THREE.LinearFilter;
+        videoTexture3.magFilter = THREE.LinearFilter;
+
+        var movieMaterial = new THREE.MeshBasicMaterial({
+            map: videoTexture,
+            side: THREE.FontSide,
+            toneMapped: false,
+            roughness:0.135,
+        })
+        var movieMaterial2 = new THREE.MeshBasicMaterial({
+            map: videoTexture2,
+            side: THREE.FontSide,
+            toneMapped: false,
+            roughness:0.135,
+        })
+        var movieMaterial3 = new THREE.MeshBasicMaterial({
+            map: videoTexture3,
+            side: THREE.FontSide,
+            fog:true,
+            //toneMapped: false,
+            
+        })
+
+        const texture1=new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/women.png');
+        const texture2 = new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/men.png');
+        const texture3 = new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/disney.png');
+        const texture4 = new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/KOL.png');
+        const texture5 = new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/mask.png');
+        const texture6=new THREE.TextureLoader().load('https://rawcdn.githack.com/th9716/3dglb/5aeea9a066f509812d5a397ddf04cf72c6cc94f4/img/bag.png');
+        let Material1=new THREE.MeshBasicMaterial({
+            map:texture1,
+        })
+        let Material2=new THREE.MeshBasicMaterial({
+            map:texture2,
+        })
+        let Material3=new THREE.MeshBasicMaterial({
+            map:texture3,
+        })
+        let Material4=new THREE.MeshBasicMaterial({
+            map:texture4,
+        })
+        let Material5=new THREE.MeshBasicMaterial({
+            map:texture5,
+        })
+        let Material6=new THREE.MeshBasicMaterial({
+            map:texture6,
+        })
+
+        //Screen model
+        let screenGeometry = new THREE.PlaneGeometry(475, 250);
+        let screenplane = new THREE.Mesh(screenGeometry, movieMaterial2);
+        screenplane.position.set(0, 450, 115)
+        screenplane.rotation.y=-0.01;
+        scene.add(screenplane);
+
+
+        /**
+         * Background video SET
+         */
+        const shadertoyCamera = new THREE.OrthographicCamera(
+            -8, // left
+            8, // right
+            4.5, // top
+            -4.5, // bottom
+            -1, // near,
+            0, // far
+        );
+
+        const shadertoyScene = new THREE.Scene();
+        const bkplane = new THREE.PlaneBufferGeometry(16, 9);
+        shadertoyScene.add(new THREE.Mesh(bkplane, movieMaterial3));
+            
+
+
+            /**
+             * 滑鼠點擊模型
+             */
+        //mouse move
+        let plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2)
+        let pointOfIntersection = new THREE.Vector3()
+        //宣告raycaster和mouse變數
+
+        var raycaster = new THREE.Raycaster();
+        var mouse = new THREE.Vector2();
+        var Clickmouse = new THREE.Vector2();
+        let objects=[shiba,shoes,shoes2];
+
+
+        const cursorPos = new THREE.Vector2()
+        const cursorBorderPos = new THREE.Vector2()
+
+        document.addEventListener('mousemove', onMouseMove, false)
+
+
+        //// 從相機的朝向發出射線
+        //// pointer是滑鼠映射再畫布上的位置，x和y的值都必須要用-1~+1之間的值來表示
+        //raycaster.setFromCamera(mouse, camera);
+        //// 把一整個scene的mesh通通檢測過一遍，看有沒有相交
+        //const intersects = raycaster.intersectObjects(scene.children);
+
+
+        
+
+        document.addEventListener('click',event=>{
+            Clickmouse.x=(event.clientX/window.innerWidth)*2-1;
+            Clickmouse.y=-(event.clientY/window.innerHeight)*2+1;
+
+            let bkboots="Object_2002";
+            let grayshoes="defaultMaterial";
+            let disney="Object_3";
+            let lv = "Bag_low__0";
+            let mask="Plane_lambert1_0";
+            let bag="Object_5";
+            let clicktv = "Cylinder_1_0";
+            // 透過滑鼠點的位置和當前相機的矩陣計算出 raycaster值
+            raycaster.setFromCamera(mouse, camera);
+
+            // 取得 raycaster 射線和所有物件相交的陣列集合
+            var intersects = raycaster.intersectObjects(scene.children);
+
+            //返回
+            function goback(){
+                gsap.to(
+                    camera.position, {
+                    x: 0,
+                    y: 350,
+                    z: 1500,
+                    duration: 2,
+                    onUpdate: function () {
+                        camera.lookAt(scene.position);
+                    }
+                });
+                gsap.to(
+                    camera.rotation, {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    duration: 2,
+                    onUpdate: function () {
+                        camera.lookAt(scene.position);
+                    }
+                });
+                screenplane.material=movieMaterial2;
+                $('#txt').removeClass('txt');
+
+            }
+            //進入
+            function go(){
+                gsap.to(
+                        camera.position, {
+                            x:0,
+                            y:450,
+                            z:270,
+                            duration: 2,
+                            onUpdate:function(){
+                            camera.lookAt(0, 450, 0);
+                            }
+                    });
+                    gsap.to(
+                        camera.rotation, {
+                            x:0,
+                            y:0,
+                            z:100,
+                            duration: 2,
+                            onUpdate: function () {
+                            camera.lookAt(0,450,0);
+                        }
+                    });
+            }
+
+           
+
+            // 計算後，將所有有相交的物件的顏色改變為紅色，如果只需要將第一個觸發事件，那就陣列的第一個物件改變顏色即可
+            for (var i = 0; i < 1; i++) {
+
+
+                
+                //screenplane.material = movieMaterial2;
+
+
+
+
+                console.log(tv.getObjectByName('screen'));
+                console.log(tv.getObjectByName('screen').position);
+                //tv.getObjectByName('screen').material.color .setHex(0x00FF00);
+
+
+                console.log(shiba)
+                console.log(tv)
+                //console.log(shsph)
+                console.log(intersects[i].object.children.name)
+                console.log(intersects[i].object.name)
+
+                if (intersects[i].object.name == bkboots) {
+                    
+                    go();
+                   
+                    screenplane.material=Material1;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入女鞋分類嗎?');
+                        
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/2")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                }else if(intersects[i].object.name == grayshoes){
+                    go();
+
+                    screenplane.material=Material2;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入男鞋分類嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/1")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                } else if (intersects[i].object.name == disney) {
+                    
+                    go();
+
+                    screenplane.material=Material3;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入迪士尼分類嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/4")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                }else if(intersects[i].object.name == lv){
+                    
+                    go();
+
+                    screenplane.material=Material4;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入KOL聯名分類嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/3")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                }else if(intersects[i].object.name == mask){
+                    
+                    go();
+
+                    screenplane.material=Material5;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入口罩分類嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/6")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                } else if (intersects[i].object.name == bag) {
+                    
+                    go();
+
+                    screenplane.material=Material6;
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入服飾包袋分類嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/ProductWall/index/5")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                } 
+                else if (intersects[i].object.name== clicktv/* ||intersects[i].object.name==null*/) {
+                    //screenplane.material=movieMaterial;
+
+                    go();
+
+                    
+                    $('#txt').css('color','transparent');
+                    setTimeout(function(){
+                        $('#txt').addClass('txt');
+                        $('#info').css('display','block');
+                        $('#title').text('請問要進入首頁嗎?');
+                        $("#yes").on('click',function(){
+                                location.href = (`@Url.Content("~/Home/index")`);
+                        })
+                        $('#no').on('click',function(){
+                            $('#info').css('display','none');
+                            $('#txt').css('color', '#212529');
+                            goback();
+                        })
+                        
+                    },2000)
+                }
+                //else{
+                //    screenplane.material = movieMaterial;
+                    
+                //}
+
+            }
+
+
+        })
+
+
+        function onMouseMove(e) {
+            //console.log(e)
+
+            cursorPos.x = e.clientX - 1000
+            cursorPos.y = -(e.clientY - 500)
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            //rocket.position.set(cursorPos.x, cursorPos.y,200)
+        }
+
+
+        /**
+             * Cannon碰撞
+             */
+        function initCannonWorld() {
+        //    // 建立物理世界
+        //    world = new CANNON.World()
+
+        //    // 設定重力場為 y 軸 -9.8 m/s²
+        //    world.gravity.set(0, -9.8, 0)
+
+        //    // 碰撞偵測
+        //    world.broadphase = new CANNON.NaiveBroadphase()
+
+        //    // 建立地板剛體
+        //    let groundShape = new CANNON.Plane()
+        //    let groundCM = new CANNON.Material()
+        //    groundBody = new CANNON.Body({
+        //        mass: 0,
+        //        shape: groundShape,
+        //        position: new CANNON.Vec3(5, -500, 0),
+        //        material: groundCM
+        //    })
+        //    // setFromAxisAngle 旋轉 x 軸 -90 度
+        //    groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
+        //    world.add(groundBody)
+
+
+        //    //建立圓柱
+        //    let shibashape = new CANNON.Cylinder(150, 150, 500, 16);
+        //    let shibaCM = new CANNON.Material();
+        //    shibaBody = new CANNON.Body({
+        //        mass: 0,
+        //        shape: shibashape,
+        //        //position: new CANNON.Vec3(5, 0, 0),
+        //        material: shibaCM
+        //    })
+        //    world.add(shibaBody)
+
+
+            //// 建立球剛體
+            //let sphereShape = new CANNON.Sphere(150)
+            //let sphereCM = new CANNON.Material()
+            //sphereBody = new CANNON.Body({
+            //    mass: 5,
+            //    shape: sphereShape,
+            //    position: new CANNON.Vec3(0, 600, 250),
+            //    material: sphereCM
+            //})
+            //world.add(sphereBody)
+
+
+            //// 設定兩剛體碰撞時交互作用屬性
+            //sphereGroundContact = new CANNON.ContactMaterial(groundCM, sphereCM, {
+            //    friction: friction, // 摩擦力
+            //    restitution: restitution // 恢復係數, 衡量兩個物體碰撞後反彈程度
+            //})
+            //world.addContactMaterial(sphereGroundContact)
+
+            // 設定兩剛體碰撞時交互作用屬性
+            //shibaGroundContact = new CANNON.ContactMaterial(groundCM, shibaCM, {
+            //    friction: 0.8, // 摩擦力
+            //    restitution: 1.5 // 恢復係數, 衡量兩個物體碰撞後反彈程度
+            //})
+            //world.addContactMaterial(shibaGroundContact)
+
+            //// 設定兩剛體碰撞時交互作用屬性
+            //let ballGroundContact = new CANNON.ContactMaterial(sphereCM, shibaCM, {
+            //    friction: 0.8, // 摩擦力
+            //    restitution: 0.8 // 恢復係數, 衡量兩個物體碰撞後反彈程度
+            //})
+            //world.addContactMaterial(ballGroundContact)
+
+            //// 地板網格外觀
+            //let groundGeometry = new THREE.PlaneGeometry(20, 20, 32)
+            //let groundMaterial = new THREE.MeshLambertMaterial({
+            //    color: 0xa5a5a5,
+            //    side: THREE.DoubleSide
+            //})
+            //let ground = new THREE.Mesh(groundGeometry, groundMaterial)
+            //ground.rotation.x = -Math.PI / 2
+            //ground.receiveShadow = true
+            //scene.add(ground)
+
+            //// 球網格外觀
+            //let sphereGeometry = new THREE.SphereGeometry(150, 32, 32)
+            //let sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x33aaaa })
+            //sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
+            //sphere.castShadow = true
+            //scene.add(sphere)
+
+            // 圓柱網格外觀
+            //let shibaGeometry = new THREE.CylinderGeometry(150, 150, 500, 16)
+            //let shibaMaterial = new THREE.MeshStandardMaterial({ color: 0xD5BCA7 })
+            //shiba1 = new THREE.Mesh(shibaGeometry, shibaMaterial)
+            //shiba1.castShadow = true
+            //scene.add(shiba1)
+
+            //rocket
+            //gltfLoader.load(
+            //    "https://rawcdn.githack.com/th9716/3dglb/57d0aa3d7b2b54e4f74bcbf50e672bf50b259a2e/rocket.gltf",
+            //    (gltf1) => {
+            //        console.log(gltf1);
+
+            //        rocket = gltf1.scene
+
+            //        const radius = 1
+
+
+            //        rocket.scale.set(radius, radius, radius)
+
+            //        base.add(rocket)
+            //        console.log(rocket.size)
+
+
+            //        //const clips=gltf.animations;
+            //        //const clip = THREE.AnimationClip.findByName(clips, 'Armature|ArmatureAction.002');
+            //        //const action=mixer.clipAction(clip);
+            //        //action.play();
+
+            //    },
+            //    (progress) => {
+            //        console.log(progress);
+            //    },
+            //    (error) => {
+            //        console.error(error);
+            //    }
+            //)
+
+        }
+
+
+
+
+
+
+            /**
+             * Animate
+             */
+
+
+
+            const clock = new THREE.Clock()
+            let lastElapsedTime = 0
+            let prevTime = Date.now();
+
+            const timeStep = 1.0 / 60.0 // seconds
+
+            const tick = () => {
+                const elapsedTime = clock.getElapsedTime()
+                const deltaTime = elapsedTime - lastElapsedTime
+                lastElapsedTime = elapsedTime
+
+
+                //bk.rotation.y += deltaTime * 0.5 * (1 % 2 ? 1 : -1);
+                //bk.rotation.x += deltaTime * 0.5 * (1 % 2 ? -1 : 1);
+
+
+
+                if(shoes&&shoes2){
+                shoes.rotation.y += deltaTime * 0.3 * (1 % 2 ? 1 : -1);
+                shoes2.rotation.y += deltaTime * 0.3 * (1 % 2 ? 1 : -1);
+
+                }
+
+
+
+
+                if (!!shiba) {
+                    //shiba.position.y = Math.sin(elapsedTime * .5) * .1 - 0.1
+                    sphereShadow.material.opacity = (1 - Math.abs(shiba.position.y)) * 0.3
+                }
+
+            //shiba mixer
+            if (mixer) {
+                const time = Date.now();
+                mixer.update((time - prevTime) * 0.001);
+                prevTime = time;
+            }
+
+
+            //world.step(timeStep)
+
+            if (shiba1) {
+                shibaBody.position.copy(rocket.position)
+                shibaBody.quaternion.copy(rocket.quaternion)
+                console.log(rocket.position)
+                console.log(shibaBody.position)
+            }
+
+
+            //---particle move
+              for (var i = 0, l = particularGruop.children.length; i<l; i++) {
+                var newObject = particularGruop.children[i];
+                newObject.rotation.x += newObject.speedValue/10;
+                newObject.rotation.y += newObject.speedValue/10;
+                newObject.rotation.z += newObject.speedValue/10;
+                //---
+                //newObject.position.y = Math.sin(time) * 3;
+              };
+
+            particularGruop.rotation.y += 0.005;
+
+            //TV animate
+                videoTexture.needsUpdate=true;
+                videoTexture2.needsUpdate=true;
+                videoTexture3.needsUpdate=true;
+                video.play();
+                video2.play();
+                video3.play();
+
+                //***BackgroundRender
+                //console.log(deltaTime)
+                //uniforms1.time.value += deltaTime * 1;
+                //renderer.render(shadertoyScene, shadertoyCamera);
+
+
+                renderer.render(shadertoyScene, shadertoyCamera);
+
+                // ***Render
+                renderer.render(scene, camera)
+
+                // Call tick again on the next frame
+                window.requestAnimationFrame(tick)
+            }
+
+            //initCannonWorld()
+            tick()
+
+            /**
+             * On Reload
+             */
+            window.onbeforeunload = function () {
+                window.scrollTo(0, 0);
+            }
+
+
+	</script>
+
+
+
+
+}

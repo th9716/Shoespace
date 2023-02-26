@@ -1,0 +1,86 @@
+﻿@model dbCompanyTest.Models.TestClient
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Back_Layout_Sneat.cshtml";
+}
+<div style="width:80%;margin:20px auto;">
+<h1>客戶資料細節</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶姓名)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶姓名)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶電話)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶電話)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.身分證字號)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.身分證字號)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.縣市)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.縣市)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.區)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.區)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.地址)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.地址)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.密碼)
+        </dt>
+        <dd class = "col-sm-10">
+                ●●●●
+            @*@Html.DisplayFor(model => model.密碼)*@
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.性別)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.性別)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.生日)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.生日)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.客戶編號" class="btn btn-primary">編輯</a>
+    <a asp-action="Index" class="btn btn-light">返回</a>
+</div>
+</div>
+
+@section Scripts{
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/datas/taiwan_districts.js"></script>
+<script src="~/js/city_data.js"></script>
+<script src="~/js/client.js"></script>
+}

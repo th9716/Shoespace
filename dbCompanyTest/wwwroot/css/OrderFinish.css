@@ -1,0 +1,60 @@
+﻿h3,h4 {
+    text-align: center
+}
+dt {
+    text-align: right;
+}
+.center {
+    text-align: center
+}
+.m_50 {
+    margin: 50px 0px;
+}
+.OKpng {
+    width: 200px
+}
+.OrderFinish {
+    margin: 20px 25%;
+    /*border: 2px solid #7B7B7B*/
+    font-family: 'Microsoft YaHei';
+}
+.m_10 {
+    margin: 10px 0px;
+}
+.m_10 a{
+    width: 211px;
+    margin: 10px auto;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #d3d3d5;
+    border-radius: 3px;
+    display: block;
+}
+.m_10 a:hover {
+    background-color: #DBCDC0 ;
+    color: #fff ;
+}
+        .p1{
+    font-weight:bold;
+}
+.OrderFinish p{
+    font-size:18px;
+    line-height:10px;
+}
+.OrderFinish img {
+    width: 85px;
+    margin-right: 1%;
+    margin-bottom: 3%;
+}
+
+
+@media screen and (max-width:575px) {
+    dt {
+        text-align: left
+    }
+    .OrderFinish {
+        margin: 20px 15%;
+        /*border: 2px solid #7B7B7B*/
+        font-family: 'Microsoft YaHei';
+    }
+}

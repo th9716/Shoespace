@@ -1,0 +1,1 @@
+﻿$("form div").css("margin", "10px 0")

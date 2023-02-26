@@ -1,0 +1,63 @@
+﻿@model dbCompanyTest.Models.ProductsSizeDetail
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form name="proInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none">
+                <label asp-for="商品尺寸id" class="control-label"></label>
+                <input asp-for="商品尺寸id" class="form-control" />
+                <span asp-validation-for="商品尺寸id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="尺寸種類" class="control-label"></label>
+                <input asp-for="尺寸種類" class="form-control"  />
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="新建" class="btn btn-primary" id="btn_submit" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //HTML載完才會執行
+    $(document).ready(function () {
+        //送出按鈕事件
+        const btn = document.querySelector('#btn_submit');
+        //console.log(btn);
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();//停止submit預設行為
+            //前端檢測
+            let error = check_ProSize();
+            if (error.length == 0) {
+            var formData = new FormData(document.proInfo); //from 的名稱
+            SaveData(formData);
+            }
+        });
+    });
+
+    //送出資料
+    async function SaveData(data) {
+        try {
+            const response = await fetch(`@Url.Content("~/ProductRelevant/SizeCreate")`, {
+                method: 'POST',
+                body: data,
+            });
+            const mess = await response.text();
+            alert(mess);
+            $("#Moda").modal('toggle');
+            //console.log("mess=" + mess);
+            //console.log("sussers", mess);
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+
+</script>

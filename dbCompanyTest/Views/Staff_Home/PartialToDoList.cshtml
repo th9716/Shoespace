@@ -1,0 +1,178 @@
+﻿<a asp-action="Create" asp-controller="ToDoLists">
+    <button class="btn btn-primary mb-3 btnTDL_DT">建立新表單</button>
+</a>
+
+<div style="text-align:center;">
+    <table class="table1 table table-striped-columns table-rwd">@*table-rwd*@
+      
+        <thead>
+           @* <th>*@
+                <h4>待辦事項列表</h4>
+         @*</th>*@
+        </thead>
+        <thead>
+            <tr class="header">
+                <th class="col-1">表單編號</th>
+                <th class="col-1">表單類型</th>
+                <th class="col-3">表單內容</th>
+                <th class="col-1">狀態</th>
+                <th class="col-1"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="collapse1" id="123">
+                <td colspan="5" style="padding:0; ">
+                    <div>
+                        <table class="table1 table-inner table table-striped-columns" style="margin:0 !important;">
+                            <tbody id="ToDolist_tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table__wrapper">
+                        <table class="table1 table-inner table table-striped-columns">
+                            <tbody id="ToDolist_tbody_sec">
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+       @* <tbody id="tfoot_click">
+            <tr>
+                <td colspan="5">
+                    <div>
+                        <table class="table table-striped-columns" style="margin:0 !important;">
+                            <tr>
+                                <td class="col-1"> </td>
+                                <td class="col-1"> </td>
+                                <td id="td_text" class="col-1">展開</td>
+                                <td class="col-1"> </td>
+                                <td class="col-1"> </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+        </tfoot>*@
+    </table>
+    <div style="width:40px; height:40px;margin:0 auto; border:3px solid gray; border-radius:20px" id="TDL_Foot">
+        <img src="@Url.Content("~/homeimg/down_arrow_icon.png")" style="height:20px; margin-top: 8px"/>
+        </div>
+</div>
+
+@*<table class="table table-striped-columns">
+    <thead>
+    </thead>
+    <thead>
+        <tr>
+            <th>待辦事項列表</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th>表單編號</th>
+            <th>表單類型</th>
+            <th>表單內容</th>
+            <th>狀態</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="ToDolist_tbody">
+        <tr><td id="ToDolist_tr"></td></tr>
+    </tbody>
+@*<tbody id="ToDolist_tbody_sec" class="collapse">*@
+@*<tbody id="ToDolist_tbody_sec" >
+    </tbody>*@
+@*<tfoot data-bs-toggle="collapse" href="#ToDolist_tbody_sec" role="button" aria-expanded="false" aria-controls="ToDolist_tbody_sec">*@
+@* <tfoot id="tfoot_click">
+        <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </tfoot>
+</table>
+<button class="btn btn-primary mb-3" id="test">test</button>*@
+<br />
+
+
+
+<script>
+    console.log(`PartialToDolist.cshtml`)
+
+    var TDL_Foot = true;
+    $("#TDL_Foot").click(function () {
+        $("#123").toggleClass("active");
+        TDL_Foot = !TDL_Foot;
+        if (TDL_Foot)
+            $("#TDL_Foot img").attr("src", "@Url.Content("~/homeimg/down_arrow_icon.png")");
+        else
+            $("#TDL_Foot img").attr("src", "@Url.Content("~/homeimg/up_arrow_icon.png")");
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    var TDLpath = $(`#TDLpath`).val();
+    var TDL_DTpath = $(`#TDL_DTpath`).val();
+    var TID;
+
+
+    $.ajax({
+        url: `${TDLpath}`,
+        type: "GET",
+        data: { "stf": stf },
+        dataType: "json"
+    })
+        .done(data => {
+            console.log(`Start_LoadToDolist_Data`)
+
+
+            let docFrag = $(document.createDocumentFragment());
+            let docFrag_sec = $(document.createDocumentFragment());
+            $.each(data, function (i, i_val) {
+                let eleT = "";
+                let eleT_sec = "";//tr=> .tr-border;    td=> tds
+                if (i <= 4) {
+                    eleT = $(`<tr class="tr-border"></tr>`).append(`<td class="col-1 tds">${i_val.交辦事項id}</td>
+                                            <td class="col-1 tds">${i_val.表單類型}</td>
+                                            <td class="col-3 tdl">${i_val.表單內容}</td>
+                                            <td class="col-1 tds">${i_val.表單狀態}</td>
+                                            <td class="col-1 tds"><a href = "${TDL_DTpath}/?listNum=${i_val.交辦事項id}&listType=${i_val.表單類型}"><button class= "btn btn-primary mb-3 btnTDL_DT">詳細資料
+                                            </button></a></td>`
+                    );
+                    docFrag.append(eleT);
+                }
+                else {
+                    eleT_sec = $(`<tr class="tr-border"></tr>`).append(`<td class="col-1 tds">${i_val.交辦事項id}</td>
+                                            <td class="col-1 tds">${i_val.表單類型}</td>
+                                            <td class="col-3 tdl">${i_val.表單內容}</td>
+                                            <td class="col-1 tds">${i_val.表單狀態}</td>
+                                            <td class="col-1 tds"><a href = "${TDL_DTpath}/?listNum=${i_val.交辦事項id}&listType=${i_val.表單類型}"><button class= "btn btn-primary mb-3 btnTDL_DT">詳細資料
+                                            </button></a></td>`
+                    );
+                    docFrag_sec.append(eleT_sec);
+                }
+            });
+            $("#ToDolist_tbody").prepend(docFrag);
+            $("#ToDolist_tbody_sec").append(docFrag_sec);
+        });
+</script>

@@ -1,0 +1,359 @@
+﻿
+
+@media screen and (min-width: 768px) {
+    .py-5 .card {
+        border: none;
+    }
+
+    ..card-body {
+        font-family: 'Microsoft YaHei';
+    }
+
+    .col-md-6 {
+        /*width: 75%;*/
+        margin: 20px 0px;
+    }
+    /*分頁*/
+    .PagedList-skipToNext {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #0d6efd;
+        text-decoration: none;
+        background-color: #fff;
+/*        border: 1px solid #dee2e6;
+*/        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .PagedList-skipToPrevious {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #0d6efd;
+        text-decoration: none;
+        background-color: #fff;
+/*        border: 1px solid #dee2e6;
+*/        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .pagination li {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #BDAC9F;
+        text-decoration: none;
+        background-color: #fff;
+/*        border: 1px solid #dee2e6;
+*/        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+        .pagination .active {
+            text-decoration: underline;
+        }
+        /*商品*/
+        .g-item {
+            font-size: 16px;
+            line-height: 20px;
+            height: 58px;
+            display: -webkit-box;
+        }
+
+    .price-box {
+        display: flex;
+        height: 30px;
+        margin-top: 0;
+    }
+
+    /*關鍵字*/
+    .keywords-btn-pc {
+        line-height: 22px;
+        text-align: right;
+        margin-bottom: 6px;
+        cursor: pointer;
+    }
+
+
+    .sidebar-words-pc {
+        position: absolute;
+        width: 300px;
+        background-color: #fff;
+        border-left: none;
+        z-index: 1;
+        padding: 0 10px 0 30px;
+        /*    top: 0;*/
+        right: -350px;
+        display: none;
+    }
+
+        .sidebar-words-pc .words-statis {
+            display: flex;
+            justify-content: space-between;
+            line-height: 22px;
+            margin: 0 0 10px 0;
+        }
+
+            .sidebar-words-pc .words-statis .num {
+                font-size: 13px;
+                font-weight: bold;
+            }
+
+            .sidebar-words-pc .words-statis .clear-words {
+                margin-right: 10px;
+                color: #d5baa5;
+            }
+
+        .sidebar-words-pc .words-content {
+            line-height: 26px;
+        }
+
+        .sidebar-words-pc .w-item {
+            margin-bottom: 5px;
+        }
+
+            .sidebar-words-pc .w-item .w-title {
+                color: #262626;
+                font-weight: bold;
+                padding-left: 5px;
+            }
+
+            .sidebar-words-pc .w-item ul li {
+                display: flex;
+                align-items: center;
+            }
+
+                .sidebar-words-pc .w-item ul li.dpnone {
+                    display: none;
+                }
+
+                .sidebar-words-pc .w-item ul li a {
+                    min-width: 200px;
+                    padding-left: 5px;
+                }
+
+                .sidebar-words-pc .w-item ul li img {
+                    display: none;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                .sidebar-words-pc .w-item ul li.checked img {
+                    display: block;
+                }
+
+            .sidebar-words-pc .w-item a {
+                color: #636363;
+            }
+
+            .sidebar-words-pc .w-item .watch-more {
+                line-height: 26px;
+            }
+
+    .show-s {
+        display: block;
+    }
+
+    .sclass {
+        font-size: 17px;
+        color: #d5baa5;
+        font-weight: 500;
+    }
+
+    .tree-menu1 li {
+        padding-left: 20px;
+        margin: 10px 0;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .py-5 .card {
+        border: none;
+    }
+
+    .card-body {
+        font-family: 'Microsoft YaHei';
+    }
+
+    .col-md-6 {
+        /*width: 75%;*/
+        margin: 20px 0px;
+    }
+    /*分頁*/
+    .PagedList-skipToNext {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #0d6efd;
+        text-decoration: none;
+        background-color: #fff;
+        /*        border: 1px solid #dee2e6;
+*/ transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .PagedList-skipToPrevious {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #0d6efd;
+        text-decoration: none;
+        background-color: #fff;
+        /*        border: 1px solid #dee2e6;
+*/ transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .pagination li {
+        padding: 0.375rem 0.75rem;
+        position: relative;
+        display: block;
+        color: #BDAC9F;
+        text-decoration: none;
+        background-color: #fff;
+        /*        border: 1px solid #dee2e6;
+*/ transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        border-top-right-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    .pagination .active {
+        text-decoration: underline;
+    }
+
+    /*商品*/
+    .g-item {
+        font-size: 14px;
+        line-height: 20px;
+        height: 50px;
+        display: -webkit-box;
+    }
+
+    .price-box {
+        display: flex;
+        height: 30px;
+        margin-top: 0;
+    }
+
+    /*關鍵字*/
+    .keywords-btn-pc {
+        line-height: 22px;
+        text-align: right;
+        margin-bottom: 6px;
+        cursor: pointer;
+    }
+
+
+    .sidebar-words-pc {
+        position: absolute;
+        width: 300px;
+        background-color: #fff;
+        border-left: none;
+        z-index: 1;
+        padding: 0 10px 0 30px;
+        /*    top: 0;*/
+        right: -350px;
+        display: none;
+    }
+
+        .sidebar-words-pc .words-statis {
+            display: flex;
+            justify-content: space-between;
+            line-height: 22px;
+            margin: 0 0 10px 0;
+        }
+
+            .sidebar-words-pc .words-statis .num {
+                font-size: 13px;
+                font-weight: bold;
+            }
+
+            .sidebar-words-pc .words-statis .clear-words {
+                margin-right: 10px;
+                color: #d5baa5;
+            }
+
+        .sidebar-words-pc .words-content {
+            line-height: 26px;
+        }
+
+        .sidebar-words-pc .w-item {
+            margin-bottom: 5px;
+        }
+
+            .sidebar-words-pc .w-item .w-title {
+                color: #262626;
+                font-weight: bold;
+                padding-left: 5px;
+            }
+
+            .sidebar-words-pc .w-item ul li {
+                display: flex;
+                align-items: center;
+            }
+
+                .sidebar-words-pc .w-item ul li.dpnone {
+                    display: none;
+                }
+
+                .sidebar-words-pc .w-item ul li a {
+                    min-width: 200px;
+                    padding-left: 5px;
+                }
+
+                .sidebar-words-pc .w-item ul li img {
+                    display: none;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                .sidebar-words-pc .w-item ul li.checked img {
+                    display: block;
+                }
+
+            .sidebar-words-pc .w-item a {
+                color: #636363;
+            }
+
+            .sidebar-words-pc .w-item .watch-more {
+                line-height: 26px;
+            }
+
+    .show-s {
+        display: block;
+    }
+
+    .sclass {
+        display: none;
+    }
+
+
+    .tree-menu1 {
+        display:none;
+    }
+
+    .promin{
+        width:190px;
+    }
+
+    .row{
+        justify-content:center;
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    .promin {
+        width: 180px;
+    }
+}
+
+a:hover {
+    color: #BDAC9F;
+}

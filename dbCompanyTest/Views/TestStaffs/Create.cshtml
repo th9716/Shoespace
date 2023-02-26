@@ -1,0 +1,423 @@
+﻿@model dbCompanyTest.ViewModels.CTestStaffViewModels
+@{
+    ViewData["Title"] = "Create";
+}
+@*/TestStaffs/Create*@
+@{
+    Layout = "_Back_Layout_Sneat_HR";
+}
+<div style="width:80%;margin:20px auto;">
+    <div></div>
+    <h1>建立新資料</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    @* <label asp-for="員工編號" class="control-label"></label>*@
+                    <input type="hidden" asp-for="員工編號" class="form-control" value="1" />
+                    <span asp-validation-for="員工編號" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="員工姓名" class="control-label"></label>
+                    <input asp-for="員工姓名" class="form-control" id="i_stfName" />
+                    <span asp-validation-for="員工姓名" class="text-danger" id="span_stfName"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="員工電話" class="control-label"></label>
+                    <input asp-for="員工電話" class="form-control" id="i_stfPhone" />
+                    <span asp-validation-for="員工電話" class="text-danger" id="span_stfPhone"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="身分證字號" class="control-label"></label>
+                    <input asp-for="身分證字號" class="form-control" id="i_stfPasonalID" />
+                    <span asp-validation-for="身分證字號" class="text-danger" id="span_stfPasonalID"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="縣市" class="control-label"></label>
+                    <select asp-for="縣市" class="form-control" id="city"></select>
+                    <span asp-validation-for="縣市" class="text-danger" id="span_city"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="區" class="control-label"></label>
+                    <select asp-for="區" class="form-control" id="town"></select>
+                    <span asp-validation-for="區" class="text-danger" id="span_town"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="地址" class="control-label"></label>
+                    <input asp-for="地址" class="form-control" id="i_stfAddress" />
+                    <span asp-validation-for="地址" class="text-danger" id="span_stfAddress"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" id="i_stfEmail" />
+                    <span asp-validation-for="Email" class="text-danger" id="span_stfEmail"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="緊急聯絡人" class="control-label"></label>
+                    <input asp-for="緊急聯絡人" class="form-control" id="i_stfFamily" />
+                    <span asp-validation-for="緊急聯絡人" class="text-danger" id="span_stfFamily"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="聯絡人關係" class="control-label"></label>
+                    <input asp-for="聯絡人關係" class="form-control" id="i_stfFamilyRe" />
+                    <span asp-validation-for="聯絡人關係" class="text-danger" id="span_stfFamilyRe"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="聯絡人電話" class="control-label"></label>
+                    <input asp-for="聯絡人電話" class="form-control" id="i_stfFamilyNum" />
+                    <span asp-validation-for="聯絡人電話" class="text-danger" id="span_FamilyNum"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="部門" class="control-label"></label>
+                    <select asp-for="部門" class="form-control" id="sele_stfDep">
+                        <option>人事</option>
+                        <option>行政</option>
+                        <option>執行長室</option>
+                    </select>
+                    <span asp-validation-for="部門" class="text-danger" id="span_stfDep"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="主管" class="control-label"></label>
+                    <input asp-for="主管" class="form-control" id="i_stfspv" />
+                    <span asp-validation-for="主管" class="text-danger" id="span_stfspv"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="職稱" class="control-label"></label>
+                    <select asp-for="職稱" class="form-control" id="sele_stfPosition">
+                        <option>專員</option>
+                        <option>經理</option>
+                    </select>
+                    <span asp-validation-for="職稱" class="text-danger" id="span_stfPosition"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="密碼" class="control-label"></label>
+                    <input asp-for="密碼" class="form-control" id="i_password" />
+                    <span asp-validation-for="密碼" class="text-danger" id="span_password"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="薪資" class="control-label"></label>
+                    <input asp-for="薪資" class="form-control" id="i_sell" />
+                    <span asp-validation-for="薪資" class="text-danger" id="span_sell"></span>
+                </div>
+                @*<div class="form-group">
+                <label asp-for="權限" class="control-label"></label>
+                <input asp-for="權限" class="form-control" />
+                <span asp-validation-for="權限" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <label asp-for="在職" class="control-label"></label>
+                    @*<input asp-for="在職" class="form-control" />*@
+                    <select asp-for="在職" class="form-control" id="still"><option>在職</option><option>離職</option></select>
+                    <span asp-validation-for="在職" class="text-danger" id="span_still"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">印章</label>
+                    <input asp-for="File" class="form-control" type="file" />
+                    <span asp-validation-for="File" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="新增" class="btn btn-primary" disabled="disabled" id="submit" />
+                    <a asp-action="Index" class="btn btn-primary">返回</a>
+                </div>
+            </form>
+            <button id="demo"></button>
+        </div>
+    </div>
+
+    <div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/datas/taiwan_districts.js"></script>
+<script src="~/js/city_data.js"></script>
+@section Scripts {
+    <script>
+        var name = false; var phone = false; var ID = false; var email = false; var city = false; var town = false; var Address = false;
+        var Dep = false; var spv = false; var Position = false; var password = false; var sell = false; var still = false;
+        console.log(name, phone, ID, email, city, town, Address, Dep, spv, Position, password, sell, still)
+        $("#demo").on("click", function () {
+            $("#i_stfName").val(`莊智淵`);
+            $("#span_stfName").text(``);
+            $("#i_stfPhone").val(`0936521458`);
+            $("#span_stfPhone").text(``);
+            $("#i_stfPasonalID").val(`A126585435`);
+            $("#span_stfPasonalID").text(``);
+            $("#i_stfAddress").val(`信義路1號`);
+            $("#span_stfAddress").text(``);
+            $("#i_stfEmail").val(`y.joseph0217@gmail.com`);
+            $("#span_stfEmail").text(``);
+            $("#i_password").val(`Msit-145`);
+            $("#span_password").text(``);
+            $("#i_sell").val(`50000`);
+            $("#span_sell").text(``);
+            name = true; phone = true; ID = true; email = true; Address = true; password = true; sell = true;
+
+        });
+
+
+
+
+        $("#sele_stfDep,#sele_stfPosition,#still").val(``);
+        $("#i_stfPhone").on("blur", function () {
+            let phonestandard = /^[0]{1}[9]{1}[0-9]{8}$/;
+            let checkval = $(this).val();
+            if (checkval) {
+                $("#span_stfPhone").text(``);
+                if (phonestandard.test(checkval)) {
+                    phone = true;
+                }
+                else {
+                    phone = false;
+                    $("#span_stfPhone").text(`不符合電話格式`);
+                }
+            }
+            else {
+                $("#span_stfPhone").text(`空值`);
+                phone = false;
+            }
+            allowsubmit();
+        });
+
+        $("#sele_stfDep").on("change", function () {
+            var Dep = $("#sele_stfDep").val();
+            $.ajax({
+                url: `@Url.Content("~/TestStaffs/spv")`,
+                type: "GET",
+                data: { "dep": Dep },
+                dataType: "json"
+            })
+                .done(data => {
+                    $("#i_stfspv").val(data);
+                    spv = true;
+                });
+        });
+
+        $("#i_stfPasonalID").on("blur", function () {
+            let IDstandard = /^[A-Z]{1}[1-2]{1}[0-9]{8}$/;
+            let checkval = $(this).val();
+            if (checkval) {
+                $("#span_stfPasonalID").text(``);
+                if (IDstandard.test(checkval)) {
+                    ID = true;
+                }
+                else {
+                    ID = false;
+                    $("#span_stfPasonalID").text(`不符合身分證格式`);
+                }
+            }
+            else {
+                $("#span_stfPasonalID").text(`空值`);
+                ID = false;
+            }
+            allowsubmit();
+        });
+
+        $("#i_stfEmail").on("blur", function () {
+            let Emailstandard = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+            let checkval = $(this).val();
+            if (checkval) {
+                $("#span_stfEmail").text(``);
+                if (Emailstandard.test(checkval)) {
+                    email = true;
+                }
+                else {
+                    email = false;
+                    $("#span_stfEmail").text(`不符合信箱格式`);
+                }
+            }
+            else {
+                $("#span_stfEmail").text(`空值`);
+                email = false;
+            }
+            allowsubmit();
+        });
+
+        function check(who, span_who, Rule) {
+            who.on("blur", function () {
+                let checkval = $(this).val();
+                if (checkval) {
+                    span_who.text(``);
+                    Rule = true;
+                }
+                else {
+                    Rule = false;
+                    span_who.text(`空值`);
+                }
+                allowsubmit();
+            });
+        }
+        function allowsubmit() {
+            console.log(name, phone, ID, email, city, town, Address, Dep, spv, Position, password, sell, still)
+            if (name && phone && ID && email && city && town && Address && Dep && spv && Position && password && sell && still) {
+                $("#submit").attr('disabled', false);
+            }
+        }
+
+        $("#i_stfName").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_stfName").text(``);
+                name = true;
+            }
+            else {
+                name = false;
+                $("#span_stfName").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#city").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_city").text(``);
+                city = true;
+            }
+            else {
+                city = false;
+                $("#span_city").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#town").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_town").text(``);
+                town = true;
+            }
+            else {
+                town = false;
+                $("#span_town").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#i_stfAddress").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_stfAddress").text(``);
+                Address = true;
+            }
+            else {
+                Address = false;
+                $("#span_stfAddress").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#sele_stfDep").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_stfDep").text(``);
+                Dep = true;
+            }
+            else {
+                Dep = false;
+                $("#span_stfDep").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#i_stfspv").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_stfspv").text(``);
+                spv = true;
+            }
+            else {
+                spv = false;
+                $("#span_stfspv").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#sele_stfPosition").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_stfPosition").text(``);
+                Position = true;
+            }
+            else {
+                Position = false;
+                $("#span_stfPosition").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#i_password").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_password").text(``);
+                password = true;
+            }
+            else {
+                password = false;
+                $("#span_password").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#i_sell").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_sell").text(``);
+                sell = true;
+            }
+            else {
+                sell = false;
+                $("#span_sell").text(`空值`);
+            }
+            allowsubmit();
+        });
+        $("#still").on("blur", function () {
+            if ($(this).val()) {
+                $("#span_still").text(``);
+                still = true;
+            }
+            else {
+                still = false;
+                $("#span_still").text(`空值`);
+            }
+            allowsubmit();
+        });
+
+                                        //check($("#city"), $("#span_city"), city);
+                                        //check($("#town"), $("#span_town"), town);
+                                        //check($("#i_stfAddress"), $("#span_stfAddress"), Address);
+                                        //check($("#sele_stfDep"), $("#span_stfDep"), Dep);
+                                        //check($("#i_stfspv"), $("#span_stfspv"), spv);
+                                        //check($("#sele_stfPosition"), $("#span_stfPosition"), Position);
+                                        //check($("#i_password"), $("#span_password"), password);
+                                        //check($("#i_sell"), $("#span_sell"), sell);
+                                        //check($("#still"), $("#span_still"), still);
+                                        //var name, phone, ID, email, city, town, Address, Dep, spv, Position, password, sell, still;
+    </script>
+
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* ^\w+：@ 之前必須以一個以上的文字&數字開頭，例如 abc
+ ((-\w+)：@ 之前可以出現 1 個以上的文字、數字或「-」的組合，例如 -abc-
+ (\.\w+))：@ 之前可以出現 1 個以上的文字、數字或「.」的組合，例如 .abc.
+ ((-\w+)|(\.\w+))*：以上兩個規則以 or 的關係出現，並且出現 0 次以上 (所以不能 –. 同時出現)
+ @：中間一定要出現一個 @
+ [A-Za-z0-9]+：@ 之後出現 1 個以上的大小寫英文及數字的組合
+ (\.|-)：@ 之後只能出現「.」或是「-」，但這兩個字元不能連續時出現
+ ((\.|-)[A-Za-z0-9]+)*：@ 之後出現 0 個以上的「.」或是「-」配上大小寫英文及數字的組合
+ \.[A-Za-z]+$/：@ 之後出現 1 個以上的「.」配上大小寫英文及數字的組合，結尾需為大小寫英文*@

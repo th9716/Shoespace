@@ -1,0 +1,273 @@
+﻿@{
+    ViewData["Title"] = "Service";
+    Layout = "~/Views/Shared/_Back_Layout_Sneat.cshtml";
+}
+<link href="~/css/service.css" rel="stylesheet" />
+<div id="serviceName">
+    <h1 style="margin:5px 5%;">客戶服務中心</h1>
+    <div id="Main">
+        <div class="row">
+            <div class="list-group col-2" id="userList">
+            </div>
+
+            <div class="col-6" id="callback">
+                <input type="hidden" id="connectionUserID" />
+                <h3 id="userName" style="text-align:center;">客戶名稱</h3>
+                <div id="msgArea">
+                </div>
+                <div id="inputArea">
+                    <input type="text" id="msg" />
+                    <img src="~/images/send.png" id="serverSend" style="cursor:pointer"/>
+                </div>
+            </div>
+            <div class="col-4" id="video"></div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/webcam/webcam.js"></script>
+    <script src="~/js/aibot.js"></script>
+    <script>
+        //Webcam.set({
+        //    width:320,
+        //    Height:240,
+        //    image_format:'jpeg',
+        //    image_quality:90
+        //});
+        //Webcam.attach(`#video`);
+        //console.log(Botdata.key[0].你好);
+        //var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+        //connection.start().then(async function () {
+        //    //connection.invoke(`getName`, "客服人員");
+        //    const data = await fetch("@Url.Content("~/Staff_Home/StaffNum")");
+        //    const StaffNum = await data.text();
+        //    if (StaffNum == "fales")
+        //        alert("連線逾時請重新登入");
+        //    else
+        //        connection.invoke("getName", StaffNum).catch(function (err) {
+        //            alert('傳送錯誤: ' + err.toString());
+        //        });
+        //    //console.log("連線成功");
+        //});
+        //$(window).ready(function(){
+        $(window).ready(function(){
+            if ($(window).width() < 1000) {
+                $(`#callback`).addClass(`col-9`).removeClass(`col-6`);
+                $(`#video`).removeClass(`col-4`);
+                $(`#userList`).addClass(`col-3`).removeClass(`col-2`);
+                $(`#Main`).css("width","95%");
+                $(`#Main`).css("margin","5px 1%");
+            }
+        });
+
+        $(window).on("resize", function (e) {
+            if ($(window).width() < 1000) {
+                $(`#callback`).addClass(`col-9`).removeClass(`col-6`);
+                $(`#video`).removeClass(`col-4`);
+                $(`#userList`).addClass(`col-3`).removeClass(`col-2`);
+                $(`#Main`).css("width", "95%");
+                $(`#Main`).css("margin", "5px 1%");
+            }
+            else {
+                $(`#callback`).addClass(`col-6`).removeClass(`col-9`);
+                $(`#video`).addClass(`col-4`);
+                $(`#userList`).addClass(`col-2`).removeClass(`col-3`);
+                $(`#Main`).css("width","80%");
+                $(`#Main`).css("margin", "5px 15%");
+            }
+        });
+        
+        connection.on(`userList`, function (data) {
+            const userList = JSON.parse(data);
+            const htmluserList = userList.map((value) => {
+                let color = "red";
+                if (value.newWords == 0) {
+                    color = "gray"
+                }
+                //
+                if (value.LineID){
+                    return (`<div class="list-group-item list-group-item-action" id="${value.LineID}" style="cursor:pointer">
+                                                                    <div class="d-flex w-100 justify-content-between">
+                                                                        <h5 class="mb-1">${value.userName} <span style="color:white;background-color:green;border-radius:5px;font-size:16px">Line</span></h5>
+                                                                        <div style="width:10px;height:10px;border-radius:50px;background-color:${color}"></div>
+                                                                    </div>
+                                                                </div>`);
+                }else{
+                    return (`<div class="list-group-item list-group-item-action" id="${value.connectionId}" style="cursor:pointer">
+                                                                    <div class="d-flex w-100 justify-content-between">
+                                                                        <h5 class="mb-1">${value.userName}</h5>
+                                                                        <div style="width:10px;height:10px;border-radius:50px;background-color:${color}"></div>
+                                                                    </div>
+                                                                </div>`);
+                    }
+            });
+            $(`.list-group`).html(htmluserList.join(""));
+
+            let customerID = "";
+            let userdiv = document.getElementsByClassName(`list-group-item`);
+            for (let Item of userdiv) {
+                Item.addEventListener(`dblclick`, function () {
+                    customerID = $(this).attr("id");
+                    $(`#connectionUserID`).val(customerID);
+                    $(`#userName`).text($(this).find(`h5`).text());
+                    $(this).find(`h5`).next().css("background-color", "gray");
+                    connection.invoke("bindWaiterUser", customerID);
+                });
+            }
+            resetScrollSite();
+        });
+        //    let userId = "";
+        //    let userdiv = document.getElementsByClassName(`list-group-item`);
+        //    for (let Item of userdiv) {
+        //        Item.addEventListener(`dblclick`, function () {
+        //            // customerID = $(this).attr("id");
+        //            userId = $(this).data("id");
+        //            $(`#connectionUserID`).val(userId);
+        //            $(`#userName`).text($(this).find(`h5`).text());
+        //            $(this).find(`h5`).next().css("background-color", "gray");
+        //            connection.invoke("bindWaiterUser", userId);
+        //        });
+        //    }
+        //    resetScrollSite();
+        //});
+
+
+
+
+
+
+
+
+
+        connection.on(`newClientMsg`, function (data) {
+            let clientName = $(`#userName`).text();
+            let clientwords = JSON.parse(data);
+            let htmlvliemtwords = clientwords.map((value) => {
+                if (value.substr(0, 1) == "S") {
+                    return (`<div class="chat">
+                                                                       <div class="myName">我</div>
+                                                                    <div class="myChat">
+                                                                         ${value.substr(1, value.length - 1)}
+                                                                  </div>
+                                                             </div>`);
+                }
+                else {
+                    return (`<div class="chat">
+                                                        <div class="otherName">${clientName}</div>
+                                                <div class="otherChat">
+                                                    ${value}
+                                                </div>
+                                            </div>`);
+                }
+            });
+            $(`#msgArea`).html(htmlvliemtwords.join(""));
+        });
+
+        $(`#serverSend`).on('click', function () {
+            let msg = $(`#msg`).val();
+            let clientID = $(`#connectionUserID`).val();
+
+            if (clientID){
+            connection.invoke("SendMessage", clientID, msg);
+            $(`#msg`).val("");
+            }
+            else{
+                $(`#userList`).prepend(`<div class="alert alert-danger d-flex align-items-center" role="alert" style="transition:all 0.3s" id="fail">
+                                                                          <div>
+                                                                                    請選擇要服務的客戶
+                                                                          </div>
+                                                                                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                                                </div>`);
+                setTimeout(function(){
+                    $(`#fail`).remove();
+                },3000);
+            }
+        });
+
+        connection.on('rechoose',function(data){
+            $(`#userList`).prepend(`<div class="alert alert-danger d-flex align-items-center" role="alert" style="transition:all 0.3s" id="fail">
+                                                                                  <div>
+                                                                                                    ${data}
+                                                                                  </div>
+                                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                                                        </div>`);
+            setTimeout(function () {
+                $(`#fail`).remove();
+            }, 3000);
+            $(`#connectionUserID`).val("");
+            $(`#userName`).text(`請重新選擇客戶`);
+        });
+
+        $(`#msg`).on(`keyup`,function(evn){
+            if (evn.keyCode === 13 && $(`#msg`).val()) {
+                let msg = $(`#msg`).val();
+                let clientID = $(`#connectionUserID`).val();
+
+                if (clientID) {
+                    connection.invoke("SendMessage", clientID, msg);
+                    $(`#msg`).val("");
+                }
+                else {
+                    $(`#userList`).prepend(`<div class="alert alert-danger d-flex align-items-center" role="alert" style="transition:all 0.3s" id="fail">
+                                                                                  <div>
+                                                                                            請選擇要服務的客戶
+                                                                                  </div>
+                                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                                                        </div>`);
+                    setTimeout(function () {
+                        $(`#fail`).remove();
+                    }, 3000);
+                }
+            }
+        })
+
+        connection.on("UpdContent", function (msg) {
+            $(`#msgArea`).append(`<div class="chat">
+                                                               <div class="myName">我</div>
+                                                            <div class="myChat">
+                                                                 ${msg}
+                                                          </div>
+                                                     </div>`);
+            $(`#message`).val("");
+
+            resetScrollSite();
+        });
+
+        connection.on("UpdSystem", function (user, msg) {
+            $(`#msgArea`).append(`<div class="chat">
+                                        <div class="otherName">${user}</div>
+                                        <div class="otherChat">
+                                                    ${msg}
+                                        </div>
+                                    </div>`);
+            resetScrollSite();
+            if(msg.substr(msg.length-4)=="已離線"){
+                $(`#connectionUserID`).val("");
+            }
+        });
+
+        connection.on("test",function(data){
+            console.log(data);
+        });
+
+        function resetScrollSite(){
+            let chatList = $("#msgArea").find(".chat");
+            let TotalH = 0;
+            for(var xh of chatList)
+            {
+                TotalH += xh.scrollHeight;
+            }
+            $('#msgArea').animate({
+                scrollTop: $("#msgArea").offset().top + TotalH
+            }, 500);
+        }
+
+        //})
+    </script>
+}
+

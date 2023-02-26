@@ -1,0 +1,109 @@
+﻿@model dbCompanyTest.Models.TestStaff
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@{
+    Layout = "_Back_Layout_Sneat_HR";
+}
+
+<div style="width:80%;margin:20px auto; padding:10px;">
+    <h1>刪除員工資料</h1>
+
+    <h3>確定是否刪除本筆資料?</h3>
+    <div class="en_div">
+       
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.員工姓名)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.員工姓名)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.員工電話)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.員工電話)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.身分證字號)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.身分證字號)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.縣市)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.縣市)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.區)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.區)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.地址)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.地址)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.緊急聯絡人)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.緊急聯絡人)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.聯絡人關係)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.聯絡人關係)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.聯絡人電話)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.聯絡人電話)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.部門)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.部門)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.主管)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.主管)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.職稱)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.職稱)
+            </dd>           
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.在職)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.在職)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="員工編號" />
+            <input type="submit" value="刪除" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-primary">返回</a>
+        </form>
+    </div>
+</div>

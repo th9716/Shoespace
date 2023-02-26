@@ -1,0 +1,66 @@
+﻿@model dbCompanyTest.Models.會員商品暫存
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>會員商品暫存</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.商品編號)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.商品編號)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.商品名稱)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.商品名稱)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.尺寸種類)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.尺寸種類)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.商品顏色種類)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.商品顏色種類)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.訂單數量)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.訂單數量)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.商品價格)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.商品價格)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.購物車或我的最愛)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.購物車或我的最愛)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶編號Navigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶編號Navigation.客戶編號)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

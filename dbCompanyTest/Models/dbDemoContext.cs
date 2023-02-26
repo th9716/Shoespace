@@ -1,0 +1,128 @@
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace dbCompanyTest.Models
+{
+    public partial class dbDemoContext : DbContext
+    {
+        public dbDemoContext()
+        {
+        }
+
+        public dbDemoContext(DbContextOptions<dbDemoContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<TPatient> TPatients { get; set; } = null!;
+        public virtual DbSet<TProduct> TProducts { get; set; } = null!;
+        public virtual DbSet<TTransaction> TTransactions { get; set; } = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=dbDemo;Integrated Security=True;TrustServerCertificate=true;");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TPatient>(entity =>
+            {
+                entity.HasKey(e => e.Fid);
+
+                entity.ToTable("tPatient");
+
+                entity.Property(e => e.Fid).HasColumnName("fid");
+
+                entity.Property(e => e.FAddress)
+                    .HasMaxLength(50)
+                    .HasColumnName("fAddress");
+
+                entity.Property(e => e.FEmail)
+                    .HasMaxLength(50)
+                    .HasColumnName("fEmail");
+
+                entity.Property(e => e.FName)
+                    .HasMaxLength(50)
+                    .HasColumnName("fName");
+
+                entity.Property(e => e.FPassword)
+                    .HasMaxLength(50)
+                    .HasColumnName("fPassword");
+
+                entity.Property(e => e.FPhone)
+                    .HasMaxLength(50)
+                    .HasColumnName("fPhone");
+
+                entity.Property(e => e.F健保卡號)
+                    .HasMaxLength(50)
+                    .HasColumnName("f健保卡號");
+
+                entity.Property(e => e.F身分證號)
+                    .HasMaxLength(50)
+                    .HasColumnName("f身分證號");
+            });
+
+            modelBuilder.Entity<TProduct>(entity =>
+            {
+                entity.HasKey(e => e.Fid);
+
+                entity.ToTable("tProduct");
+
+                entity.Property(e => e.Fid).HasColumnName("fid");
+
+                entity.Property(e => e.FCost)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("fCost");
+
+                entity.Property(e => e.FName)
+                    .HasMaxLength(50)
+                    .HasColumnName("fName");
+
+                entity.Property(e => e.FPhotoPath).HasColumnName("fPhotoPath");
+
+                entity.Property(e => e.FPhotoPath1)
+                    .HasMaxLength(50)
+                    .HasColumnName("fPhotoPath1");
+
+                entity.Property(e => e.FPrice)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("fPrice");
+
+                entity.Property(e => e.FQty).HasColumnName("fQty");
+            });
+
+            modelBuilder.Entity<TTransaction>(entity =>
+            {
+                entity.HasKey(e => e.Fid);
+
+                entity.ToTable("tTransaction");
+
+                entity.Property(e => e.Fid).HasColumnName("fid");
+
+                entity.Property(e => e.FCount).HasColumnName("fCount");
+
+                entity.Property(e => e.FCustomerId).HasColumnName("fCustomerId");
+
+                entity.Property(e => e.FDate)
+                    .HasMaxLength(50)
+                    .HasColumnName("fDate");
+
+                entity.Property(e => e.FPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("fPrice");
+
+                entity.Property(e => e.FProductId).HasColumnName("fProductId");
+            });
+
+            OnModelCreatingPartial(modelBuilder);
+        }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
+}

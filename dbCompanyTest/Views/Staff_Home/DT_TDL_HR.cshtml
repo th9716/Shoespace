@@ -1,0 +1,432 @@
+﻿@model dbCompanyTest.ViewModels.CToDoListViewModels
+
+@{
+    ViewData["Title"] = "DT_TDL";
+}
+@{
+    if (ViewBag.dep == "行政" || ViewBag.dep == "執行長室")
+        Layout = "_Back_Layout_Sneat";
+    else if (ViewBag.dep == "人事")
+        Layout = "_Back_Layout_Sneat_HR";
+}
+<input type="hidden" id="StaffNumpath" value="@Url.Content("~/Staff_Home/StaffNum")" />
+<div style="width:80%;margin:20px auto;">
+    <h4 id="stf_info" style="display:none">@ViewBag.acc</h4>
+    <div>
+        <p>
+            <span>起單人 :</span><span id="span_whostart">@Model.起單人</span>
+        </p>
+        <p>
+            <span>表單類型 :</span><span id="span_list_type">@Model.表單類型</span>
+        </p>
+        <p>
+            <span>表單狀態 :</span><span id="span_stu">@Model.表單狀態</span>
+        </p>
+        <p>
+            <span>表單內容 :</span><span id="span_cont">@Model.表單內容</span>
+        </p>
+        <div id="schedule"></div>
+
+    </div>
+    <input type="hidden" id="StaffNumpath" value="@Url.Content("~/Staff_Home/StaffNum")" />
+    @{
+        if (Model.附件path != null)
+        {
+            <a href="~/File/@Model.附件path" class="btn btn-primary" target="_blank">查看附件</a>
+        }
+        else
+        {
+            <input type="hidden" value="@Model.附件path" />
+        }
+    }
+    @{
+        if (Model.附件 != null)
+        {
+            <a href="~/File/@Model.附件" class="btn btn-primary" target="_blank">查看紙本</a>
+        }
+        else
+        {
+            <input type="hidden" value="@Model.附件" />
+        }
+    }
+    <form asp-action="DT_TDL" enctype="multipart/form-data">
+        <div class="form-group" id="div_Attached">
+            <label class="control-label" id="lab_File">附件</label>
+            <input class="form-control" id="File" type="file" name="File" />
+        </div>
+        <div class="en_div">
+            <input asp-for="交辦事項id" type="hidden" id="listnumber" value="@Model.交辦事項id" />
+            <input asp-for="表單類型" type="hidden" id="list_type" value="@Model.表單類型" />
+            <input asp-for="表單狀態" type="hidden" value="@Model.表單狀態" id="inp_stu" />
+            <input asp-for="附件" type="hidden" value="@Model.附件" />
+            <input asp-for="附件path" type="hidden" value="@Model.附件path" />
+            <input asp-for="員工編號" type="hidden" value="@Model.員工編號" />
+            <table class="table table-striped-columns" id="GR_table">
+                <thead>
+                    <tr>
+                        <th>階段</th>
+                        <th>部門</th>
+                        <th>簽核人員</th>
+                        <th>簽核時間</th>
+                        <th>輸入意見</th>
+                        <th>簽核</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*起單*@
+                    <tr>
+                        <td>起單</td>
+                        <td id="dpm_str">@Model.起單部門</td>
+                        <td id="man_str">@Model.起單人</td>
+                        <td id="time_str">@Model.起單時間</td>
+                        <input asp-for="起單時間" class="form-control" value="@Model.起單時間" type="hidden" id="inp_starttime" />
+                        <td id="com_str">
+                            <span id="span_com_str">@Model.表單內容</span>
+                            <input asp-for="表單內容" class="form-control" id="inp_com_str" value="@Model.表單內容" />
+                        </td>
+                        <td id="sin_str">
+                            <span id="span_sin_str"></span>
+                            <select class="form-control" id="list_stu">
+                                <option>未啟動</option>
+                                <option>敬陳</option>
+                            </select>
+                        </td>
+                    </tr>
+                    @*部門主管*@
+                    <tr>
+                        <td>部門主管</td>
+                        <td id="dpm_spv">@Model.起單部門</td>
+                        <td id="man_spv">@Model.部門主管</td>
+                        <td id="time_spv">@Model.部門主管簽核時間</td>
+                        <input asp-for="部門主管簽核時間" class="form-control" value="@Model.部門主管簽核時間" type="hidden" id="inp_super_vs_time" />
+                        <td id="com_spv">
+                            <input asp-for="部門主管簽核意見" class="form-control" id="inp_com_spv" value="@Model.部門主管簽核意見" />
+                            <span id="span_com_spv">@Model.部門主管簽核意見</span>
+                        </td>
+                        <td id="sin_spv">
+                            <span id="span_sin_spv">@Model.部門主管簽核</span>
+                            <input asp-for="部門主管簽核" type="hidden" id="inp_super_vs_sin" />
+                            <select class="form-control" id="list_stu_spv">
+                                <option>待簽</option>
+                                <option>敬陳</option>
+                                <option>退回起單人</option>
+                            </select>
+                        </td>
+                    </tr>
+                    @*協辦部門*@
+                    <tr>
+                        <td>協辦部門</td>
+                        <td id="dpm_cod">@Model.協辦部門</td>
+                        <td id="man_cod">@Model.協辦部門簽核人員</td>
+                        <td id="time_cod">@Model.協辦部門簽核時間</td>
+                        <input asp-for="協辦部門簽核時間" class="form-control" value="@Model.協辦部門簽核時間" type="hidden" id="inp_co_dep_time" />
+                        <td id="com_cod">
+                            <input asp-for="協辦部門簽核意見" class="form-control" id="inp_com_cod" value="@Model.協辦部門簽核意見" />
+                            <span id="span_com_cod">@Model.協辦部門簽核意見</span>
+                        </td>
+                        <td id="sin_cod">
+                            <span id="span_sin_cod">@Model.協辦部門簽核</span>
+                            <input asp-for="協辦部門簽核" type="hidden" id="inp_co_dep_sin" />
+                            <select class="form-control" id="list_stu_cod">
+                                <option>待簽</option>
+                                <option>敬陳</option>
+                                <option>退回上階段</option>
+                                <option>退回起單人</option>
+                            </select>
+                        </td>
+                    </tr>
+                    @*老闆簽核*@
+                    <tr>
+                        <td>老闆</td>
+                        <td id="dpm_bos">@Model.老闆部門</td>
+                        <td id="man_bos">@Model.老闆</td>
+                        <td id="time_bos">@Model.老闆簽核時間</td>
+                        <input asp-for="老闆簽核時間" class="form-control" value="@Model.老闆簽核時間" type="hidden" id="inp_boss_time" />
+                        <td id="com_bos">
+                            <input asp-for="老闆簽核意見" class="form-control" id="inp_com_bos" value="@Model.老闆簽核意見" />
+                            <span id="span_com_bos">@Model.老闆簽核意見</span>
+                        </td>
+                        <td id="sin_bos">
+                            <span id="span_sin_bos">@Model.老闆簽核</span>
+                            <input asp-for="老闆簽核" type="hidden" id="inp_boss_sin" />
+                            <select class="form-control" id="list_stu_bos">
+                                <option>待簽</option>
+                                <option>敬陳</option>
+                                <option>退回上階段</option>
+                                <option>退回起單人</option>
+                            </select>
+                        </td>
+                    </tr>
+                    @*執行*@
+                    <tr>
+                        <td>執行</td>
+                        <td id="dpm_ecu">@Model.執行部門</td>
+                        <td id="man_ecu">@Model.執行人</td>
+                        <td id="time_ecu">@Model.執行時間</td>
+                        <input asp-for="執行時間" class="form-control" value="@Model.執行時間" type="hidden" id="inp_execut_time" />
+                        <td id="com_ecu">
+                            <input asp-for="回覆" class="form-control" id="inp_com_ecu" value="@Model.回覆" />
+                            <span id="span_com_ecu">@Model.回覆</span>
+                        </td>
+                        <td id="sin_ecu">
+                            <select class="form-control" id="list_stu_sin_ecu1">
+                                <option>待簽</option>
+                                <option>退回上階段</option>
+                                <option>完成</option>
+                                <option>退回起單人</option>
+                            </select>
+                            <span id="span_sin_ecu">@Model.執行人簽核</span>
+                            <input asp-for="執行人簽核" type="hidden" id="inp_executor_sin" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="送出" class="btn btn-primary" id="inp_start" />
+            <input type="submit" value="作廢" class="btn btn-primary" id="inp_dis" />
+        </div>
+    </form>
+
+</div>
+@section Scripts{
+    <script>
+        var Staff_Home_StaffNum = $("#StaffNumpath").val();
+        var i_stu = $("#inp_stu").val();
+        var split = $(`#stf_info`).text().split(' ');
+        var splitstf = split[1];
+        var stf = $(`#stf_info`).text().substr(0, split);
+        var split1 = $("#man_str").text().split(' ');
+        var i_whostart = split1[0];
+        var split2 = $("#man_ecu").text().split(' ');
+        var s_executor = split2[0];
+        var split3 = $("#man_spv").text().split(' ');
+        var i_spvs = split3[0];
+        var split4 = $("#man_cod").text().split(' ');
+        var i_co = split4[0];
+        var i_boss = "ST2-0010170";
+        var Send_To_num;
+        var Sta
+
+        $("#list_stu_sin_ecu1, #list_stu_bos, #list_stu_cod, #list_stu, #list_stu_spv").css("display", "none");
+        $("#inp_com_str, #inp_com_spv, #inp_com_cod, #inp_com_bos, #inp_com_ecu, #div_Attached, #inp_dis").css("display", "none");
+        $("#list_stu, #list_stu_spv, #list_stu_cod, #list_stu_bos, #list_stu_sin_ecu1").val(``);
+        $("#span_sin_str").css("display", "");
+
+        if (i_stu == `完成`) {
+            $("#inp_start").css("display", "none")
+        }
+
+
+
+
+        if (i_stu != `未啟動` && i_stu != `退回起單人`) {
+            $("#span_sin_str").text("敬陳")
+        }
+        if (i_stu == `完成`) {
+            $("#span_sin_str").text("敬陳")
+        }
+
+
+        if (i_whostart == splitstf) {//起單
+            if (i_stu == `未啟動` || i_stu == `退回起單人`) {
+                $("#list_stu").css("display", "");
+                $("#inp_com_str").css("display", "");
+                $("#inp_com_str").text($("#inp_cont").val());
+                $("#list_stu").val("未啟動");
+                $("#span_sin_str").css("display", "none");
+                $("#div_Attached_File").css("display", "");
+                $("#div_Attached").css("display", "");
+                $("#inp_dis").css("display", "");
+                $("#inp_dis").on("click", function () { $("#inp_stu").val("作廢"); });
+            }
+            else {
+                $("#span_sin_str").css("display", "");
+                $("#span_sin_str").text("敬陳")
+                $("#inp_start").css("display", "none")
+            }
+        }
+
+
+        if (i_spvs == splitstf) {
+            if (i_stu == `部門主管 待簽`) {
+                $("#span_sin_spv").css("display", "none");
+                $("#span_com_spv").css("display", "none");
+                $("#list_stu_spv").css("display", "");
+                $("#inp_com_spv").css("display", "");
+            }
+            else{
+                $("#inp_start").css("display", "none")
+            }
+        }
+
+        if (i_co == splitstf) {
+            if (i_stu == `協辦部門 待簽`) {
+                $("#span_sin_cod").css("display", "none");
+                $("#list_stu_cod").css("display", "");
+                $("#inp_com_cod").css("display", "");
+            }
+            else {
+                $("#inp_start").css("display", "none")
+            }
+        }
+
+        if (i_boss == splitstf) {
+            if (i_stu == `執行長 待簽`) {
+                $("#span_sin_bos").css("display", "none");
+                $("#list_stu_bos").css("display", "");
+                $("#inp_com_bos").css("display", "");
+            }
+            else {
+                $("#inp_start").css("display", "none")
+            }
+        }
+
+        if (s_executor == splitstf) {
+            if (i_stu == `執行 待簽`) {
+                $("#inp_com_ecu").css("display", "");
+                $("#list_stu_sin_ecu1").css("display", "");
+                $("#span_sin_ecu").css("display", "none");
+            }
+            else {
+                $("#inp_start").css("display", "none")
+            }
+        }
+
+
+
+        $("#list_stu").on("change", function () {
+            if (i_whostart == splitstf) {
+                if ($(`#list_stu option:selected`).val() == "未啟動")
+                    $("#inp_stu").val("未啟動");
+                else {
+                    $("#inp_stu").val("部門主管 待簽");
+                    $("#inp_super_vs_sin").val("待簽");
+                    Send_To_num = i_spvs;//連線收件spv
+                    Sta = `next`
+                }
+            }
+        });
+
+        $("#list_stu_spv").on("change", function () {
+            if (i_spvs == splitstf) {
+                if ($(`#list_stu_spv option:selected`).val() == "待簽")
+                    $("#inp_stu").val("部門主管 待簽");
+                else if ($(`#list_stu_spv option:selected`).val() == "敬陳") {
+                    $("#inp_stu").val("協辦部門 待簽");
+                    $("#inp_co_dep_sin").val("待簽");
+                    Send_To_num = i_co;//連線收件co_dep
+                    Sta = `next`
+                }
+                else if ($(`#list_stu_spv option:selected`).val() == "退回起單人") { //todo other
+                    $("#inp_stu").val("退回起單人");
+                    Send_To_num = i_whostart;//連線收件str
+                    Sta = `back`
+                    console.log(Sta)
+                }
+                $("#inp_super_vs_sin").val($(`#list_stu_spv option:selected`).val());
+            }
+        });
+
+        $("#list_stu_cod").on("change", function () {
+            if (i_co == splitstf) {
+                if ($(`#list_stu_cod option:selected`).val() == "待簽")
+                    $("#inp_stu").val("協辦部門 待簽");
+                else if ($(`#list_stu_cod option:selected`).val() == "敬陳") {
+                    $("#inp_stu").val("執行長 待簽");
+                    $("#inp_boss_sin").val("待簽");
+                    Send_To_num = i_boss;
+                    Sta = `next`
+                }
+                else if ($(`#list_stu_cod option:selected`).val() == "退回上階段") {
+                    $("#inp_stu").val("部門主管 待簽");
+                    $("#inp_super_vs_sin").val("待簽");
+                    Send_To_num = i_spvs;//連線收件spv
+                    Sta = `back`
+                }
+                else if ($(`#list_stu_cod option:selected`).val() == "退回起單人") {
+                    $("#inp_stu").val("退回起單人");
+                    Send_To_num = i_whostart;//連線收件str
+                    Sta = `back`
+                }
+                $("#inp_co_dep_sin").val($(`#list_stu_cod option:selected`).val());
+            }
+        });
+
+        $("#list_stu_bos").on("change", function () {
+            if (i_boss == splitstf) {
+                if ($(`#list_stu_bos option:selected`).val() == "待簽")
+                    $("#inp_stu").val("執行長 待簽");
+                else if ($(`#list_stu_bos option:selected`).val() == "敬陳") {
+                    $("#inp_stu").val("執行 待簽");
+                    $("#inp_executor_sin").val("待簽");
+                    Send_To_num = s_executor;//連線收件exc
+                    Sta = `next`
+                }
+                else if ($(`#list_stu_bos option:selected`).val() == "退回上階段") {
+                    $("#inp_stu").val("協辦部門 待簽");
+                    $("#inp_co_dep_sin").val("待簽");
+                    Send_To_num = i_co;//連線收件co_dep
+                    Sta = `back`
+                }
+                else if ($(`#list_stu_bos option:selected`).val() == "退回起單人") {
+                    $("#inp_stu").val("退回起單人");
+                    Send_To_num = i_whostart;//連線收件str
+                    Sta = `back`
+                }
+                $("#inp_boss_sin").val($(`#list_stu_bos option:selected`).val());
+            }
+        });
+
+        $("#list_stu_sin_ecu1").on("change", function () {
+            if (s_executor == splitstf) {
+                if ($(`#list_stu_sin_ecu1 option:selected`).val() == "待簽")
+                    $("#inp_stu").val("執行 待簽");
+                else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "完成") {
+                    $("#inp_stu").val("完成");
+                    Send_To_num = i_whostart;//連線收件str
+                    Sta = `next`
+                }
+                else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "退回上階段") {
+                    $("#inp_stu").val("執行長 待簽");
+                    $("#inp_boss_sin").val("待簽");
+                    Send_To_num = i_boss;
+                    Sta = `back`
+                }
+                else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "退回起單人") {
+                    $("#inp_stu").val("退回起單人");
+                    Send_To_num = i_whostart;//連線收件str
+                    Sta = `back`
+                }
+                $("#inp_executor_sin").val($(`#list_stu_sin_ecu1 option:selected`).val());
+            }
+        });
+
+
+
+        $("#inp_start").on('click', function () {
+            let dt = new Date();
+            let datestring = `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()} ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+            if (i_whostart == splitstf) {
+                $("#inp_starttime").val(datestring);
+            }
+            else if (i_spvs == splitstf) {
+                $("#inp_super_vs_time").val(datestring);
+            }
+            else if (i_co == splitstf) {
+                $("#inp_co_dep_time").val(datestring);
+            }
+            else if (i_boss == splitstf) {
+                $("#inp_boss_time").val(datestring);
+            }
+            else if (s_executor == splitstf) {
+                $("#inp_execut_time").val(datestring);
+            }
+        });
+
+    </script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/staffconnect.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

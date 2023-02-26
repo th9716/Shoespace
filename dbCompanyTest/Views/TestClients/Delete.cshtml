@@ -1,0 +1,91 @@
+﻿@model dbCompanyTest.Models.TestClient
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Back_Layout_Sneat.cshtml";
+}
+<div style="width:80%;margin:20px auto;">
+<h1>刪除客戶資料</h1>
+
+<h3>你確定要刪除這筆客戶資料嗎?</h3>
+<div>
+    <h4>@Html.DisplayNameFor(c=>c.客戶編號)</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶姓名)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶姓名)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶電話)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶電話)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.身分證字號)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.身分證字號)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.縣市)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.縣市)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.區)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.區)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.地址)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.地址)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.密碼)
+        </dt>
+        <dd class = "col-sm-10">
+                ●●●●
+            @*@Html.DisplayFor(model => model.密碼)*@
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.性別)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.性別)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.生日)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.生日)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="客戶編號" />
+        <input type="submit" value="刪除" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-light">返回</a>
+    </form>
+</div>
+</div>
+
+@section Scripts{
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/datas/taiwan_districts.js"></script>
+<script src="~/js/city_data.js"></script>
+<script src="~/js/client.js"></script>
+}

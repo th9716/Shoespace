@@ -1,0 +1,220 @@
+﻿.chatMain {
+    position:fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 100px;
+    right: 30px;
+    border-radius: 50px 50px 0 50px;
+    background-color: rgb(191, 169, 154);
+    box-shadow:0px 0px 30px 5px gray;
+}
+
+.dot {
+    position:absolute;
+    border-radius: 50px 50px 50px 50px;
+    background-color:white;
+    height:8px;
+    width:8px;
+    transition:all 0.3s;
+}
+
+.eyes-left{
+    top:46%;
+    left:12%;
+}
+
+.eyes-right {
+    top: 46%;
+    left: 74%;
+}
+
+.mouth {
+    top: 46%;
+    left: 44%;
+}
+
+.eyes-left-hover {
+    top: 35%;
+    left: 22%;
+}
+
+.eyes-right-hover {
+    top: 35%;
+    left: 66%;
+}
+
+.mouth-hover {
+    top: 58%;
+    left: 39%;
+    border-radius:0 0 50px 50px;
+    width:15px;
+    height:10px;
+}
+
+.chatBody {
+    display: none;
+    position: fixed;
+    bottom: 170px;
+    right: 30px;
+    height: 65%;
+    width: 360px;
+    background-color: rgb(191, 169, 154);
+    border-radius: 15px 15px;
+    transition: all 0.3s;
+    box-shadow: 0px 0px 30px 5px gray;
+    
+}
+
+
+
+    .chatHeader {
+        border-radius: 15px 15px 0 0;
+        width: 100%;
+        height: 14%;
+        background-color: rgb(191, 169, 154);
+        /*display:flex;*/
+        align-items: center;
+    }
+
+    .chatBBody {
+        background-color: white;
+        width: 100%;
+        height: 80%;
+        overflow-y: scroll;
+    }
+
+    .chatFooter {
+        border-radius: 0 0 15px 15px;
+        width: 100%;
+        height: 9%;
+        text-align: center;
+        color: white;
+        background-color: rgb(191, 169, 154);
+        align-items: center;
+    }
+
+        .chatFooter p {
+            margin: 0;
+        }
+
+        .chatFooter input {
+            width: 75%;
+            height: 30px;
+        }
+
+    .chatBBody .chat {
+        margin: 5px;
+    }
+    #chatClose {
+    background-color: rgb(191, 169, 154);
+}
+
+    .chatBBody .myChat {
+        margin-left: 28%;
+        max-width: 70%;
+        border-radius: 5px;
+        background-color: rgb(191, 169, 154);
+        color: white;
+        padding: 5px;
+        word-break: break-all;
+    }
+
+    .chatBBody .otherChat {
+        margin-right: 28%;
+        max-width: 70%;
+        border-radius: 5px;
+        background-color: bisque;
+        color: gray;
+        padding: 5px;
+        word-break: break-all;
+    }
+
+    .chatBBody .myName {
+        margin: 0 10px 0 0;
+        text-align: end;
+    }
+
+    #connection {
+        display: flex;
+        height: 60px;
+        width: 60px;
+        margin: 0 auto;
+        /*padding: 1%;*/
+        font-size: small;
+        text-align: center;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 50px;
+        cursor: pointer;
+        /*background-image: url("https://localhost:7100/images/dog.jpg");*/
+        background-repeat: no-repeat;
+        background-size: 60px;
+    }
+
+    #chatClose {
+        margin-bottom: 0;
+        text-align: end;
+        margin-right: 10px;
+        color: white;
+        cursor: pointer;
+    }
+
+        #chatClose:hover {
+            color: red;
+        }
+
+    #message:focus {
+        outline: none;
+    }
+
+.LineFriend {
+    padding: 0 30%;
+    width: 100px;
+    background-color: rgb(191, 169, 154);
+}
+
+    .LineFriend iframe {
+        width: 200px !important;
+        height: 20px !important;
+        background-color: rgb(191, 169, 154);
+    }
+.MochiContent{
+    width:100%;
+}
+
+.hee {
+    background-color: rgb(191, 169, 154);
+}
+
+@media screen and (max-width:500px) {
+    .chatBody {
+        bottom: 4%;
+        right: 0;
+        width: 100%;
+        height: 75%;
+    }
+
+    .chatHeader {
+        height: 12%;
+    }
+
+        .chatHeader p {
+            text-align: center;
+
+        }
+    #chatClose {
+        background-color: rgb(191, 169, 154);
+    }
+
+    .LineFriend {
+        padding: 0 33% !important;
+        background-color: rgb(191, 169, 154);
+    }
+    .chatBBody {
+        height: 78%;
+        width:100%;
+    }
+    .MochiContent {
+        height: 95% !important;
+    }
+}

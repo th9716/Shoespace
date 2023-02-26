@@ -1,0 +1,148 @@
+﻿@model IEnumerable<dbCompanyTest.Models.會員商品暫存>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<hr />
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                商品資訊
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.訂單數量)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.商品價格)
+            </th>
+        </tr>
+        
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <img src="~/images/@item.圖片1檔名" width="200" />
+
+            </td>
+                <td>
+                    <dl class="row">
+
+                        <dt class="col-sm-2">
+                            品名:
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(modelItem => item.商品名稱)
+                        </dd>
+                        <dt class="col-sm-2">
+                            尺寸:
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(modelItem => item.尺寸種類)
+                        </dd>
+                        <dt class="col-sm-2">
+                            顏色:
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(modelItem => item.商品顏色種類)
+                        </dd>
+                    </dl>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.訂單數量)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.商品價格)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">X</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<dl class="row">
+    <dt class="col-sm-2">付款方式</dt>
+    <dd class="col-sm-10">
+
+        <div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+                信用卡
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+                ATM
+  </label>
+</div>
+
+    </dd>
+
+    <dt class="col-sm-2">配送方式</dt>
+    <dd class="col-sm-10">
+        <select class="form-select" aria-label="Default select example" id="delivery">
+            <option selected disabled>請選擇配送方式</option>
+            <option value="60">7-11取貨</option>
+            <option value="100">宅配</option>
+            <option value="60">全家取貨</option>
+        </select>
+    </dd>
+
+</dl>
+<hr />
+@{
+    decimal totomony = 0;
+    foreach (var item in Model)
+    {
+        totomony += (decimal)item.商品價格;
+    }
+    <div>
+<div>
+    <div>
+            <span>總金額</span>
+                <span>TWD $@totomony</span>
+    </div>
+    <div>
+            <span>運費</span>
+                <span id="TxtDeliverymony">TWD $0</span>
+    </div>
+    <hr />
+    <div>
+            <span>結帳金額</span>
+                <span id="paymony">TWD $0</span>
+    </div>
+</div>
+</div>
+}
+@section Scripts{
+    <script>
+        const deliverymony = document.querySelector('#delivery')
+        const txtdeliverymony =document.querySelector('#TxtDeliverymony')
+        const paymony = document.querySelector('#paymony')
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener(`load`,()=>{
+            const data = xhr.responseText;
+            txtdeliverymony.innerHTML = `TWD $${data}`;
+            const mony = parseInt(data) + @totomony;
+            paymony.innerHTML = `TWD $${mony}`
+        })
+        deliverymony.addEventListener(`change`, () => {
+            xhr.open('GET', `/Shopping/GetDeliveryMony?OPvalue=${deliverymony.value}`);
+            xhr.send();
+        })
+
+    </script>
+}

@@ -1,0 +1,44 @@
+/*@media screen and (max-width:500px) {
+
+.border-rwd {
+        border: solid 3px gray;
+    }
+
+
+
+}*/
+.conflexbetween {
+    display: flex;
+    justify-content: space-between;
+}
+    
+
+    @media (max-width: 510px) {
+        .small-width {
+            width: 50%;
+        }
+        /*.table-rwd td {
+        border: solid 3px gray;
+    }*/
+
+        /* .table-wrapper {
+        margin: 30px 15px;
+    }*/
+
+        /* .table-rwd thead {
+        display: none;
+    }*/
+
+        /*.table-rwd td {
+        display: block;
+        一定要下！ padding: 0;
+    }*/
+        /*   .table-rwd td:before {
+            content: attr(data-title);  顯示 data-title 
+            display: inline-block;
+            width: 100%;
+            font-weight: 500;
+            padding: 6px 0;
+        }*/
+    }
+

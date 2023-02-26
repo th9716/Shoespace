@@ -1,0 +1,126 @@
+﻿@model dbCompanyTest.Models.TestStaff
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@{
+    Layout = "_Back_Layout_Sneat_HR";
+}
+@*<h1>Edit</h1>*@
+
+<hr />
+<div class="row" style="width:85%;margin:20px auto;">
+    <h4>修改員工資料</h4>
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="員工編號" />
+            <div class="form-group">
+                <label asp-for="員工姓名" class="control-label"></label>
+                <input asp-for="員工姓名" class="form-control" />
+                <span asp-validation-for="員工姓名" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="員工電話" class="control-label"></label>
+                <input asp-for="員工電話" class="form-control" />
+                <span asp-validation-for="員工電話" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="身分證字號" class="control-label"></label>
+                <input asp-for="身分證字號" class="form-control" />
+                <span asp-validation-for="身分證字號" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="縣市" class="control-label"></label>
+                <select asp-for="縣市" class="form-control" id="city"></select>
+                <span asp-validation-for="縣市" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="區" class="control-label"></label>
+                <select asp-for="區" class="form-control" id="town"></select>
+                <span asp-validation-for="區" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="地址" class="control-label"></label>
+                <input asp-for="地址" class="form-control" />
+                <span asp-validation-for="地址" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="緊急聯絡人" class="control-label"></label>
+                <input asp-for="緊急聯絡人" class="form-control" />
+                <span asp-validation-for="緊急聯絡人" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="聯絡人關係" class="control-label"></label>
+                <input asp-for="聯絡人關係" class="form-control" />
+                <span asp-validation-for="聯絡人關係" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="聯絡人電話" class="control-label"></label>
+                <input asp-for="聯絡人電話" class="form-control" />
+                <span asp-validation-for="聯絡人電話" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="部門" class="control-label"></label>
+                <input asp-for="部門" class="form-control" />
+                <span asp-validation-for="部門" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="主管" class="control-label"></label>
+                <input asp-for="主管" class="form-control" />
+                <span asp-validation-for="主管" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="職稱" class="control-label"></label>
+                <select asp-for="職稱" class="form-control"><option>專員</option><option>協理</option><option>經理</option></select>
+                <span asp-validation-for="職稱" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="密碼" class="control-label"></label>
+                <input asp-for="密碼" class="form-control" />
+                <span asp-validation-for="密碼" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="薪資" class="control-label"></label>
+                <input asp-for="薪資" class="form-control" />
+                <span asp-validation-for="薪資" class="text-danger"></span>
+            </div>
+            @*      <div class="form-group">
+            <label asp-for="權限" class="control-label"></label>
+            <input asp-for="權限" class="form-control" />
+            <span asp-validation-for="權限" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="在職" class="control-label"></label>
+                @*<input asp-for="在職" class="form-control" />*@
+                <select asp-for="在職" class="form-control" id="still"><option>在職</option><option>離職</option></select>
+                <span asp-validation-for="在職" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="修改" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">返回</a>
+            </div>
+        </form>
+
+        <div>
+            <input asp-for="縣市" type="hidden" id="q1" />
+            <input asp-for="區" type="hidden" id="q2" />
+        </div>
+    </div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/datas/taiwan_districts.js"></script>
+    <script src="~/js/city_data.js"></script>
+}

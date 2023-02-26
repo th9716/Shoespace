@@ -1,0 +1,242 @@
+﻿@model dbCompanyTest.Models.ToDoList
+
+@{
+    ViewData["Title"] = "DT_TDL";
+}
+@{
+    if (ViewBag.dep == "行政" || ViewBag.dep == "執行長室")
+        Layout = "_Back_Layout_Sneat";
+    else if (ViewBag.dep == "人事")
+        Layout = "_Back_Layout_Sneat_HR";
+}
+<div style="width:80%;margin:20px auto;">
+    <h4 id="stf_info" style="display:none">@ViewBag.acc</h4>
+    <div>
+        <p>
+            <span>起單人 :</span><span id="span_whostart"></span>
+        </p>
+        <p>
+            <span>表單類型 :</span><span id="span_list_type"></span>
+        </p>
+        <p>
+            <span>表單狀態 :</span><span id="span_sta"></span>
+        </p>
+        <p>
+            <span>表單內容 :</span><span id="span_cont"></span>
+        </p>
+        <div id="schedule"></div>
+
+    </div>
+    <input type="hidden" id="StaffNumpath" value="@Url.Content("~/Staff_Home/StaffNum")" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row" id="div_data">
+        <div class="col-md-4">
+            <form asp-action="DT_TDL" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger no"></div>
+                <input asp-for="交辦事項id" class="no" id="listnumber" />
+                <div class="form-group no">
+                    <label asp-for="表單類型" class="control-label no"></label>
+                    <select asp-for="表單類型" class="form-control no" id="list_type">
+                        <option>常規表單</option>
+                        <option>人事表單</option>
+                    </select>
+                    <span asp-validation-for="表單類型" class="text-danger no"></span>
+                </div>
+                <div class="form-group no">
+                    <label asp-for="員工編號" class="control-label" id="lab_stfId"></label>
+                    @*<select asp-for="員工編號" class="form-control" asp-items="ViewBag.員工編號" id="stfId"></select>*@
+                    <input asp-for="員工編號" class="form-control" id="stfId" />
+                    <span asp-validation-for="員工編號" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_cont">
+                    <label asp-for="表單內容" class="control-label"></label>
+                    <input asp-for="表單內容" class="form-control" id="inp_cont" />
+                    <span asp-validation-for="表單內容" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_ans">
+                    <label asp-for="回覆" class="control-label"></label>
+                    <input asp-for="回覆" class="form-control" id="inp_ans" />
+                    <span asp-validation-for="回覆" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_sta">
+                    <label asp-for="表單狀態" class="control-label"></label>
+                    <input asp-for="表單狀態" class="form-control" id="inp_sta" />
+                    <span asp-validation-for="表單狀態" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_starttime">
+                    <label asp-for="起單時間" class="control-label"></label>
+                    <input asp-for="起單時間" class="form-control" id="inp_starttime" />
+                    <span asp-validation-for="起單時間" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_whostart">
+                    <label asp-for="起單人" class="control-label"></label>
+                    <input asp-for="起單人" class="form-control" id="inp_whostart" />
+                    <span asp-validation-for="起單人" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_super_vs">
+                    <label asp-for="部門主管" class="control-label"></label>
+                    <input asp-for="部門主管" class="form-control" id="inp_super_vs" />
+                    <span asp-validation-for="部門主管" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_super_vs_sin">
+                    <label asp-for="部門主管簽核" class="control-label"></label>
+                    <input asp-for="部門主管簽核" class="form-control" id="inp_super_vs_sin" />
+                    <span asp-validation-for="部門主管簽核" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_super_vs_opn">
+                    <label asp-for="部門主管簽核意見" class="control-label"></label>
+                    <input asp-for="部門主管簽核意見" class="form-control" id="inp_super_vs_opn" />
+                    <span asp-validation-for="部門主管簽核意見" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_super_vs_time">
+                    <label asp-for="部門主管簽核時間" class="control-label"></label>
+                    <input asp-for="部門主管簽核時間" class="form-control" id="inp_super_vs_time" />
+                    <span asp-validation-for="部門主管簽核時間" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_co_dep">
+                    <label asp-for="協辦部門" class="control-label"></label>
+                    <input asp-for="協辦部門" class="form-control" id="inp_co_dep" />
+                    <span asp-validation-for="協辦部門" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_co_dep_sin">
+                    <label asp-for="協辦部門簽核" class="control-label"></label>
+                    <input asp-for="協辦部門簽核" class="form-control" id="inp_co_dep_sin" />
+                    <span asp-validation-for="協辦部門簽核" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_co_dep_who">
+                    <label asp-for="協辦部門簽核人員" class="control-label"></label>
+                    <input asp-for="協辦部門簽核人員" class="form-control" id="inp_co_dep_who" />
+                    <span asp-validation-for="協辦部門簽核人員" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_co_dep_opn">
+                    <label asp-for="協辦部門簽核意見" class="control-label"></label>
+                    <input asp-for="協辦部門簽核意見" class="form-control" id="inp_co_dep_opn" />
+                    <span asp-validation-for="協辦部門簽核意見" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_co_dep_time">
+                    <label asp-for="協辦部門簽核時間" class="control-label"></label>
+                    <input asp-for="協辦部門簽核時間" class="form-control" id="inp_co_dep_time" />
+                    <span asp-validation-for="協辦部門簽核時間" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_boss_sin">
+                    <label asp-for="老闆簽核" class="control-label"></label>
+                    <input asp-for="老闆簽核" class="form-control" id="inp_boss_sin" />
+                    <span asp-validation-for="老闆簽核" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_boss_opn">
+                    <label asp-for="老闆簽核意見" class="control-label"></label>
+                    <input asp-for="老闆簽核意見" class="form-control" id="inp_boss_opn" />
+                    <span asp-validation-for="老闆簽核意見" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_boss_time">
+                    <label asp-for="老闆簽核時間" class="control-label"></label>
+                    <input asp-for="老闆簽核時間" class="form-control" id="inp_boss_time" />
+                    <span asp-validation-for="老闆簽核時間" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_executor">
+                    <label asp-for="執行人" class="control-label"></label>
+                    <input asp-for="執行人" class="form-control" id="sele_executor" />
+                    <span asp-validation-for="執行人" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_execut_time">
+                    <label asp-for="執行時間" class="control-label"></label>
+                    <input asp-for="執行時間" class="form-control" id="inp_execut_time" />
+                    <span asp-validation-for="執行時間" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_executor_sin">
+                    <label asp-for="執行人簽核" class="control-label"></label>
+                    <input asp-for="執行人簽核" class="form-control" id="inp_executor_sin" />
+                    <span asp-validation-for="執行人簽核" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_Attached">
+                    <label asp-for="附件" class="control-label"></label>
+                    <input asp-for="附件" class="form-control" id="inp_Attached" />
+                    <span asp-validation-for="附件" class="text-danger"></span>
+                </div>
+                <div class="form-group no" id="div_Attached_path">
+                    <label asp-for="附件path" class="control-label"></label>
+                    <input asp-for="附件path" class="form-control" id="inp_Attached_path" />
+                    <span asp-validation-for="附件path" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="div_Attached_File">
+                    <label class="control-label" id="lab_File">附件</label>
+                    <input class="form-control" id="File" type="file" name="File" />
+
+                </div>
+                <div class="form-group">
+
+                    <input type="submit" value="送出" class="btn btn-primary" id="inp_start" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <iframe src="~/File/@Model.附件path" height="800" width="100%">附件</iframe>
+    <iframe src="~/File/@Model.附件" height="800" width="100%">附件</iframe>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        var Staff_Home_StaffNum = $("#StaffNumpath").val();
+        var split = $(`#stf_info`).text().split(' ');
+        var splitstf = split[1];
+        var split1 = $(`#inp_whostart`).val().split(' ');
+        var splitstf1 = split1[1];
+        var list_type = $("#list_type").val();
+        var splitmain = $(`#stf_info`).text().indexOf(' ');
+        var stf = $(`#stf_info`).text().substr(0, split);
+        $(".no").css("display", "none");
+        $("#div_Attached_File").css("display", "none");
+        $("#inp_start").css("display", "");
+
+        $("#span_whostart").text($("#inp_whostart").val());
+        $("#span_list_type").text(list_type);
+        $("#span_sta").text($("#inp_sta").val());
+        $("#span_cont").text($("#inp_cont").val());
+        if (list_type == `常規表單`)
+            LoadPartialSchedule_RG();
+        else
+            LoadPartialSchedule_HR();
+
+
+
+
+
+        function LoadPartialSchedule_HR() {
+            $('#schedule').load("@Url.Content("~/Staff_Home/PartialSchedule_HR")")
+        }
+
+        function LoadPartialSchedule_RG() {
+            $('#schedule').load("@Url.Content("~/Staff_Home/PartialSchedule_RG")")
+        }
+
+
+    </script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/staffconnect.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

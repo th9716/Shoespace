@@ -1,0 +1,892 @@
+﻿@model dbCompanyTest.ViewModels.ProductDetailViewModels
+
+<link href="~/css/ProductWall.css" rel="stylesheet">
+<link href="~/css/productdetail.css" rel="stylesheet" />
+<input type="hidden" name="Id" />
+<div class="content">
+    <div class="row" style="width:158px; margin:14px 0;">
+        <div class="col-md-8 unshow">
+            <br />
+            <br />
+            <a class="list-inline-item sclass" asp-controller="ProductWall" asp-action="Index" asp-route-id="@Model.pro商品分類id" id="type">@Model.pro商品分類</a>
+            <input type="hidden" value="@Model.pro商品分類id" id="typeid" data-productid="@Model.pro商品編號" data-colorid="@Model.商品顏色ID" />
+            <ul class="tree-menu1 list-inline shop-top-menu pb-3 pt-1" id="sclass"></ul>
+
+        </div>
+    </div>
+    <div class="detail-center">
+        @*麵包*@
+        <div class="d-position">
+            <a asp-controller="Home" asp-action="Index">首頁</a>
+            <span>></span>
+            <a href="@Url.Content("~/ProductWall/Index/"+Model.pro商品分類id)">@Model.pro商品分類</a>
+            <span>></span>
+
+            <span>@Model.pro商品名稱 @Model.pro商品顏色</span>
+        </div>
+        @*輪播*@
+        <div id="carouselExampleDark" class="carousel carousel-dark d-carouse" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active d-carouse-pic" data-bs-interval="2000">
+                    @{
+                        if (Model.pro商品圖片1 == null || Model.pro商品圖片1 == "")
+                        {
+                                                                                                                <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+                        }
+                        else
+                        {
+                                                                                                                <img src="@Url.Content("~/images/"+Model.pro商品圖片1)" class="d-block " alt="圖片無法顯示">
+                        }
+                    }
+                </div>
+                <div class="carousel-item d-carouse-pic" data-bs-interval="2000">
+                    @{
+                        if (Model.pro商品圖片2 == null || Model.pro商品圖片2 == "")
+                        {
+                                                                                                                <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+                        }
+                        else
+                        {
+                                                                                                                <img src="@Url.Content("~/images/"+Model.pro商品圖片2)" class="d-block " alt="圖片無法顯示">
+                        }
+                    }
+                </div>
+                <div class="carousel-item d-carouse-pic" data-bs-interval="2000">
+                    @{
+                        if (Model.pro商品圖片3 == null || Model.pro商品圖片3 == "")
+                        {
+                                                                                                                <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+                        }
+                        else
+                        {
+
+                                                                                                                <img src="@Url.Content("~/images/"+Model.pro商品圖片3)" class="d-block " alt="圖片無法顯示">
+                        }
+                    }
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="d-right-detail">
+        <br />
+        <br />
+        <div class="d-right-detail-item">@Model.pro商品名稱 @Model.pro商品顏色</div>
+        <div class="d-right-detail-item">金額: @Convert.ToDouble(Model.pro商品金額).ToString("#")</div>
+        <div class="d-right-detail-item">
+            <div name="商品顏色種類" class="Color">COLOR: <span>@Model.pro商品顏色</span></div>
+            <div class="d-right-color col-8">
+                @{
+                    for (int i = 0; i < Model.pro商品顏色idlist.Count; i++)
+                    {
+                        if (Model.pro商品顏色idlist[i] == Model.商品顏色ID)
+                        {
+                                                                                                                <div class="d-right-color-item  active"><div class="d-right-color-item-color"><a id="@Model.pro商品顏色idlist[i]"><img src="@Url.Content("~/images/colorimg/"+Model.pro商品顏色圖片list[i])"></img></a></div></div>
+                        }
+                        else
+                        {
+                                                                                                                <div class="d-right-color-item"><div class="d-right-color-item-color"><a href="@Url.Content("~/ProductWall/Details?id="+Model.pro商品編號+"&colorID="+Model.pro商品顏色idlist[i])" id="@Model.pro商品顏色idlist[i]"><img src="@Url.Content("~/images/colorimg/"+Model.pro商品顏色圖片list[i])"></img></a></div></div>
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="d-choose-size">
+            <div class="">SIZE</div>
+            <div class="d-right-size col-8">
+                @{
+                    for (int i = 0; i < Model.pro商品尺寸list.Count; i++)
+                    {
+                                                                                                            <div class="size-item" id="@Model.pro商品尺寸idlist[i]">@Model.pro商品尺寸list[i]</div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="d-right-detail-item">
+            @*<div>尺寸對照表</div>*@
+            <div class="d-right-share">
+                <div class="d-right-share-Add">
+                    <span class="d-right-share-pic"></span>
+                    <span class="d-right-share-pic-Text">ADD TO FAVORITE</span>
+                </div>
+                <div class="d-right-share-share">
+                    <span class="d-right-share-FB"></span>
+                    <span class="d-right-share-LINE"></span>
+                </div>
+            </div>
+        </div>
+        <div class="d-right-detail-item">
+            <div class="p-num-box main-product">
+                <div class="reduce icon">-</div>
+                <div class="number-box">
+                    <input type="number" value="1" readonly="readonly" style="cursor:default" />
+                </div>
+                <div class="plus icon">+</div>
+            </div>
+        </div>
+        <div class="user-choose-size" style="cursor:default" id="userchoose">請選擇尺寸</div>
+        <div class="p-details">
+            <div class="p-tab">
+                <div class="tab-item ac" data-item="1">
+                    <span class="name">商品介紹</span><span class="m-2">|</span>
+                </div>
+                <div class="tab-item" data-item="2">
+                    <span class="name">商品規格</span><span class="m-2"></span>
+                </div>
+            </div>
+            <div class="detail-content">
+                <div class="detail-item  detail-item-show" data-detail="1">
+                    <p> </p>
+                    <p>@Model.pro商品介紹</p>
+                </div>
+                <div class="detail-item" data-detail="2">
+                    <p> </p>
+                    <p>@Model.pro商品材質</p>
+                </div>
+            </div>
+        </div>
+        @*評論區*@
+        <br />
+        <div class="d-right-detail-item" id="comment">
+            <h2 class="btn collapsed m_10"  data-bs-toggle="collapse" data-bs-target="#Example">留言板</h2>
+            <ul class="collapse show" id="Example">
+                @{
+                    int collapsecount = 0;
+                    foreach (var paretitem in Model.paretCommentslist)
+                    {
+                        collapsecount++;
+                                                                                                            <li>
+                                                                                                                <div class="itemCommentContent" data-id="@paretitem.paretCommentID" data-name="paret">
+                                                                                                                    <div>
+                                                                                                                        <p class="itemName">會員:@paretitem.paretCommentGuestName</p>
+                                                                                                                        <p class="itemMessage">內容:@paretitem.paretComment</p>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        @if (paretitem.paretCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                                    {
+                                                                                                                            <span class="itemreport">回覆</span>
+
+                                                                                                                            <span>|</span>
+
+                                                                                                                            <span class="itemreportEdit" data-id="@paretitem.paretCommentID" data-order="1">編輯</span>
+
+                                                                                                                            <span>|</span>
+
+                                                                                                                            <span class="itemreportDelete" data-id="@paretitem.paretCommentID" data-order="1">刪除</span>
+
+                                                                                                                            <span>|</span>
+
+                                                                                                                            <span>留言時間:@paretitem.paretCommentDate.ToString("yyyy/MM/dd")</span>
+                                        if (Model.childCommentlist.FirstOrDefault(x => x.childCommentParet == paretitem.paretCommentID) != null)
+                                        {
+                                            var commentcount =Model.childCommentlist.Select(x=>x).Where(y=>y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                                                                                                <span>|</span>
+
+                                            <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount">檢視其他 @commentcount.Count 則留言</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                                                                                                            <span class="itemreport">回覆</span>
+
+                                                                                                                            <span>|</span>
+
+                                                                                                                            <span>留言時間:@paretitem.paretCommentDate.ToString("yyyy/MM/dd")</span>
+                                          if (Model.childCommentlist.FirstOrDefault(x=>x.childCommentParet == paretitem.paretCommentID)!=null)
+                                            {
+                                                var commentcount =Model.childCommentlist.Select(x=>x).Where(y=>y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                                                                                                    <span>|</span>
+
+                                                                                                                        <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount" data="@paretitem.paretCommentID">檢視其他 @commentcount.Count 則留言</span>
+
+                                            }
+                                    }
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div style="display:flex;margin-left:2px;border-left:solid;">
+                                <ul class="collapse multi-collapse" id="Example_@collapsecount">
+                                                                                                                        @{
+                                        foreach (var childitem in Model.childCommentlist)
+                                        {
+                                            if (paretitem.paretCommentID == childitem.childCommentParet && childitem.childCommentchildid == null)
+                                            {
+                                                                                                                                                                                                                        <div style="display:flex;" class="itemCommentContent" data-id="@childitem.childCommentID" data-name="child">
+                                                                                                                                                                                                                            <div class="itemdivborder"></div>
+                                                                                                                                                                                                                        <li>
+                                                                                                                                                                                                                            <div>
+                                                                                                                                                                                                                                <p class="itemName">會員:@childitem.childCommentGuestName</p>
+                                                                                                                                                                                                                                <p class="itemMessage">內容:@childitem.childComment</p>
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                            <div>
+                                                                                                                                                                                                                                    @if (childitem.childCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                                                            {
+                                                                                                                                                                                                                                    <span class="itemreport">回覆</span>
+
+                                                                                                                                                                                                                                    <span>|</span>
+
+                                                                                                                                                                                                                                    <span class="itemreportEdit" data-id="@childitem.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">編輯</span>
+
+                                                                                                                                                                                                                                    <span>|</span>
+
+                                                                                                                                                                                                                    <span class="itemreportDelete" data-id="@childitem.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">刪除</span>
+
+                                                                                                                                                                                                                                    <span>|</span>
+
+                                                                                                                                                                                                                                    <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                                                                                                                                                                                    <span class="itemreport">回覆</span>
+
+                                                                                                                                                                                                                                    <span>|</span>
+
+                                                                                                                                                                                                                                    <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                            }
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                            <div style="display:flex;margin-left:28px;border-left:solid;">
+                                                                                                                                                                                                                                <ul>
+                                                                                                                                                                                                                                        @{
+                                                                    foreach (var childitemchildid in Model.childCommentlist)
+                                                                    {
+                                                                        if (childitem.childCommentID == childitemchildid.childCommentchildid)
+                                                                        {
+                                                                                                                                                                                                                                                                                                                                    <div style="display:flex;" class="itemCommentContent">
+                                                                                                                                                                                                                                                                                                                                        <div class="itemdivborder"></div>
+                                                                                                                                                                                                                                                                                                                                    <li>
+                                                                                                                                                                                                                                                                                                                                        <div>
+                                                                                                                                                                                                                                                                                                                                            <p class="itemName">會員:@childitemchildid.childCommentGuestName</p>
+                                                                                                                                                                                                                                                                                                                                            <p class="itemMessage">內容:@childitemchildid.childComment</p>
+                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                        <div>
+                                                                                                                                                                                                                                                                                                                                                    @if (childitemchildid.childCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                                                                                        {
+                                                                                                                                                                                                                                                                                                                                                <span class="itemreport">回覆</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>|</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span class="itemreportEdit" data-id="@childitemchildid.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">編輯</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>|</span>
+
+                                                                                                                                                                                                                                                                                                                        <span class="itemreportDelete" data-id="@childitemchildid.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">刪除</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>|</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                                                                                                                                                                                                                                                                                <span class="itemreport">回覆</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>|</span>
+
+                                                                                                                                                                                                                                                                                                                                                <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                                                        }
+                                                                                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                                                                                                                                                                                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                            </li>
+                                                                                                                                                                                                    </div>
+                                            }
+                                        }
+                                                                                                                        }
+                                                                                                    </ul>
+                                                                                                </div>
+                                                                                                </li>
+                    }
+                }
+    </ul>
+            @*回覆視窗*@
+    <hr />
+    <div class="reportmain" data-name="reportmain"></div>
+    <div class="userreport">
+        <input class="userreportinput" type="text" placeholder="留言..." /><br />
+        <input type="submit" id="userreportSubmit" class="btn btn-success btn-sm" value="送出" />
+        <input type="button" id="userreportCancel" class="btn btn-secondary btn-sm" value="取消" />
+    </div>
+
+            @*編輯訊息*@
+    <div class="reportEdit" style="display:none;">
+        <input class="userEditinput" type="text" /><br />
+        <input type="submit" id="userEditSubmit" class="btn btn-primary btn-sm" value="送出" />
+        <input type="button" id="userEditCancel" class="btn btn-secondary btn-sm" value="取消" />
+    </div>
+
+
+
+
+</div>
+</div>
+</div>
+
+
+
+@*aaa*@
+<div style="display:flex; justify-content:center;">
+    <div class="d-carouse aaa">
+        @{
+            if (Model.pro商品圖片1 == null || Model.pro商品圖片1 == "")
+            {
+                                                                                                    <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+            }
+            else
+            {
+                                                                                                    <img src="@Url.Content("~/images/"+Model.pro商品圖片1)" alt="圖片無法顯示" />
+            }
+            if (Model.pro商品圖片2 == null || Model.pro商品圖片2 == "")
+            {
+                                                                                                    <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+            }
+            else
+            {
+                                                                                                    <img src="@Url.Content("~/images/"+Model.pro商品圖片2)" alt="圖片無法顯示" />
+            }
+            if (Model.pro商品圖片3 == null || Model.pro商品圖片3 == "")
+            {
+                                                                                                    <img src="@Url.Content("~/images/404.jpg")" alt="圖片無法顯示" />
+            }
+            else
+            {
+                                                                                            <img src="@Url.Content("~/images/"+Model.pro商品圖片3)" alt="圖片無法顯示" />
+            }
+            if (Model.pro商品分類id == 1)
+            {
+                                                                                            <img src="@Url.Content("~/images/男鞋尺寸對照表.jpeg")" alt="圖片無法顯示" />
+            
+            }
+            else
+            {
+                                                                                        <img src="@Url.Content("~/images/尺寸對照表.jpeg")" alt="圖片無法顯示" />
+            }
+            
+
+        }
+
+    </div>
+</div>
+<div>
+    <div class="youmustlikeclass">
+        <div>
+            <div>YOU MAY ALSO LIKE</div>
+            <div style="display:flex;" class="youmustlike">
+                @{
+                    foreach (var item in Model.pro商品分類list)
+                    {
+                                                                                                            <div><a href="@Url.Content("~/ProductWall/Details?id="+item.pro商品編號+"&colorID="+item.商品顏色ID)"><img src="@Url.Content("~/images/"+item.商品圖片1)" /></a></div>
+                    }
+                }
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+
+
+
+@*錯誤訊息*@
+<div class="modal" id="error" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-content">
+            <div class="modal-header"><div class="modal-close"></div></div>
+            <div class="content-box">
+                <div class="modal-text"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*警告訊息*@
+<div class="modal" id="alert" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-content">
+            <div class="modal-header"><div class="modal-close"></div></div>
+            <div class="content-box">
+                <div class="modal-text"></div>
+                <div style="display:flex; justify-content:center;">
+                    <input type="button" class="btn btn-primary alertsubmit me-2" value="確認" />
+                    <input type="button" class="btn btn-secondary alertcancel ms-2" value="取消" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*購物車記數用*@
+<input type="text" id="CarCount" value="" style="display:none" />
+
+
+
+@*分享視窗*@
+@*<div class="modal" id="share" style="display:none">
+    <div class="modal-box">
+        <div class="modal-content">
+            <div class="modal-header"><div class="modal-close"></div></div>
+            <div class="content-box">
+                <div class="share-box">
+                    <div class="share-item" id="shareFB">
+                        <a href="#">分享至FACEBOOK</a>
+                    </div>
+                    <div class="share-item" id="shareline">
+                        <a src="">分享至LINE</a>
+                    </div>
+                    <div class="share-item">
+                        <a src="#" id="copy-link">複製連結</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>*@
+
+
+@section Scripts{
+    <script>
+        let sizecheck = null;
+        let login = false;
+        let userdata = null;
+        let datas = null;
+        
+        let deleteid = null;
+        let deleteorder = null;
+        
+        let editorder = null;
+        let editid = null;
+        let editparetid =null;
+        let count = 1;
+        var carCount = 0;
+        let savetext=null;
+        
+
+        
+        
+
+
+        //警示視窗
+        $(`.alertcancel`).on(`click`, function () {
+            //checkdelete = false;
+            $('#alert').css("display", "none");
+        });
+        //刪除(可再修改)
+        $(`.alertsubmit`).on(`click`, function () {
+            $('#alert').css("display", "none");
+            deletecomment(deleteid, deleteorder);
+        });
+        $('.modal-close').on('click', function () {
+            //checkdelete = false;
+            $('#error').css("display", "none");
+            $('#alert').css("display", "none");
+        });
+        //呼叫resetdisplay
+        connection.on('UpdMessage', async function (response) {
+            let FD = new FormData();
+            FD.append('response', response)
+            let data = await fetch("@Url.Content("~/ProductWall/resetdisplay")",
+                {
+                    method: "POST",
+                    body: FD
+                })
+            let aaaa = await data.text();
+            //console.log(aaaa);
+            $('#comment').html(aaaa);
+        });
+        ////Signalr評論
+        $('.collapsecheck').on("click",async function(){
+            const collapseid = await $(this).data("bsTarget");
+            if ($(this).hasClass('collapsed')) 
+            {
+                $(this).text(savetext);
+            }
+            else
+            {
+                savetext = $(this).text();
+                $(this).text("隱藏");
+            }
+        });
+        async function checkuser() {
+            let data = await fetch("@Url.Content("~/ProductWall/checkuser")");
+            let response = await data.json();
+            //console.log(response);
+            if (response == null) {
+                $('#error').css("display", "block");
+                $('.modal-text').text(`請登入會員`);
+            }
+            else {
+                userdata = JSON.stringify(response);
+            }
+        }
+        //修改
+        $(`.itemreportEdit`).on("click", function () {
+            if ($(`.reportEdit`).css('display') === "none") {
+                editid = $(this).data('id');
+                editorder = $(this).data('order');
+                editparetid = $(this).data('paretid');
+                let str = $(this).closest('div').prev('div').find(".itemMessage").text();
+                let strEdit = str.substring(3, str.length);
+                $(`.reportEdit`).find('.userEditinput').val(strEdit);
+                $(`.reportEdit`).css('display', 'block')
+                $(this).closest('div').prev('div').find('p').css('display', "none");
+                //console.log($(this).closest('div').prev('div'));
+                $(this).closest('div').prev('div').append($(".reportEdit"));
+            }
+        });
+
+        $('#userEditCancel').on('click', function () {
+            $(`.reportEdit`).css('display', 'none');
+            $(this).closest('div').siblings('p').css('display', "block")
+        });
+        $('.userEditinput').on('keyup', function (evt) {
+            let comment = $('.userEditinput').val();
+            if(evt.keyCode === 13)
+            {
+            editcomment(editparetid,editid, editorder, comment);
+            }
+        });
+         $('#userEditSubmit').on('click', function (evt) {
+            let comment = $('.userEditinput').val();
+            editcomment(editparetid, editid, editorder, comment);
+        });
+        async function editcomment(paretid,id, order, comment) {
+            let productid = @Model.pro商品編號;
+            let colorid = @Model.商品顏色ID;
+            let FD = new FormData();
+            FD.append('paretid',paretid)
+            FD.append('id', id)
+            FD.append('order', order)
+            FD.append('productid', productid)
+            FD.append('colorid', colorid)
+            FD.append('comment', comment)
+            var data = await fetch(`@Url.Content("~/ProductWall/EditComment")`, {
+                method: "POST",
+                body: FD
+            });
+            let response = await data.text();
+            if (response != null) {
+                connection.invoke("SendComment", response).catch(function () {
+                    $('#error').css("display", "block");
+                    $('.modal-text').text("推送失敗");
+                });
+            }
+        };
+
+        //回覆
+        $(`.itemreport`).on("click", function () {
+            $(this).closest(`div`).after($(`.userreport`));
+        });
+        //刪除
+        $(`.itemreportDelete`).on("click", function () {
+            $('#alert').css('display', 'block');
+            $('.modal-text').text("請問確認要刪除嗎?");
+            deleteid = $(this).data('id');
+            deleteorder = $(this).data('order');
+        });
+        //刪除Post
+        async function deletecomment(id, order) {
+            let productid = @Model.pro商品編號;
+            let colorid = @Model.商品顏色ID;
+            let FD = new FormData();
+            FD.append('id', id)
+            FD.append('order', order)
+            FD.append('productid', productid)
+            FD.append('colorid', colorid)
+            var data = await fetch(`@Url.Content("~/ProductWall/DeleteComment")`, {
+                method: "POST",
+                body: FD
+            });
+            let response = await data.text();
+            if (response != null) {
+                connection.invoke("SendComment", response).catch(function () {
+                    $('#error').css("display", "block");
+                    $('.modal-text').text("操作失敗");
+                });
+            }
+        };
+        
+        //新增
+        $(`#userreportSubmit`).on(`click`, async function () {
+            createComment();
+        });
+        $(`.userreportinput`).on('keyup', async function (evt) {
+            if(evt.keyCode === 13)
+            {
+                console.log("新增測試");
+            createComment();
+            }
+        });
+        //新增方法
+       async function createComment(){
+            await checkuser();
+            if (userdata != null) {
+                //回復商品
+                if ($(`.userreport`).siblings(`.reportmain`).data('name') === "reportmain") {
+                    let comment = $(`.userreportinput`).val();//使用者輸入內容
+                    let productid = @Model.pro商品編號;
+                    let colorid = @Model.商品顏色ID;
+                    (async function () {
+                        let FD = new FormData();
+                        FD.append('comment', comment)
+                        FD.append('productid', productid)
+                        FD.append('colorid', colorid)
+                        FD.append('userdata', userdata)
+                        FD.append('count', 1)
+                        let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                            method: "POST",
+                            body: FD
+                        })
+                        let response = await data.text();
+
+                        if (response != null) {
+                            connection.invoke("SendComment", response).catch(function () {
+                                $('#error').css("display", "block");
+                                $('.modal-text').text(response);
+                            });
+                        }
+                    }());//加上小括號立即執行
+                }
+                //回復主題
+                else if ($(`.userreport`).closest(`.itemCommentContent`).data('name') === "paret") {
+                    let comment = $(`.userreportinput`).val();
+                    let productid = @Model.pro商品編號;
+                    let colorid = @Model.商品顏色ID;
+                    let paretID = $(`.userreport`).closest(`.itemCommentContent`).data('id');
+                    (async function () {
+                        let FD = new FormData();
+                        FD.append('comment', comment)
+                        FD.append('productid', productid)
+                        FD.append('colorid', colorid)
+                        FD.append('userdata', userdata)
+                        FD.append('paretID', paretID)
+                        FD.append('count', 2)
+                        let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                            method: "POST",
+                            body: FD
+                        })
+                        let response = await data.text();
+
+                        if (response != null) {
+                            connection.invoke("SendComment", response).catch(function () {
+                                $('#error').css("display", "block");
+                                $('.modal-text').text(response);
+                            });
+                        }
+                    }());//加上小括號立即執行
+                }
+                ////回復子題
+                else if ($(`.userreport`).closest(`.itemCommentContent`).data('name') === "child") {
+                    let comment = $(`.userreportinput`).val();
+                    let paretID = $(`.userreport`).closest(`.itemCommentContent`).closest(`ul`).closest(`div`).prev().data('id');
+                    let childID = $(`.userreport`).closest(`.itemCommentContent`).data('id');
+                    let productid = @Model.pro商品編號;
+                    let colorid = @Model.商品顏色ID;
+                    (async function () {
+                        let FD = new FormData();
+                        FD.append('comment', comment)
+                        FD.append('productid', productid)
+                        FD.append('colorid', colorid)
+                        FD.append('userdata', userdata)
+                        FD.append('paretID', paretID)
+                        FD.append('childID', childID)
+                        FD.append('count', 3)
+                        let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                            method: "POST",
+                            body: FD
+                        })
+                        let response = await data.text();
+
+                        if (response != null) {
+                            connection.invoke("SendComment", response).catch(function () {
+                                $('#error').css("display", "block");
+                                $('.modal-text').text(response);
+                            });
+                        }
+                    }());
+                }
+                //最後
+                else {
+                    let comment = $(`.userreportinput`).val();
+                    let paretID = $(`.userreport`).closest("ul").closest('li').closest(`.itemCommentContent`).closest("ul").closest(`div`).prev().data('id');
+                    let childID = $(`.userreport`).closest("ul").closest('li').closest(`.itemCommentContent`).data('id');
+                    let productid = @Model.pro商品編號;
+                    let colorid = @Model.商品顏色ID;
+                    (async function () {
+                        let FD = new FormData();
+                        FD.append('comment', comment)
+                        FD.append('productid', productid)
+                        FD.append('colorid', colorid)
+                        FD.append('userdata', userdata)
+                        FD.append('paretID', paretID)
+                        FD.append('childID', childID)
+                        FD.append('count', 3)
+                        let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                            method: "POST",
+                            body: FD
+                        })
+                        let response = await data.text();
+
+                        if (response != null) {
+                            connection.invoke("SendComment", response).catch(function () {
+                                $('#error').css("display", "block");
+                                $('.modal-text').text("推送失敗");
+                            });
+                        }
+                    }());
+                }
+            }
+        }
+
+        $(`#userreportCancel`).on("click", function () {
+            $(`.reportmain`).after($(`.userreport`));
+            $(`.userreportinput`).val("");
+        });
+
+        //以上評論
+
+        $(".tab-item").on('click', function () {
+            $(this).addClass("ac").siblings().removeClass("ac");
+            let item = $(this).data('item');
+            $(`div[data-detail=${item}]`).addClass("detail-item-show").siblings().removeClass("detail-item-show");
+        });
+
+        $(".plus").on("click", function () {
+            ++count;
+            if (count > 10) {
+                count = 10;
+                $(this).siblings('.number-box').find('input').val(count);
+            }
+            else {
+                $(this).siblings('.number-box').find('input').val(count);
+            }
+        });
+        $(".reduce").on("click", function () {
+            --count;
+            if (count >= 1) {
+                $(this).siblings('.number-box').find('input').val(count);
+            }
+            else {
+                count = 1;
+                $(this).siblings('.number-box').find('input').val(count);
+
+            }
+
+        });
+        $(".d-right-share-FB").on('click', function () {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${location.href}`);
+        });
+        $(".d-right-share-LINE").on('click', function () {
+            window.open(`https://social-plugins.line.me/lineit/share?url=${location.href}`);
+
+        });
+
+        $('.size-item').on('click', function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $("#userchoose").text("加入購物車");
+            $("#userchoose").css("cursor", "pointer");
+        });
+        $("#userchoose").on("click", function () {
+            if ($(".size-item.active").text() != "") {
+                sizecheck = $(".size-item.active").text();
+                checkCount();
+            }
+
+        });
+
+        $('.d-right-share-pic,.d-right-share-pic-Text').on(`click`, function () {
+            sizecheck = $(".size-item.active").text();
+            let idcheck = $(".d-right-color-item.active").find('a').attr("id");
+            let Colorcheck = $(".Color").find('span').text();
+            if (sizecheck === "") {
+                $('#error').css("display", "block");
+                $('.modal-text').text("請選擇尺寸");
+            }
+            else {
+                AddtoMyLoveOrCart(sizecheck, false);
+
+            }
+        });
+        //加入我的最愛或購物車
+        async function AddtoMyLoveOrCart(sizecheck, bool) {
+            const FD = new FormData();
+            FD.append('商品名稱', "@Model.pro商品名稱")
+            FD.append('商品編號', "@Model.pro商品編號")
+            FD.append('商品顏色種類', "@Model.pro商品顏色")
+            FD.append('商品價格', "@Model.pro商品金額")
+            FD.append('尺寸種類', sizecheck)
+            FD.append('圖片1檔名', "@Model.pro商品圖片1")
+            FD.append('訂單數量', $('.number-box').find('input').val())
+            FD.append('購物車或我的最愛', bool)
+            const data = await fetch("@Url.Content("~/MyLove/Create")", {
+                method: "POST",
+                body: FD
+            });
+            const response = await data.text();
+            $('#error').css("display", "block");
+            $('.modal-text').text(`${response}`);
+            //---LU
+            if (bool) {
+                let count = $('.number-box').find('input').val()
+                let carcount = $('#cart_num_pc').text()
+                carcount = parseFloat(carcount) + parseFloat(count);
+                $('#cart_num_pc').text(carcount)
+                CountForCar();
+            }
+        }
+
+
+        //----購物車記數
+        async function CountForCar() {
+            var carNumBox = $('#cart_num_pc').text()
+            const num = await fetch(`@Url.Content("~/Shopping/CarProductCount?num=${carNumBox}")`);
+            const nums = await num.json();
+        }
+
+        //確認商品數量
+        async function checkCount() {
+            const FD = new FormData();
+            FD.append("productid", "@Model.pro商品編號")
+            FD.append("colorid", "@Model.商品顏色ID")
+            FD.append("sizeid", $(".size-item.active").attr("id"))
+            FD.append("count", $('.number-box').find('input').val())
+            const data = await fetch("@Url.Content("~/MyLove/checkCount")",
+                {
+                    method: "POST",
+                    body: FD
+                });
+            const reponse = await data.text();
+            if (reponse === "true") {
+                AddtoMyLoveOrCart(sizecheck, true);
+            }
+            else {
+                $('#error').css("display", "block");
+                $('.modal-text').text("商品庫存不足");
+            }
+        }
+    
+         
+            
+            
+    
+            
+    </script>
+    <script>
+        $("#sclass").load("@Url.Content("~/ProductWall/typeNav?id=")" + $("#typeid").val() + "&type=" + $("#type").text());
+    </script>
+}

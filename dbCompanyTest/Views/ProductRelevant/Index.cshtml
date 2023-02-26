@@ -1,0 +1,779 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Back_Layout_Sneat.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+@*chart圖所需的資源*@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> 相關分類表單</h4>
+        <div class="row">            
+        <p id="nav_modal_btn">
+            <button class="btn btn-primary " type="button" data-bs-toggle="collapse" data-bs-target="#collapsecolor" aria-expanded="false" aria-controls="collapsecolor" id="btn_ColorControl">
+              顏色
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesize" aria-expanded="false" aria-controls="collapsesize" id="btn_SizeControl">
+                尺寸
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsetype" aria-expanded="false" aria-controls="collapsetype" id="btn_TypeControl">
+                分類
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseshoe" aria-expanded="false" aria-controls="collapseshoe" id="btn_ShoesControl">
+                鞋種
+            </button>
+        </p>
+       </div>
+    <div id="collapse_group">       
+        <div class="collapse" id="collapsecolor">           
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-3">     
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Moda" id="btn_ColorForm"> 新增</button>
+                        <button type="button" class="btn btn-primary" data-bubble-url="@Url.Content("~/ProductRelevant/color_bubblechart")" data-bar-url="@Url.Content("~/ProductRelevant/color_Barchart")" name="show_chart">銷售圖表</button>
+                    </div>
+            </div>
+                <hr style='background-color:white; height:1px; border:none;'>
+                <table id="tableColor" class="table-rwd">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>商品顏色種類</th>
+                            <th>色碼</th>
+                            <th>商品顏色圖片</th>
+                            <th>修改</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapse" id="collapsesize">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Moda" id="btn_SizeForm"> 新增</button>
+                        <button type="button" class="btn btn-primary" data-bubble-url="@Url.Content("~/ProductRelevant/size_bubblechart")" data-bar-url="@Url.Content("~/ProductRelevant/size_Barchart")" name="show_chart">銷售圖表</button>
+                    </div>
+                </div>
+                <hr style='background-color:white; height:1px; border:none;'>
+                <table id="tableSize" class="table-rwd">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>尺寸種類</th>
+                            <th>修改</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapse" id="collapsetype">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Moda" id="btn_TypeForm"> 新增</button>
+                        <button type="button" class="btn btn-primary" data-bubble-url="@Url.Content("~/ProductRelevant/type_bubblechart")" data-bar-url="@Url.Content("~/ProductRelevant/type_Barchart")" name="show_chart">銷售圖表</button>
+                    </div>
+                </div>
+                <hr style='background-color:white; height:1px; border:none;'>
+                <table id="tableType" class="table-rwd">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>商品分類名稱</th>
+                            <th>修改</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapse" id="collapseshoe">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Moda" id="btn_shoesForm"> 新增</button>
+                        <button type="button" class="btn btn-primary" data-bubble-url="@Url.Content("~/ProductRelevant/shoes_bubblechart")" data-bar-url="@Url.Content("~/ProductRelevant/shose_Barchart")" name="show_chart">銷售圖表</button>
+                    </div>
+                </div>
+                <hr style='background-color:white; height:1px; border:none;'>
+                <table id="tableShoes" class="table-rwd">
+                    <thead>
+                        <tr>
+                            <th>序</th>
+                            <th>鞋種</th>
+                            <th>修改</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapse" id="heightchart_bubble">
+            <div class="card card-body">
+                <div class="row">                     
+                    <div class="col-md-6">
+                        <h2><i class="align-middle me-2" data-feather="bar-chart" ></i>Bar圖</h2>
+                        <div id="container_bar" style="height:600px"></div>
+                    </div>
+                  
+                    <div class="col-md-6" >
+                        <h2><i class="align-middle me-2" data-feather="pie-chart" ></i>氣泡圖</h2>
+                        <div id="SP_bubble_container" "></div>
+                    </div>
+                 
+                </div>
+            </div>
+    </div>
+</div>
+
+@*Modal_新增與修改_明細*@
+    <div class="modal fade" id="Moda" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width:350px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModal-label">新增</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn_Close_D">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal_刪除*@
+<div class="modal fade" id="Moda_D_D" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="DeleteModal-label">警告</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="display: none;">
+                    <label class="control-label">url</label>
+                    <input name="url" class="form-control" readonly />
+                </div>
+                <div class="form-group" style="display: none;">
+                    <label class="control-label">id</label>
+                    <input name="id" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="D_D_Delete" class="btn btn-primary" name="btn_D_D">刪除</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn_Close_D">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+    <script src="@Url.Content("~/js/product_index.js")"></script>
+        <script>
+            //用於DataTable中文化設定
+        var lang = {
+            "processing": "處理中...",
+            "loadingRecords": "載入中...",
+            "lengthMenu": "顯示 _MENU_ 項結果",
+            "zeroRecords": "沒有符合的結果",
+            "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+            "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+            "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+            "infoPostFix": "",
+            "search": "搜尋:",
+            "paginate": {
+                "first": "第一頁",
+                "previous": "上一頁",
+                "next": "下一頁",
+                "last": "最後一頁"
+            },
+            "aria": {
+                "sortAscending": ": 升冪排列",
+                "sortDescending": ": 降冪排列"
+            }
+        };
+
+        //用TBcolor 代表整個Color表單
+            //TBcolor Load Start===============
+            let TBcolor = null;
+            
+            const ColorLoad = () =>{
+            TBcolor = $('#tableColor').DataTable(
+               {
+                    "language": lang,
+                   "searching":true,
+                    "ajax": `@Url.Content("~/ProductRelevant/ColorList")`,
+                    "type":'get',
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "columns":
+                    [
+                            //{ "data": "商品顏色id", width: '10%' },
+                            {
+                                "data": null,
+                                "render": function (data, type, full, meta) {
+                                    return meta.row + 1 + meta.settings._iDisplayStart;
+                                }
+                            }, // 序號
+                            { "data": "商品顏色種類"},
+                            { "data": "色碼" },
+                            {
+                                data: null,
+                                className: 'img',
+                                render: function (data, type, row) {                                    
+                                    if (data.商品顏色圖片==null)
+                                    return `<img src="@Url.Content("~/images")/404.jpg" width="50" height="50" '/>`
+                                    else
+                                    return `<img src="@Url.Content("~/images/colorimg")/${data.商品顏色圖片}" width="50" height="50" '/>`
+
+                                },
+                                orderable: false,
+                                width:'10%'
+                            },
+                            {
+                                data: null,
+                                className: 'edit',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" data-value="${data.商品顏色id}" id="btnEdit" name="C_btnEdit" title="修改"   data-bs-toggle="modal" data-bs-target="#Moda"><i class="fas fa-edit"></i>修改</button>`;
+
+                                },
+                                orderable: false,
+                                width: '7%'
+                            },
+                            {
+                                data: null,
+                                className: 'del',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="P_btnDel" data-value="${data.商品顏色id}" name="C_btnDel"  title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"></i>刪除</button>`;
+                                },
+                                orderable: false,
+                                width: '7%'
+                            }
+                    ]
+               });     
+            }
+         //TBColor End===================
+
+        //用TBsize 代表整個Size表單
+        //TBsize Load Start===============
+        let TBsize = null;
+
+        const SizeLoad = () => {
+            TBsize = $('#tableSize').DataTable(
+                {
+                    "language":lang,
+                    "searching": true,
+                    "ajax": `@Url.Content("~/ProductRelevant/SizeList")`,
+                    "type": 'get',
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "columns":
+                        [
+                            //{ "data": "商品尺寸id", width: '10%' },
+                            {
+                                "data": null,
+                                "render": function (data, type, full, meta) {
+                                    return meta.row + 1 + meta.settings._iDisplayStart;
+                                }
+                            }, // 序號
+                            { "data": "尺寸種類" },                         
+                            {
+                                data: null,
+                                className: 'edit',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="btnEdit" data-value="${data.商品尺寸id}" name="S_btnEdit" title="修改" data-bs-toggle="modal" data-bs-target="#Moda"><i class="fas fa-edit"></i>修改</button>`;
+
+                                },
+                                orderable: false,
+                                width: '7%'
+                            },
+                            {
+                                data: null,
+                                className: 'del',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="P_btnDel" name="S_btnDel" data-value="${data.商品尺寸id}"  title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"></i>刪除</button>`;
+                                },
+                                orderable: false,
+                                width: '7%'
+                            }
+                        ]
+                });
+        }
+        //TBColor End===================
+
+        //用TBtype 代表整個Type表單
+        //TBtype Load Start===============
+        let TBtype = null;
+
+        const TypeLoad = () => {
+            TBtype = $('#tableType').DataTable(
+                {
+                    "language": lang,
+                    "searching": true,
+                    "ajax": `@Url.Content("~/ProductRelevant/TypeList")`,
+                    "type": 'get',
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "columns":
+                        [
+                            //{ "data": "商品分類id", width: '10%' },
+                            {
+                                "data": null,
+                                "render": function (data, type, full, meta) {
+                                    return meta.row + 1 + meta.settings._iDisplayStart;  //加這段分頁自動疊加
+                                }
+                            }, // 序號
+                            { "data": "商品分類名稱" },
+                            {
+                                data: null,
+                                className: 'edit',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="btnEdit" data-value="${data.商品分類id}" name="T_btnEdit" title="修改" data-bs-toggle="modal" data-bs-target="#Moda"><i class="fas fa-edit"></i>修改</button>`;
+
+                                },
+                                orderable: false,
+                                width: '7%'
+                            },
+                            {
+                                data: null,
+                                className: 'del',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="P_btnDel" data-value="${data.商品分類id}"  name="T_btnDel"  title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"></i>刪除</button>`;
+                                },
+                                orderable: false,
+                                width: '7%'
+                            }
+                        ]
+                });
+        }
+        //TBColor End===================
+
+        //用TBshoes 代表整個Shoes表單
+        //TBshoes Load Start===============
+        let TBshoes = null;
+
+        const ShoesLoad = () => {
+            TBshoes = $('#tableShoes').DataTable(
+                {
+                    "language": lang,
+                    "searching": true,
+                    "ajax": `@Url.Content("~/ProductRelevant/ShoesList")`,
+                    "type": 'get',
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "columns":
+                        [
+                            //{ "data": "商品鞋種id", width: '10%' },
+                            {
+                                "data": null,
+                                "render": function (data, type, full, meta) {
+                                    return meta.row + 1 + meta.settings._iDisplayStart;  //加這段分頁自動疊加
+                                }
+                            }, // 序號
+                            { "data": "鞋種" },
+                            {
+                                data: null,
+                                className: 'edit',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="btnEdit"  data-value="${data.商品鞋種id}" name="SH_btnEdit" title="修改" data-bs-toggle="modal" data-bs-target="#Moda"><i class="fas fa-edit"></i>修改</button>`;
+
+                                },
+                                orderable: false,
+                                width: '7%'
+                            },
+                            {
+                                data: null,
+                                className: 'del',
+                                render: function (data, type, row) {
+                                    return `<button type="submit" class="btn btn-primary" id="P_btnDel" data-value="${data.商品鞋種id}" name="SH_btnDel"  title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"></i>刪除</button>`;
+                                },
+                                orderable: false,
+                                width: '7%'
+                            }
+                        ]
+                });
+        }
+        //TBColor End===================
+
+            //載入時觸發
+        $(document).ready(function () {
+            //先開啟顏色面板
+            $("#btn_ColorControl").click();
+            ColorLoad();
+        });
+
+        //表單按鈕事件開始===================
+        //顏色表單按鈕事件
+        $("#btn_ColorControl").on('click',function(){           
+           if($(this).attr("aria-expanded")=="true")
+           {
+                change_Colortable();
+           }           
+        });
+
+        //新增按鈕綁定(Color)
+        $("#btn_ColorForm").on('click', function () {
+            $("#Moda .modal-header").find("#myModal-label").text("新增顏色")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_ColorCreate")");
+        });     
+
+        //加入按鈕事件(顏色修改) C_btnEdit
+        $('#tableColor').on('click', 'button[name="C_btnEdit"]', function () {
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");         
+            $("#Moda .modal-header").find("#myModal-label").text("修改顏色")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_ColorEdit")"+`/?id=${id}`);
+                      
+        });
+        //加入按鈕事件(顏色刪除) C_btnDel
+        $('#tableColor').on('click', 'button[name="C_btnDel"]', function () {
+            $.ajaxSettings.async = false;   //關閉非同步
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");
+            Send_DatatoDel_Moda("@Url.Content("~/ProductRelevant/ColorDelete")", id)
+            //$.get("@Url.Content("~/ProductRelevant/ColorDelete")", { "id": `${id}` }, (datas) => { alert(datas); });
+            ////重新載入
+            //change_Colortable()
+            $.ajaxSettings.async = true;   //開啟非同步
+        });
+
+        //重新加載顏色
+        function change_Colortable() {
+            if (($("#tableColor tbody tr").length)>0)
+            {
+                TBcolor.destroy();
+            }
+            ColorLoad();
+        }
+        //===
+        //尺寸表單按鈕事件
+        $("#btn_SizeControl").on('click', function () {
+            if ($(this).attr("aria-expanded") == "true") {
+                change_Sizetable();
+            }
+        })
+
+        //新增按鈕綁定(Size)
+        $("#btn_SizeForm").on('click', function () {
+            $("#Moda .modal-header").find("#myModal-label").text("新增尺寸")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_SizeCreate")");
+        });
+
+        //加入按鈕事件(尺寸修改) C_btnEdit
+        $('#tableSize').on('click', 'button[name="S_btnEdit"]', function () {
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");         
+            $("#Moda .modal-header").find("#myModal-label").text("修改尺寸")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_SizeEdit")" + `/?id=${id}`);
+        });
+
+        //重新加載尺寸
+        function change_Sizetable() {
+            if (($("#tableSize tbody tr").length) > 0) {
+                TBsize.destroy();
+            }
+            SizeLoad();
+        }
+
+        //加入按鈕事件(尺寸刪除) C_btnDel
+        $('#tableSize').on('click', 'button[name="S_btnDel"]', function () {
+            $.ajaxSettings.async = false;   //關閉非同步
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");         
+            Send_DatatoDel_Moda("@Url.Content("~/ProductRelevant/SizeDelete")", id)
+            //$.get("@Url.Content("~/ProductRelevant/SizeDelete")", { "id": `${id}` }, (datas) => { alert(datas); });
+            ////重新載入
+            //change_Sizetable();
+            $.ajaxSettings.async = true;   //開啟非同步
+        });
+        //===
+        //類別表單按鈕事件
+        $("#btn_TypeControl").on('click', function () {
+            if ($(this).attr("aria-expanded") == "true") {
+                change_Typetable();
+            }
+        })
+        //重新加載類別
+        function change_Typetable() {
+            if (($("#tableType tbody tr").length) > 0) {
+                TBtype.destroy();
+            }
+            TypeLoad();
+        }
+
+        //新增按鈕綁定(Size) btn_TypeForm
+        $("#btn_TypeForm").on('click', function () {
+            $("#Moda .modal-header").find(".modal-title").text("新增類別")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_TypeCreate")");
+        });
+
+        //加入按鈕事件(類別修改) T_btnEdit
+        $('#tableType').on('click', 'button[name="T_btnEdit"]', function () {
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");
+            $("#Moda .modal-header").find(".modal-title").text("修改類別")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_TypeEdit")" + `/?id=${id}`);
+        });
+
+        //加入按鈕事件(類別刪除) T_btnDel
+        $('#tableType').on('click', 'button[name="T_btnDel"]', function () {
+            $.ajaxSettings.async = false;   //關閉非同步
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");
+            Send_DatatoDel_Moda("@Url.Content("~/ProductRelevant/TypeDelete")", id)
+            //$.get("@Url.Content("~/ProductRelevant/TypeDelete")", { "id": `${id}` }, (datas) => { alert(datas); });
+            ////重新載入
+            //change_Typetable();
+            $.ajaxSettings.async = true;  //開啟非同步
+        });
+
+        //刪除資料送入刪除Moda
+        function Send_DatatoDel_Moda(url, id) {
+            let moda = $("#Moda_D_D");
+            moda.find("input[name='id']").val(id);
+            moda.find("input[name='url']").val(url);
+            moda.find("#DeleteModal-label").text("警告!請問是否要刪除此筆資料?")
+        }
+        //確認刪除事件
+        $("#Moda_D_D").find("#D_D_Delete").on('click', function () {
+            let moda = $("#Moda_D_D");
+            let id = moda.find("input[name='id']").val();
+            let url = moda.find("input[name='url']").val();
+            moda.find("#btn_Close_D").click();
+            $.get(url, { "id": `${id}` }, (datas) => { test_alert(datas); });
+            //重新載入
+             change_Colortable();
+            change_Sizetable();
+            change_Typetable();
+            change_Shoestable();
+        });
+        //===
+        //鞋種表單按鈕事件
+        $("#btn_ShoesControl").on('click', function () {
+            if ($(this).attr("aria-expanded") == "true") {
+                change_Shoestable();
+            }
+        })
+
+       // 新增按鈕綁定(Size) btn_TypeForm
+        $("#btn_shoesForm").on('click', function () {
+            $("#Moda .modal-header").find(".modal-title").text("新增鞋種")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_ShoesCreate")");
+        });
+
+        //加入按鈕事件(鞋種修改) SH_btnEdit
+        $('#tableShoes').on('click', 'button[name="SH_btnEdit"]', function () {
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");
+            $("#Moda .modal-header").find(".modal-title").text("修改鞋種")
+            $("#Moda .modal-body").load("@Url.Content("~/ProductRelevant/_ShoesEdit")" + `/?id=${id}`);
+        });
+
+        //加入按鈕事件(鞋種刪除) SH_btnDel
+        $('#tableShoes').on('click', 'button[name="SH_btnDel"]', function () {
+            $.ajaxSettings.async = false;   //關閉非同步
+            //const row = $(this).parents('tr');
+            //const id = row.find('td:eq(0)').text().trim();
+            const id = $(this).attr("data-value");         
+            Send_DatatoDel_Moda("@Url.Content("~/ProductRelevant/ShoesDelete")", id)
+            //$.get("@Url.Content("~/ProductRelevant/ShoesDelete")", { "id": `${id}` }, (datas) => { alert(datas); });
+            ////重新載入
+            //change_Shoestable();
+            $.ajaxSettings.async = true;  //開啟非同步
+        });
+
+
+        //重新加載類別
+        function change_Shoestable() {
+            if (($("#tableShoes tbody tr").length) > 0) {
+                TBshoes.destroy();
+            }
+            ShoesLoad();
+        }
+        //表單按鈕事件結束===================
+         //按其他button 關閉現在已開啟的collapse
+        $("#nav_modal_btn").on('click', "button", function () {
+            $(this).siblings().each(function () {            
+                    let modal = $(this).attr("data-bs-target");                  
+                    $(`${modal}`).collapse('hide');
+                    $("#heightchart_bubble").slideUp(500);
+            })
+        })
+
+        //按鈕開圖表圖事件
+        $("#collapse_group").on('click', "button[name='show_chart']",function(){
+            $("#heightchart_bubble").slideToggle(500);
+            const bubbleUrl = $(this).attr("data-bubble-url");
+             const barUrl = $(this).attr("data-bar-url");
+            // console.log(bubbleUrl);
+           //  console.log(barUrl);
+          Split_Packed_bubble("SP_bubble_container", bubbleUrl);
+          Bar_chart('container_bar', barUrl);
+        })
+             
+        //檢查錯誤圖檔
+        document.addEventListener("error", function (e) {
+            var elem = e.target;
+            if (elem.tagName.toLowerCase() == 'img') {
+                elem.src = '@Url.Content("~/images/404.jpg")';
+            }
+        }, true);
+
+       //Modal關閉監聽 hide.bs.modal
+        $("#Moda").on('hide.bs.modal', function () {
+            change_Colortable();
+            change_Sizetable();
+            change_Typetable();
+            change_Shoestable();           
+        })
+
+      function Bar_chart(obj,url)
+      {
+            $.getJSON(`${url}`, function (data) {
+                Highcharts.chart('container_bar', {
+
+                    colors: [
+                        data.topcolor
+                    ],
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: data.title,
+                        align: 'left'
+                    },
+                    subtitle: {
+                        text: '',
+                        align: 'left'
+                    },
+                    xAxis: {
+                        categories: data.categories,
+                        title: {
+                            text: null
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: data.yAxis_title_text,
+                            align: 'high'
+                        },
+                        labels: {
+                            overflow: 'justify'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: data.tooltip_valueSuffix
+                    },
+                    plotOptions: {
+                        bar: {
+                            pointWidth: data.plotOptions_bar_pontwidth,
+                            pointPadding: 0,
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'top',
+                        x: -40,
+                        y: 80,
+                        floating: true,
+                        borderWidth: 1,
+                        backgroundColor:
+                            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                        shadow: true
+                    },
+                    credits: {
+                        enabled: true
+                    },
+                    series: [{
+                        name: data.series.name,
+                        data: data.series.data
+                    }]
+                });
+            });
+      }
+
+       function Split_Packed_bubble(obj, url)
+        {
+
+            $.getJSON(`${url}`, function (data) {
+
+            Highcharts.chart('SP_bubble_container', {
+            chart: {
+            type: 'packedbubble',
+            height: '100%'
+            },
+            title: {
+                            text: data.title_text,
+            align: 'left'
+            },
+            tooltip: {
+            useHTML: true,
+                            pointFormat: '<b>{point.name}:</b> {point.value}' + `${data.pontformat}`
+            },
+            plotOptions: {
+            packedbubble: {
+            minSize: '30%',
+            maxSize: '100%',
+            zMin: 0,
+            zMax: 1000,
+            layoutAlgorithm: {
+            gravitationalConstant: 0.05,
+            splitSeries: true,
+            seriesInteraction: false,
+            dragBetweenSeries: true,
+            parentNodeLimit: true
+            },
+            dataLabels: {
+            enabled: true,
+            format: '{point.name}',
+            filter: {
+            property: 'y',
+            operator: '>',
+             value: data.filter_value
+            },
+            style: {
+            color: 'black',
+            textOutline: 'none',
+            fontWeight: 'normal'
+            }
+            }
+            }
+            },
+            series: data.series
+            });
+            });
+        }
+       </script>
+
+}

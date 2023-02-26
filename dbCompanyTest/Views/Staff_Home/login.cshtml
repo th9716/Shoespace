@@ -1,0 +1,158 @@
+﻿@model dbCompanyTest.Models.TestStaff
+
+@{
+    ViewData["Title"] = "login";
+}
+@{
+    Layout = null;
+}
+
+<link href="~/css/staff_login.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet" />
+
+
+
+<!-- Core CSS -->
+<link rel="stylesheet" href="~/assets/vendor/css/core.css" class="template-customizer-core-css" />
+<link rel="stylesheet" href="~/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+<link rel="stylesheet" href="~/assets/css/demo.css" />
+
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Shoespace</title>
+    <link rel="icon" href="~/homeImg/icon.ico" />
+    <meta name="description" content="" />
+   
+</head>
+
+
+
+
+<div class="out" style="background-image: url('@Url.Content("~/homeImg/後台.png")')">
+    <div class="right">
+        <form>
+            @Html.AntiForgeryToken()
+            <div class="box1">
+                <div class="containerr">
+                    <div class="top">
+                        <header class="no">員工登入</header>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" asp-controller="Staff_Home" asp-action="login" name="txtAccount" value="ST1-0008797" class="input no" placeholder="Username" id="Username" />
+                    </div>
+                    <div class="input-field">
+                        <input type="password" asp-controller="Staff_Home" asp-action="login" name="txtPassword" value="123456" class="input no" placeholder="Password" id="Password" />
+                    </div>
+                    <div style="display:flex; text-align:center">
+
+                        <div class="input-field" >
+                            <a href="javascript:void(0)" style="text-decoration:none">
+                                <botton type="submit" class="submit no" id="Login" style="margin-right:7px !important;margin-left:2px" >登入</botton>
+                            </a>
+                        </div>
+                        <div class="input-field">
+                            <a asp-action="Index" asp-controller="Home" style="text-decoration:none">
+                                <botton type="button" class="submit no" id="Login" style="margin-right:7px;margin-left:2px">返回</botton>
+                            </a>
+                        </div>
+                       @* <div class="input-field">
+                            <a asp-action="Index" asp-controller="Home" style="text-decoration:none">
+                                <botton class="submit" style="margin-right:7px;margin-left:2px;">返回</botton>
+                            </a>
+                        </div>*@
+                    </div>
+
+                    <div class="input-field" style="margin-top:17px;">
+                        <a id="forget" style="margin-top:17px;color:white; cursor:pointer">忘記密碼?</a>
+                        @*class="submit1 no"*@
+                        <p id="response" class="no" style="color: #ffffff;"></p>
+
+                        <div class="spinner-border text-light" role="status" style="width:15px; height:15px ; display:none" id="wait">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+        <botton class="submit2" id="spv_ad">行政主管</botton>
+        <botton class="submit2" id="spv_hr">人事主管</botton>
+        <botton class="submit2" id="hr1">h628</botton>
+        <botton class="submit2" id="hr2">h597</botton>
+        <botton class="submit2" id="bos">老闆</botton>
+    </div>
+    <div class="left">
+    </div>
+
+</div>
+
+<script src="~/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="~/assets/vendor/libs/popper/popper.js"></script>
+<script src="~/assets/vendor/js/bootstrap.js"></script>
+<script src="~/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //$("#out").css("height", `${height}px`)
+    $("#response").css("display", "none");
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener(`load`, () => {
+        var result = xhr.responseText;
+        if (result == "CantNull") {
+            $("#response").css("display", "");
+            $(`#response`).html(`請輸入完整`);
+        }
+        else if (result == "false") {
+            $("#response").css("display", "");
+            $(`#response`).html(`帳號或密碼錯誤`);
+        }
+        else if (result == "success")
+            location.reload();
+    });
+
+    $(`#Login`).on(`click`, function () {
+
+        const account = $(`#Username`).val();
+        const password = $(`#Password`).val();
+        xhr.open(`post`, `@Url.Content("~/Staff_Home/login")`);
+        xhr.setRequestHeader(`Content-Type`, `application/x-www-form-urlencoded`);
+        xhr.send(`account=${account}&password=${password}`);
+    });
+
+
+    $(`#forget`).on('click', function () {
+        $("#wait").css("display", "")
+        let account = $(`#Username`).val();
+        console.log(account);
+        if (account) {
+            console.log(account);
+            $.post("@Url.Content("~/Staff_Home/forgetPassword")", { "account": account }, function (data) {
+                $("#response").css("display", "");
+                $(`#response`).text(data);
+                $("#wait").css("display", "none")
+            })
+        }
+        else {
+            $("#response").css("display", "");
+            $(`#response`).text(`帳號?`);
+            $("#wait").css("display", "none")
+        }
+    });
+
+
+    $(`#spv_ad`).on(`click`, function () { $("#Username").val(`ST1-00596`); });
+    $(`#spv_hr`).on(`click`, function () { $("#Username").val(`ST1-00668`); });
+    $(`#hr1`).on(`click`, function () { $("#Username").val(`ST1-00628`); });
+    $(`#hr2`).on(`click`, function () { $("#Username").val(`ST1-00597`); });
+    $(`#bos`).on(`click`, function () { $("#Username").val(`ST2-0010170`); });
+
+</script>

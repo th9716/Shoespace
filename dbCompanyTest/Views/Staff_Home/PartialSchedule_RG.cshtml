@@ -1,0 +1,125 @@
+﻿<table class="table table-striped-columns" id="GR_table">
+    <thead>
+        <tr>
+            <th>部門</th>
+            <th>簽核人員</th>
+            <th>簽核時間</th>
+            <th>輸入意見</th>
+            <th>簽核</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="dpm_str"></td>
+            <td id="man_str"></td>
+            <td id="time_str"></td>
+            <td id="com_str"><input class="form-control" id="inp_com_str" /></td>
+            <td id="sin_str">
+                <span id="span_sin_str">敬陳</span>
+                <select class="form-control" id="list_stu">
+                    <option>未啟動</option>
+                    <option>敬陳</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td id="dpm_ecu"></td>
+            <td id="man_ecu"></td>
+            <td id="time_ecu"></td>
+            <td id="com_ecu"><input class="form-control" id="inp_com_ecu" /></td>
+            <td id="sin_ecu">
+                <select class="form-control" id="list_stu_sin_ecu1">
+                    <option>待簽</option>
+                    <option>完成</option>
+                    <option>退回起單人</option>
+                </select>
+                <span id="span_sin_ecu"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    var i_whostart = $("#inp_whostart").val();
+    var s_executor = $("#sele_executor").val();
+    $("#span_sin_str").css("display", "");
+    $("#inp_com_ecu").css("display", "none");
+    $("#list_stu_sin_ecu1,#lab_stfId").css("display", "none");
+    $("#list_stu").css("display", "none");
+
+    if (i_stu == `完成`) {
+        $("#inp_start").css("display", "none")
+    }
+
+    $("#dpm_str").text(i_whostart);
+    $("#time_str").text($("#inp_starttime").val());
+    $("#com_str").text($("#inp_cont").val());
+    $("#dpm_ecu").text(s_executor);
+    $("#span_sin_ecu").text($("#inp_executor_sin").val())
+    $("#time_ecu").text($("#inp_execut_time").val());
+
+    $.ajax({
+        url: `@Url.Content("~/Staff_Home/stf_info")`,
+        type: "GET",
+        data: { "stf": i_whostart },
+        dataType: "json"
+    })
+        .done(data => {
+            $("#dpm_str").text(data.部門)
+            $("#man_str").text(`${data.員工編號} ${data.員工姓名}`);
+        });
+    $.ajax({
+        url: `@Url.Content("~/Staff_Home/stf_info")`,
+        type: "GET",
+        data: { "stf": s_executor },
+        dataType: "json"
+    })
+        .done(data => {
+            $("#dpm_ecu").text(data.部門);
+            $("#man_ecu").text(`${data.員工編號} ${data.員工姓名}`);
+        });
+
+    if (i_whostart == splitstf) {
+        if ($("#inp_sta").val() == `執行 待簽`) {
+            $("#list_stu").css("display", "none");
+            $("#span_sin_str").css("display", "");
+        }
+        else if ($("#inp_sta").val() == `退回起單人`) {
+            $("#list_stu").css("display", "");
+            $("#inp_com_str").css("display", "");
+            $("#inp_com_str").text($("#inp_cont").val());
+            $("#list_stu").text("未啟動");
+            $("#span_sin_str").css("display", "none");
+        }
+    }
+    if (s_executor == splitstf) {
+        $("#list_stu_sin_ecu1").on('change', function () {
+            console.log(`3312132`)
+            $("#inp_executor_sin").val($("#list_stu_sin_ecu1 option:selected").text())
+        });
+        if ($("#inp_sta").val() != "完成") {
+            if ($("#inp_sta").val() == `執行 待簽`) {
+                $("#inp_com_ecu").css("display", "");
+                $("#list_stu_sin_ecu1").css("display", "");
+                $("#span_sin_ecu").css("display", "none");
+            }
+        }
+    }
+
+    $("#inp_com_str").on('blur', function () {
+        $("#inp_cont").val($("#inp_com_str").val())
+    });
+    $("#inp_com_ecu").on('blur', function () {
+        $("#inp_ans").val($("#inp_com_ecu").val())
+    });
+
+    $("#inp_start").on('click', function () {
+        let dt = new Date();
+        if (i_whostart == splitstf) {
+            $("#inp_starttime").val(dt);
+        }
+        if (s_executor == splitstf) {
+            $("#inp_execut_time").val(dt);
+        }
+    });
+</script>

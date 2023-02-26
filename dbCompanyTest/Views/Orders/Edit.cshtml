@@ -1,0 +1,84 @@
+﻿@model dbCompanyTest.Models.Order
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@{
+    Layout = "_Back_Layout_Sneat";
+}
+<div style="width:80%;margin:20px auto;">
+    <h1>Edit</h1>
+
+    <h4>Order</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="訂單編號" />
+                <div class="form-group">
+                    <label asp-for="客戶編號" class="control-label"></label>
+                    <select asp-for="客戶編號" class="form-control" asp-items="ViewBag.客戶編號"></select>
+                    <span asp-validation-for="客戶編號" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="付款方式" class="control-label"></label>
+                    <input asp-for="付款方式" class="form-control" />
+                    <span asp-validation-for="付款方式" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="送貨地址" class="control-label"></label>
+                    <input asp-for="送貨地址" class="form-control" />
+                    <span asp-validation-for="送貨地址" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="總金額" class="control-label"></label>
+                    <input asp-for="總金額" class="form-control" />
+                    <span asp-validation-for="總金額" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="下單時間" class="control-label"></label>
+                    <input asp-for="下單時間" class="form-control" />
+                    <span asp-validation-for="下單時間" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="訂單狀態" class="control-label"></label>
+                    <input asp-for="訂單狀態" class="form-control" />
+                    <span asp-validation-for="訂單狀態" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="付款狀態" class="control-label"></label>
+                    <input asp-for="付款狀態" class="form-control" />
+                    <span asp-validation-for="付款狀態" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="收件人名稱" class="control-label"></label>
+                    <input asp-for="收件人名稱" class="form-control" />
+                    <span asp-validation-for="收件人名稱" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="收件人電話" class="control-label"></label>
+                    <input asp-for="收件人電話" class="form-control" />
+                    <span asp-validation-for="收件人電話" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="收件人email" class="control-label"></label>
+                    <input asp-for="收件人email" class="form-control" />
+                    <span asp-validation-for="收件人email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index" class="btn btn-primary">取消</a>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

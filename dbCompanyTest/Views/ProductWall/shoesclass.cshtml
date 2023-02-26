@@ -1,0 +1,8 @@
+﻿@model IEnumerable<dbCompanyTest.ViewModels.ProductWallViewModel>
+
+@foreach (var item in Model)
+{
+    <li class="list-inline-item">
+        <a class="h5 text-dark text-decoration-none" asp-action="type" asp-route-id="@item.商品鞋種id">@Html.DisplayFor(modelItem => item.鞋種名稱)</a>
+    </li>
+}

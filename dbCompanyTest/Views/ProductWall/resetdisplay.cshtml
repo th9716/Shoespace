@@ -1,0 +1,462 @@
+﻿@model dbCompanyTest.ViewModels.ProductDetailViewModels
+<h2 class="btn collapsed m_10" data-bs-toggle="collapse" data-bs-target="#Example">留言板</h2>
+<ul class="collapse show" id="Example">
+    @{
+        int collapsecount = 0;
+        foreach (var paretitem in Model.paretCommentslist)
+        {
+            collapsecount++;
+                            <li>
+                                <div class="itemCommentContent" data-id="@paretitem.paretCommentID" data-name="paret">
+                                    <div>
+                                        <p class="itemName">會員:@paretitem.paretCommentGuestName</p>
+                                        <p class="itemMessage">內容:@paretitem.paretComment</p>
+                                    </div>
+                                    <div>
+                                        @if (paretitem.paretCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                        {
+                                            <span class="itemreport">回覆</span>
+
+                                            <span>|</span>
+
+                                            <span class="itemreportEdit" data-id="@paretitem.paretCommentID" data-order="1">編輯</span>
+
+                                            <span>|</span>
+
+                                            <span class="itemreportDelete" data-id="@paretitem.paretCommentID" data-order="1">刪除</span>
+
+                                            <span>|</span>
+
+                                            <span>留言時間:@paretitem.paretCommentDate.ToString("yyyy/MM/dd")</span>
+                            if (Model.childCommentlist.FirstOrDefault(x => x.childCommentParet == paretitem.paretCommentID) != null)
+                            {
+                                if (paretitem.paretCommentID == Model.collapseParetid)
+                                {
+                                    var commentcount = Model.childCommentlist.Select(x => x).Where(y => y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                    <span>|</span>
+
+                                                    <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount" data-comment="@commentcount.Count">隱藏</span>
+                                }
+                                else 
+                                {
+                                var commentcount = Model.childCommentlist.Select(x => x).Where(y => y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                    <span>|</span>
+
+                                    <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount" data-comment="@commentcount.Count">檢視其他 @commentcount.Count 則留言</span>
+                                
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                                            <span class="itemreport">回覆</span>
+
+                                            <span>|</span>
+
+                                            <span>留言時間:@paretitem.paretCommentDate.ToString("yyyy/MM/dd")</span>
+                            if (Model.childCommentlist.FirstOrDefault(x => x.childCommentParet == paretitem.paretCommentID) != null)
+                            {
+                                if (paretitem.paretCommentID == Model.collapseParetid)
+                                {
+                                    var commentcount = Model.childCommentlist.Select(x => x).Where(y => y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                    <span>|</span>
+
+                                                    <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount" data="@paretitem.paretCommentID" data-comment="@commentcount.Count">隱藏</span>
+                                }
+                                else
+                                {
+                                    var commentcount = Model.childCommentlist.Select(x => x).Where(y => y.childCommentParet == paretitem.paretCommentID).ToList();
+                                                    <span>|</span>
+
+                                    <span class="collapsed collapsecheck" data-bs-toggle="collapse" data-bs-target="#Example_@collapsecount" data="@paretitem.paretCommentID" data-comment="@commentcount.Count">檢視其他 @commentcount.Count 則留言</span>
+                                }
+                            }
+                        }
+                                    </div>
+                                </div>
+                                <div style="display:flex;margin-left:2px;border-left:solid;">
+                                    @{
+                        string x = "multi-collapse";
+
+                        if (paretitem.paretCommentID == Model.collapseParetid)
+                        {
+                            x = "show";
+                        }
+                                    }
+                                    <ul class="collapse @x" id="Example_@collapsecount" data="@Model.collapseParetid">
+                                        @{
+                            foreach (var childitem in Model.childCommentlist)
+                            {
+                                if (paretitem.paretCommentID == childitem.childCommentParet && childitem.childCommentchildid == null)
+                                {
+                                                                    <div style="display:flex;" class="itemCommentContent" data-id="@childitem.childCommentID" data-name="child">
+                                                                        <div class="itemdivborder"></div>
+                                                                    <li>
+                                                                        <div>
+                                                                            <p class="itemName">會員:@childitem.childCommentGuestName</p>
+                                                                            <p class="itemMessage">內容:@childitem.childComment</p>
+                                                                        </div>
+                                                                        <div>
+                                                                                @if (childitem.childCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                                                {
+                                                                                <span class="itemreport">回覆</span>
+
+                                                                                <span>|</span>
+
+                                                                                <span class="itemreportEdit" data-id="@childitem.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">編輯</span>
+
+                                                                                <span>|</span>
+
+                                                                                <span class="itemreportDelete" data-id="@childitem.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">刪除</span>
+
+                                                                                <span>|</span>
+
+                                                                                <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                }
+                                                else
+                                                {
+                                                                                <span class="itemreport">回覆</span>
+
+                                                                                <span>|</span>
+
+                                                                                <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                }
+                                                                        </div>
+                                                                        <div style="display:flex;margin-left:28px;border-left:solid;">
+                                                                            <ul>
+                                                                                    @{
+                                                        foreach (var childitemchildid in Model.childCommentlist)
+                                                        {
+                                                            if (childitem.childCommentID == childitemchildid.childCommentchildid)
+                                                            {
+                                                                                                            <div style="display:flex;" class="itemCommentContent">
+                                                                                                                <div class="itemdivborder"></div>
+                                                                                                            <li>
+                                                                                                                <div>
+                                                                                                                    <p class="itemName">會員:@childitemchildid.childCommentGuestName</p>
+                                                                                                                    <p class="itemMessage">內容:@childitemchildid.childComment</p>
+                                                                                                                </div>
+                                                                                                                <div>
+                                                                                                                            @if (childitemchildid.childCommentGuestID.Equals(Model.客戶編號) || Model.員工編號 != null)
+                                                                            {
+                                                                                                                        <span class="itemreport">回覆</span>
+
+                                                                                                                        <span>|</span>
+
+                                                                                                                        <span class="itemreportEdit" data-id="@childitemchildid.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">編輯</span>
+
+                                                                                                                        <span>|</span>
+
+                                                                                                                        <span class="itemreportDelete" data-id="@childitemchildid.childCommentID" data-paretid="@paretitem.paretCommentID" data-order="2">刪除</span>
+
+                                                                                                                        <span>|</span>
+
+                                                                                                                        <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                                                        <span class="itemreport">回覆</span>
+
+                                                                                                                        <span>|</span>
+
+                                                                                                                        <span>留言時間:@childitem.childCommentDate.ToString("yyyy/MM/dd")</span>
+                                                                            }
+                                                                                                                </div>
+                                                                                                            </li>
+                                                                                                    </div>
+                                                            }
+                                                        }
+                                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </li>
+                                                        </div>
+                                }
+                            }
+                                        }
+                        </ul>
+                                                        </div>
+                                                        </li>
+        }
+    }
+        </ul>
+@*回覆視窗*@
+<hr />
+<div class="reportmain" data-name="reportmain"></div>
+<div class="userreport">
+    <input class="userreportinput" type="text" placeholder="留言..." /><br />
+    <input type="submit" id="userreportSubmit" class="btn btn-success btn-sm" value="送出" />
+    <input type="button" id="userreportCancel" class="btn btn-secondary btn-sm" value="取消" />
+</div>
+
+@*編輯訊息*@
+<div class="reportEdit" style="display:none;">
+    <input class="userEditinput" type="text" /><br />
+    <input type="submit" id="userEditSubmit" class="btn btn-primary btn-sm" value="送出" />
+    <input type="button" id="userEditCancel" class="btn btn-secondary btn-sm" value="取消" />
+</div>
+
+
+
+
+    </div>
+</div>
+<script>
+    $('.collapsecheck').on("click", async function () {
+        const collapseid = await $(this).data("bsTarget");
+        if ($(this).hasClass('collapsed')) 
+        {
+            if ($(this).data("comment") != "" || $(this).data("comment") != null || $(this).data("comment") != "undefined") {
+              let comment =   $(this).data("comment")
+                $(this).text(`檢視其他 ${comment} 則留言`);
+            }
+            else
+            {
+            $(this).text(savetext);
+            }
+        }
+        else {
+            savetext = $(this).text();
+            $(this).text("隱藏");
+        }
+    });
+
+    async function checkuser() {
+        let data = await fetch("@Url.Content("~/ProductWall/checkuser")");
+        let response = await data.json();
+        //console.log(response);
+        if (response == null) {
+            $('#error').css("display", "block");
+            $('.modal-text').text(`請登入會員`);
+        }
+        else {
+            userdata = JSON.stringify(response);
+        }
+    }
+
+
+    //修改
+    $(`.itemreportEdit`).on("click", function () {
+        if ($(`.reportEdit`).css('display') === "none") {
+            editid = $(this).data('id');
+            editorder = $(this).data('order');
+            editparetid = $(this).data('paretid');
+            let str = $(this).closest('div').prev('div').find(".itemMessage").text();
+            let strEdit = str.substring(3, str.length);
+            $(`.reportEdit`).find('.userEditinput').val(strEdit);
+            $(`.reportEdit`).css('display', 'block')
+            $(this).closest('div').prev('div').find('p').css('display', "none");
+            //console.log($(this).closest('div').prev('div'));
+            $(this).closest('div').prev('div').append($(".reportEdit"));
+        }
+    });
+
+    $('#userEditCancel').on('click', function () {
+        $(`.reportEdit`).css('display', 'none');
+        $(this).closest('div').siblings('p').css('display', "block")
+    });
+    $('.userEditinput').on('keyup', function (evt) {
+        let comment = $('.userEditinput').val();
+        if (evt.keyCode === 13) {
+            editcomment(editparetid, editid, editorder, comment);
+        }
+    });
+    $('#userEditSubmit').on('click', function (evt) {
+        let comment = $('.userEditinput').val();
+        editcomment(editparetid, editid, editorder, comment);
+    });
+    async function editcomment(paretid, id, order, comment) {
+        let productid = @Model.pro商品編號;
+        let colorid = @Model.商品顏色ID;
+        let FD = new FormData();
+        FD.append('paretid', paretid)
+        FD.append('id', id)
+        FD.append('order', order)
+        FD.append('productid', productid)
+        FD.append('colorid', colorid)
+        FD.append('comment', comment)
+        var data = await fetch(`@Url.Content("~/ProductWall/EditComment")`, {
+            method: "POST",
+            body: FD
+        });
+        let response = await data.text();
+        if (response != null) {
+            connection.invoke("SendComment", response).catch(function () {
+                $('#error').css("display", "block");
+                $('.modal-text').text("推送失敗");
+            });
+        }
+    };
+
+    //回覆
+    $(`.itemreport`).on("click", function () {
+        $(this).closest(`div`).after($(`.userreport`));
+    });
+    //刪除
+    $(`.itemreportDelete`).on("click", function () {
+        $('#alert').css('display', 'block');
+        $('.modal-text').text("請問確認要刪除嗎?");
+        deleteid = $(this).data('id');
+        deleteorder = $(this).data('order');
+    });
+    //刪除Post
+    async function deletecomment(id, order) {
+        let productid = @Model.pro商品編號;
+        let colorid = @Model.商品顏色ID;
+        let FD = new FormData();
+        FD.append('id', id)
+        FD.append('order', order)
+        FD.append('productid', productid)
+        FD.append('colorid', colorid)
+        var data = await fetch(`@Url.Content("~/ProductWall/DeleteComment")`, {
+            method: "POST",
+            body: FD
+        });
+        let response = await data.text();
+        if (response != null) {
+            connection.invoke("SendComment", response).catch(function () {
+                $('#error').css("display", "block");
+                $('.modal-text').text("操作失敗");
+            });
+        }
+    };
+    //新增
+    $(`#userreportSubmit`).on(`click`, async function () {
+        createComment();
+    });
+    $(`.userreportinput`).on('keyup', async function (evt) {
+        if (evt.keyCode === 13) {
+            console.log("新增測試");
+            createComment();
+        }
+    });
+    //新增方法
+    async function createComment() {
+        await checkuser();
+        if (userdata != null) {
+            //回復商品
+            if ($(`.userreport`).siblings(`.reportmain`).data('name') === "reportmain") {
+                let comment = $(`.userreportinput`).val();//使用者輸入內容
+                let productid = @Model.pro商品編號;
+                let colorid = @Model.商品顏色ID;
+                (async function () {
+                    let FD = new FormData();
+                    FD.append('comment', comment)
+                    FD.append('productid', productid)
+                    FD.append('colorid', colorid)
+                    FD.append('userdata', userdata)
+                    FD.append('count', 1)
+                    let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                        method: "POST",
+                        body: FD
+                    })
+                    let response = await data.text();
+
+                    if (response != null) {
+                        connection.invoke("SendComment", response).catch(function () {
+                            $('#error').css("display", "block");
+                            $('.modal-text').text("推送失敗");
+                        });
+                    }
+                }());//加上小括號立即執行
+            }
+            //回復主題
+            else if ($(`.userreport`).closest(`.itemCommentContent`).data('name') === "paret") {
+                let comment = $(`.userreportinput`).val();
+                let productid = @Model.pro商品編號;
+                let colorid = @Model.商品顏色ID;
+                let paretID = $(`.userreport`).closest(`.itemCommentContent`).data('id');
+                (async function () {
+                    let FD = new FormData();
+                    FD.append('comment', comment)
+                    FD.append('productid', productid)
+                    FD.append('colorid', colorid)
+                    FD.append('userdata', userdata)
+                    FD.append('paretID', paretID)
+                    FD.append('count', 2)
+                    let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                        method: "POST",
+                        body: FD
+                    })
+                    let response = await data.text();
+
+                    if (response != null) {
+                        connection.invoke("SendComment", response).catch(function () {
+                            $('#error').css("display", "block");
+                            $('.modal-text').text("推送失敗");
+                        });
+                    }
+                }());//加上小括號立即執行
+            }
+            ////回復子題
+            else if ($(`.userreport`).closest(`.itemCommentContent`).data('name') === "child") {
+                let comment = $(`.userreportinput`).val();
+                let paretID = $(`.userreport`).closest(`.itemCommentContent`).closest(`ul`).closest(`div`).prev().data('id');
+                let childID = $(`.userreport`).closest(`.itemCommentContent`).data('id');
+                let productid = @Model.pro商品編號;
+                let colorid = @Model.商品顏色ID;
+                (async function () {
+                    let FD = new FormData();
+                    FD.append('comment', comment)
+                    FD.append('productid', productid)
+                    FD.append('colorid', colorid)
+                    FD.append('userdata', userdata)
+                    FD.append('paretID', paretID)
+                    FD.append('childID', childID)
+                    FD.append('count', 3)
+                    let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                        method: "POST",
+                        body: FD
+                    })
+                    let response = await data.text();
+
+                    if (response != null) {
+                        connection.invoke("SendComment", response).catch(function () {
+                            $('#error').css("display", "block");
+                            $('.modal-text').text("推送失敗");
+                        });
+                    }
+                }());
+            }
+            //最後
+            else {
+                let comment = $(`.userreportinput`).val();
+                let paretID = $(`.userreport`).closest("ul").closest('li').closest(`.itemCommentContent`).closest("ul").closest(`div`).prev().data('id');
+                let childID = $(`.userreport`).closest("ul").closest('li').closest(`.itemCommentContent`).data('id');
+                let productid = @Model.pro商品編號;
+                let colorid = @Model.商品顏色ID;
+                (async function () {
+                    let FD = new FormData();
+                    FD.append('comment', comment)
+                    FD.append('productid', productid)
+                    FD.append('colorid', colorid)
+                    FD.append('userdata', userdata)
+                    FD.append('paretID', paretID)
+                    FD.append('childID', childID)
+                    FD.append('count', 3)
+                    let data = await fetch(`@Url.Content("~/ProductWall/CreateComment")`, {
+                        method: "POST",
+                        body: FD
+                    })
+                    let response = await data.text();
+
+                    if (response != null) {
+                        connection.invoke("SendComment", response).catch(function () {
+                            $('#error').css("display", "block");
+                            $('.modal-text').text("推送失敗");
+                        });
+                    }
+                }());
+            }
+        }
+    }
+
+    $(`#userreportCancel`).on("click", function () {
+        $(`.reportmain`).after($(`.userreport`));
+        $(`.userreportinput`).val("");
+    });
+
+</script>
+
+

@@ -1,0 +1,117 @@
+﻿@model IEnumerable<dbCompanyTest.Models.會員商品暫存>
+
+<link href="~/css/favorites.css" rel="stylesheet" />
+
+<div class="favorites" id="divlist">
+    <div class="favorites-btitle">收藏清單</div>
+    <hr />
+    <div id="cart" class="cart-box">
+        @{
+            foreach (var item in Model)
+            {
+                    <div class="g-item" id="@item.Id">
+                        <div class="item-cont">
+                            @{
+                            if (item.圖片1檔名 == null || item.圖片1檔名 == "")
+                            {
+                                        <div><img src="@Url.Content("~/images/404.jpg")" width="111" height="148" /></div>
+                            }
+                            else
+                            {
+                                        <div><img src="@Url.Content("~/images/"+item.圖片1檔名)" width="111" height="148" /></div>
+                            }
+                            }
+                            <div class="g-detail">
+                                @{
+                                string name = item.商品名稱 + " " + item.商品顏色種類;
+                                }
+                                <div><p>@name</p></div>
+                                <div><span class="val">顏色: </span><span>@item.商品顏色種類</span></div>
+                                <div><span class="val">尺寸: </span><span>@item.尺寸種類</span></div>
+                            </div>
+                        </div>
+                        <div class="purchase-del">
+                            <div class="purchase">加入購物車</div>
+                            <div class="purchase-icon">
+                                <input type="hidden" value="@item.Id" />
+                            </div>
+                        </div>
+                    </div>
+            }
+            
+        }
+        <hr />
+        <div class="favorites-btn favorites-buying">
+            <a href="@Url.Content("~/Home/index")">繼續購買</a>
+        </div>
+    </div>
+</div>
+@*錯誤訊息*@
+<div class="modal" id="error" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-content">
+            <div class="modal-header"><div class="modal-close"></div></div>
+            <div class="content-box">
+                <div class="modal-text"></div>
+                <div class="res-error-ok">確認</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(".purchase-icon").on('click', function () {
+            event.stopPropagation();
+            let id = $(this).find("input").val();
+            del(id);
+        });
+        $(".favorites-buying").click(function(){
+            window.location.replace("@Url.Content("~/Home/index")");
+        
+        }); 
+        $(".res-error-ok").on('click', function () {
+            $(`#error`).css("display", "none");
+        });
+        $(".modal-close").on('click', function () {
+            $(`#error`).css("display", "none");
+        });
+        
+        $(".purchase").on('click', function () {
+            event.stopPropagation()
+            $.ajax({
+                url: "@Url.Content("~/mylove/joincart")",
+                type: "get",
+                data: { id: $(this).closest(`.g-item`).attr("id") },
+                datatype: "json"
+            }).done(data => error(data));   
+            //----購物車記數-----
+            let count = parseFloat($('#cart_num_pc').text())+1;
+            $('#cart_num_pc').text(count)
+            countCart(count);
+            //----購物車記數結束-----
+        });
+
+        //----購物車記數-----
+        async function countCart (count){
+            const data = await fetch(`@Url.Content("~/Shopping/CarProductCount/?num=${count}")`);
+        }
+        //----購物車記數結束-----
+
+        async function del(id) {
+            const data = await fetch(`@Url.Content("~/MyLove/Delete?id=${id}")`);
+            const response = await data.text();
+            error(response);
+            $(`#cart`).find(`#${id}`).remove();
+        }
+        function error(data)
+        {
+            $(`#error`).css("display", "block");
+            $(`.modal-text`).text(data);
+        }
+
+    </script>
+
+}

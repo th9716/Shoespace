@@ -1,0 +1,219 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@section Style{
+    <link href="~/css/loginpage.css" rel="stylesheet" />
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+}
+
+<main>
+    <div id="LoginBack" style="background-image: url('@Url.Content("~/images/LoginPage.png")')">
+        <div id="loginPage">
+
+            @*<div id="otherLogin">
+            <br />
+            <br />
+            <div id="g_id_onload"
+            data-client_id="1097400727922-rjchl3ubr8r1mtjpirchq6v7dl9vfcb2.apps.googleusercontent.com"
+            data-login_uri="@ViewData["localUrl"]/Login/loginSussess"
+            data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin" style="width: 200px;
+            margin: 10px 0px 0px 0px;
+            margin-top: 280px;
+            margin-bottom: 0px;
+            height: 60px;    MARGIN-LEFT: 24.5%;"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left">
+            </div>
+            <p id="sp"><a href="@ViewData["LineAuth"]" class="btn btn-success" title="Log in your account" id="linelogin">Line</a></p>
+            </div>*@
+            <hr />
+            <div id="selfLogin" style="margin-top:260px;">
+                <form>
+                    <input type="text" asp-controller="Login" asp-action="Login" name="txtAccount" class="Linput" id="account" placeholder="Email" /><br />
+                    <span style="color:salmon;display:none" id="accounterror">請輸入帳號</span>
+                    <input type="password" asp-controller="Login" asp-action="Login" name="txtPassword" class="Linput" id="password" placeholder="密碼" />
+                    <p id="result" style="color:salmon"></p>
+                    <botton type="submit" id="login" class="login">登入</botton><br /><br />
+                    <div id="otherLogin">
+                        <br />
+                        <br />
+                        <div id="g_id_onload"
+                             data-client_id="1097400727922-rjchl3ubr8r1mtjpirchq6v7dl9vfcb2.apps.googleusercontent.com"
+                             data-login_uri="@ViewData["localUrl"]/Login/loginSussess"
+                             data-auto_prompt="false">
+                        </div>
+                        <div class="g_id_signin" style="width: 200px;
+                                                margin: 10px 0px 0px 0px;
+                                                margin-top: 10px;
+                                                margin-bottom: 0px;
+                                                height: 60px;    MARGIN-LEFT: 40%;"
+                             data-type="icon"
+                             data-size="large"
+                             data-theme="outline"
+                             data-text="sign_in_with"
+                             data-shape="rectangular"
+                             data-logo_alignment="left">
+                        </div>
+                        <p id="sp">
+                            <a href="@ViewData["LineAuth"]" class="btn" title="Log in your account" id="linelogin" style="background-image:url('@Url.Content("~/images/line.png")')">
+                            </a>
+                            @*<img src="~/images/line.png" href="@ViewData["LineAuth"]" style="width:44px;height:44px;"/>*@
+                        </p>
+                    </div>
+                    <botton id="forgetPassword" class="login">忘記密碼</botton>
+                </form>
+            </div>
+            <p style="margin-top:50px">
+                還沒有帳號嗎? @*<a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever=""> 註冊新會員</a>*@
+                @*<a asp-action="Create" asp-controller="TestClients" style="color:white">註冊新會員</a>standard*@
+                <span id="create">註冊新會員</span>
+            </p>
+            <hr />
+            <button id="sheep">sheep</button>
+            <button id="lu">lu</button>
+            <button id="gary">gary</button>
+            <button id="yenru">yenru</button>
+
+        </div>
+    </div>
+    @*<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">註冊新會員</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+    <form>
+    <div class="mb-3">
+    <label for="recipient-name" class="col-form-label">Recipient:</label>
+    <input type="text" class="form-control" id="recipient-name">
+    </div>
+    <div class="mb-3">
+    <label for="message-text" class="col-form-label">Message:</label>
+    <textarea class="form-control" id="message-text"></textarea>
+    </div>
+    </form>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary">註冊</button>
+    </div>
+    </div>
+    </div>
+    </div>*@
+</main>
+
+@section Scripts{
+    <script src="~/datas/taiwan_districts.js"></script>
+    <script>
+        let oldSize;
+        $(window).ready(function () {
+            oldSize = $(window).width();
+            if ($(window).width() < 1000) {
+                $(`#LoginBack`).css("background-image", "url('@Url.Content("~/images/LoginPage2.png")')");
+            }
+        });
+        $(window).on(`resize`, function () {
+            let winwidth = $(window).width();
+            if (winwidth < 1000) {
+                if (oldSize >= 1000) {
+                    $(`#LoginBack`).css("background-image", "url('@Url.Content("~/images/LoginPage2.png")')");
+                }
+            } else {
+                if (oldSize < 1000) {
+                    $(`#LoginBack`).css("background-image", "url('@Url.Content("~/images/LoginPage.png")')");
+                }
+            }
+            oldSize = winwidth;
+        })
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener(`load`, () => {
+            var result = xhr.responseText;
+            if (result.substring(0, 2) == `成功`) {
+                //window.location.assign("https://localhost:7100/Home/Index");
+                window.location.assign(result.substring(2, result.length) + "/Home/Index");
+                joinCarSession();
+            } else {
+                if (result == "失敗")
+                    $(`#result`).html(`帳號或密碼錯誤`);
+                else
+                    $(`#result`).html(result);
+            }
+        });
+
+        $(`#login`).on(`click`, () => {
+            const account = $(`#account`).val();
+            const password = $(`#password`).val();
+            if (account == "") {
+                $(`#result`).html(`請輸入帳號密碼`);
+            } else {
+                xhr.open(`post`, `/Login/checkLogin`);
+                xhr.setRequestHeader(`Content-Type`, `application/x-www-form-urlencoded`);
+                xhr.timeout = 5000;
+                xhr.send(`account=${account}&password=${password}`);
+            }
+        });
+        $(`#create`).on(`click`, function () {
+            $(`#loginPage`).load("@Url.Content("~/Login/CreateClient")");
+        });
+
+        $(`#forgetPassword`).on('click', async function () {
+            let account = $(`#account`);
+            if (account.val()) {
+                $(this).after(`<div class="spinner-border text-light" role="status" style="width:15px;height:15px;" id="xx">
+                                                                <span class="visually-hidden">Loading...</span>
+                                                            </div>`);
+                $.post("@Url.Content("~/Login/forgetPassword")", { "Email": account.val() }, function (data) {
+                    $(`#accounterror`).css("display", "block");
+                    $(`#accounterror`).text(data);
+                    $(`#xx`).remove();
+                    $(`#result`).html(``);
+                })
+            }
+            else {
+                $(`#accounterror`).css("display", "block");
+                $(`#accounterror`).text("請輸入帳號");
+            }
+        });
+
+        //---購物車載入--LU
+        async function joinCarSession() {
+            const reb = await fetch(`@Url.Content("~/Shopping/joinSQLToSession")`)
+            const data = await reb.text();
+            console.log(data);
+        };
+        //---購物車載入結束--LU
+        $(`#gary`).on(`click`, function () {
+            $(`#account`).val(`gary@gmail.com`);
+            $(`#password`).val(`123456`);
+            demo();
+        });
+        $(`#sheep`).on(`click`, function () {
+            $(`#account`).val(`sheep@gmail.com`);
+            $(`#password`).val(`123456`);
+            demo();
+        });
+        $(`#lu`).on(`click`, function () {
+            $(`#account`).val(`lubig@gmail.com`);
+            $(`#password`).val(`123456`);
+            demo();
+        });
+        $(`#yenru`).on(`click`, function () {
+            $(`#account`).val(`yenru@gmai.com`);
+            $(`#password`).val(`123456`);
+            demo();
+        });
+        function demo() {
+            $(`#result`).html(``);
+        };
+    </script>
+    <script src="~/js/city_data.js"></script>
+}

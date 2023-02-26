@@ -1,0 +1,117 @@
+﻿@model IEnumerable<dbCompanyTest.Models.TestStaff>
+
+@{
+    ViewData["Title"] = "Index_HR";
+}
+@{
+    Layout = "_Back_Layout_Sneat_HR";
+}
+
+<input type="hidden" id="TDLpath" value="@Url.Content("~/Staff_Home/LoadToDoList")" />
+<input type="hidden" id="path" value="@Url.Content("~/Staff_Home/LoadSheeplist")" />
+<input type="hidden" id="TDL_DTpath" value="@Url.Content("~/Staff_Home/DT_TDL")" />
+<input type="hidden" id="StaffNumpath" value="@Url.Content("~/Staff_Home/StaffNum")" />
+
+<div style="width:85%;margin:20px auto;">
+    @* <h1>員工頁面(人事)</h1>*@
+
+    <h2 id="stf_info" style="display:none">@ViewBag.HR</h2>
+
+    <div id="ToDoList_div" class="en_div"></div>
+
+
+    <br/>
+    <div class="en_div">
+
+        <a asp-action="Create" asp-controller="TestStaffs">
+            <button class="btn btn-primary mb-3">建立新員工資料</button>
+        </a>
+        <table class="table table-striped-columns">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工編號)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工姓名)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.部門)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.職稱)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工電話)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.主管)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工編號)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工姓名)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.部門)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.職稱)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工電話)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.主管)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="TestStaffs" asp-route-id="@item.員工編號" class="btn btn-primary mb-3">修改</a>
+                            <a asp-action="Details" asp-controller="TestStaffs" asp-route-id="@item.員工編號" class="btn btn-primary mb-3">詳細資料</a>
+                            @*<a asp-action="Delete" asp-route-id="@item.員工編號">Delete</a>*@
+                            <a href="" class="btn btn-primary mb-3">></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/staffconnect.js"></script>
+    <script>
+        var split = $(`#stf_info`).text().indexOf(' ');
+        var stf = $(`#stf_info`).text()
+        LoadToDoList();
+
+        function LoadToDoList() {
+            $('#ToDoList_div').load("@Url.Content("~/Staff_Home/PartialToDoList")")
+            //$.getScript("@Url.Content("~/js/LoadToDoList.js")");
+        }
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

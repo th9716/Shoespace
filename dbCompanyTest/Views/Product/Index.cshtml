@@ -1,0 +1,1163 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Back_Layout_Sneat.cshtml";
+    //Layout = "~/Views/Shared/_Back_Layout.cshtml";
+    /*
+     test_alert()
+     請引用
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css" integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.js" integrity="sha512-mgZL3SZ/vIooDg2mU2amX6NysMlthFl/jDbscSRgF/k3zmICLe6muAs7YbITZ+61FeUoo1plofYAocoR5Sa1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+     方法:
+     function test_alert(text) {            
+        }).show();
+    }
+    */
+}
+
+@*//內部模板的icon 與bootstrap5 CDN*@
+<script src="~/assets/js/icon_js/app.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<link href="~/css/back_product.css" rel="stylesheet" />
+@*//圖表所需的JS*@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+<div class="container-xxl flex-grow-1 container-p-y"  id="ProForm_main">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product /</span> 商品與明細</h4>
+
+   
+    <div class="row " style="margin-bottom:10px">
+        <div class="col" @* style="display:flex"*@>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Moda_P_C" id="btn_ProForm" >新增商品</button>
+            <button class="btn btn-primary " type="button" id="btn_ProDetailControl" >商品明細搜尋 </button>
+            <button class="btn btn-primary " type="button" id="btn_HighchartsControl">商品圖表  </button>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+           <form id="Pro_Upload_form" name="Pro_Upload_form">
+                <div class="input-group ">
+                    <input type="file" class="form-control" aria-describedby="btn-Upload" id="excel" name="excel" accept=".xlsx,.xls">
+                     <input type="text" value="Pro" name="File_type" style="display:none">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-Upload">Excel批次匯入商品建檔</button>
+                </div>
+           </form>
+        </div>
+    </div>
+  
+    <div class="collapse" id="collapseHighcharts">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2><i class="align-middle me-2" data-feather="bar-chart"></i>column圖</h2>
+                    <div id="container_col"></div>
+                </div>
+                <div class="col-md-6">
+                    <h2><i class="align-middle me-2" data-feather="pie-chart"></i>Pie圖</h2>
+                    <div id="container_pie"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品明細表-->
+
+    <div class="card mb-4" id="collapse_ProDetaol_Search" style="display:none">
+            <div class="row" style="margin-top:10px">
+                <div class="col-md-3">
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="關鍵字" aria-label="關鍵字" aria-describedby="btn-Search" id="keywork_Pro" name="keywork_Pro">
+                        <button class="btn btn-outline-secondary" type="button" name="btn-Search_Pro">查詢</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                <button type="button" name="Detail_list_Create" class="btn btn-primary" id="create" title="新增" data-bs-toggle="modal" data-bs-target="#Moda_D_C" style="margin-left:-20px"><i class="fas fa-edit"></i>新增</button>  
+                <button class="btn btn-primary" name="batch_Delete"><i class="bi bi-trash3-fill">批次刪除</i></button>
+                </div>
+               
+                <div class="col-md-5">
+               <form id="PD_Upload_form" name="PD_Upload_form">
+                <div class="input-group " >
+                <input type="file" class="form-control" aria-describedby="btn-Upload_PD" id="excel_PD" name="excel" accept=".xlsx,.xls">
+                        <input type="text" value="ProDe" name="File_type" style="display:none">
+                <button class="btn btn-outline-secondary" type="button" id="btn-Upload_PD">Excel批次匯入細項建檔</button>
+                </div>
+                </form>
+                </div>
+            </div>
+        <div class="card-body">
+            <table id="tableProDetal" class="table-rwd" >
+                <thead>
+                    <tr>
+                    <th><input type="checkbox" name="TBcheck_AllDetail"></th>
+                        <th >序</th>
+                        <th>品名</th>
+                        <th>分類</th>
+                        <th>鞋種</th>
+                        <th>尺寸</th>                      
+                        <th>顏色</th>                     
+                        <th>數量</th>                      
+                        <th>圖號</th>                      
+                        <th>圖1</th>                     
+                        <th>圖2</th>                  
+                        <th>圖3</th>                      
+                        <th>上架</th>                     
+                        <th>有貨</th>                       
+                        <th>修改</th>                       
+                        <th>刪除</th> 
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+            </div>
+        <div class="row" name="downloadGrop" style="margin-bottom:10px">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="請先輸入檔案名稱" aria-label="請先輸入檔案名稱" aria-describedby="btn-download-PD" id="fileName_PD" name="fileName_PD">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-download-PD" disabled="disabled"  data-type="PD">下載成Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--分隔-->
+    <div class="card mb-4">
+        @* <div class="card-header">
+        商品一覽
+        </div>*@
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-3">
+                <div class="input-group ">
+                    <input type="text" class="form-control" placeholder="關鍵字" aria-label="關鍵字" aria-describedby="btn-Search" id="keywork" name="keywork">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-Search">查詢</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="tableAll" class="table-rwd ">
+                <thead>
+                    <tr>
+                        <th>圖示</th>
+                        <th>序</th>
+                        <th>上架</th>
+                        <th>名稱</th>
+                        <th>價格</th>
+                        <th>品介紹</th>
+                        <th>材質</th>
+                        <th>重量</th>
+                        <th>成本</th>
+                        <th>分類</th>
+                        <th>鞋種</th>
+                        <th>新增明細</th>
+                        <th>修改</th>
+                        <th>刪除</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+        <div class="row" name="downloadGrop" style="margin-bottom:10px">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-3">
+                <div class="input-group ">
+                    <input type="text" class="form-control" placeholder="請先輸入檔案名稱" aria-label="請先輸入檔案名稱" aria-describedby="btn-download_Pro" id="fileName_Pro" name="fileName_Pro">
+                    <button class="btn btn-outline-secondary" type="button" id="btn-download_Pro" disabled="disabled" data-type="Pro">下載成Excel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@*Modal_新增與修改_產品*@
+<div class="modal fade" id="Moda_P_C" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document" style="max-width:400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModal-label">新增產品</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                @*Product Create_Start*@
+                <hr />
+                <div class="row align-items-center">
+                    @* <div class="col-md-2 "></div>*@
+                    <div class="col-md-12 ">
+                        <form name="ProC_Form" id="form01" novalidate>
+                            <div class="form-group">
+                                <div class="form-group" style="display: none;">
+                                    <label class="control-label">商品編號</label>
+                                    <input name="id" class="form-control" readonly />
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">上架時間</label>
+                                <input name="time" class="form-control" type="datetime-local" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品名稱</label>
+                                <input name="name" class="form-control" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品價格</label>
+                                <input name="price" type="number" class="form-control" aria-label="Amount (to the nearest dollar)" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品介紹</label>
+                                <textarea class="form-control" placeholder="撰寫產品介紹" id="_introduce" style="height: 100px"></textarea>
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                                <input name="introduce" class="form-control" type="hidden" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品材質</label>
+                                <input name="material" class="form-control" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品重量</label>
+                                <input name="weight" type="number" class="form-control" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品成本</label>
+                                <input name="cost" type="number" class="form-control" />
+                                <div class="invalid-feedback">
+                                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">商品分類</label>
+                                <select id="_商品分類id" name="_商品分類id" class="form-select" aria-label="商品分類">
+                                    <option selected>ajax_select</option>
+                                </select>
+                                <input name="typeid" class="form-control" type="hidden" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">商品鞋種</label>
+                                <select id="_商品鞋種id" class="form-select" aria-label="商品分類">
+                                    <option selected>ajax_select</option>
+                                </select>
+                                <input name="shoeid" class="form-control" type="hidden" />
+                            </div>
+                            <br>
+                            <div class="row" style="display: none;">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">商品是否有貨</label>
+                                        <input type="checkbox" id="_有貨" checked>
+                                        <input name="instock" class="form-control" type="hidden" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">商品是否上架</label>
+                                        <input type="checkbox" id="_上架" checked>
+                                        <input name="onshelves" class="form-control" type="hidden" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                    @*<div class="col-md-2 "></div>*@
+                </div>
+                @*Product Create_END*@
+            </div>
+            <div class="modal-footer">
+                <div class="col" style="text-align-left">  <button type="button" id="P_Create_Demo" class="btn btn-primary" name="btn_P" style="width:10px;height:5px;"></button></div>
+
+                <button type="button" id="P_Create" class="btn btn-primary" name="btn_P">新增</button>
+                <button type="button" id="P_Edit" class="btn btn-primary" name="btn_P" style="display: none;">修改</button>
+                <button type="button" id="P_Close" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@*Modal_新增與修改_明細*@
+<div class="modal fade" id="Moda_D_C" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document" style="max-width:400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModal-label">新增細項商品</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn_Close_D">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*Modal_刪除*@
+<div class="modal fade" id="Moda_D_D" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="DeleteModal-label">警告</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="display: none;">
+                    <label class="control-label">url</label>
+                    <input name="url" class="form-control" readonly />
+                </div>
+                <div class="form-group" style="display: none;">
+                    <label class="control-label">id</label>
+                    <input name="id" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="D_D_Delete" class="btn btn-primary" name="btn_D_D">刪除</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn_Close_D">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*圖片預覽*@
+<div class="modal fade" id="Moda_Img_View" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="display:display;">
+                    <img src="" width="500" name="P_D_img_big" '  />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+<script src='@Url.Content("~/js/product_index.js")'></script>
+<script>
+    var lang = {
+        "processing": "處理中...",
+        "loadingRecords": "載入中...",
+        "lengthMenu": "顯示 _MENU_ 項結果",
+        "zeroRecords": "沒有符合的結果",
+        "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+        "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+        "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+        "infoPostFix": "",
+        "search": "搜尋:",
+        "paginate": {
+            "first": "第一頁",
+            "previous": "上一頁",
+            "next": "下一頁",
+            "last": "最後一頁"
+        },
+        "aria": {
+            "sortAscending": ": 升冪排列",
+            "sortDescending": ": 降冪排列"
+        }
+    };
+    //產品明細表單使用
+    let urlDe = '@Url.ActionLink("showSearchDetail","Product")';
+    let ProDeimg_url ='@Url.Content("~/images")';
+    let ProDe_Create_url = `@Url.Content("~/Product/_CreateDetail")/?id=&imgid=&colid=`;
+    let ProDe_Delet_url = "@Url.Content("~/product/DeleteProDetail")";
+    let ProDe_Edit_url ="@Url.Content("~/Product/_EditDetial")";
+    let ProDe_Upload_url = "@Url.Content("~/Product/Upload")";
+    //alrt 方法 建立
+    //var myAlert = document.getElementById('myAlert')
+    //var bsAlert = new bootstrap.Alert(myAlert);
+    //用 table代表整個表單
+    //Table Load Start==========================
+    let url01 = '@Url.ActionLink("showlist","Product")';
+    let keywork = $("#keywork").val();
+    let table = null;
+    //console.log("url01=" + url01);
+    let funcLoad = () => {
+        let _keywork = $("#keywork").val();
+        table = $('#tableAll').DataTable(
+            {
+                "language": lang,
+                "searching": false,
+                "ajax": url01 + `/?id=${_keywork}`,
+                "type": 'get',
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columns":
+                    [
+                        {  //master detail button
+                            className: 'details-control',
+                            orderable: false,
+                            data: null,
+                            defaultContent: '',
+                            //用渲染 新增子項目按鍵
+                            render: function (data, type, row) {
+                                return '<i class="bi bi-plus-circle-fill"></i>';
+                            },
+                            width: '6%'
+                        },
+                        //{ "data": "商品編號id", "width": "6%" },
+                        {
+                            "data": null,
+                            "render": function (data, type, full, meta) {
+                                return meta.row + 1 + meta.settings._iDisplayStart;
+                            }
+                        }, // 序號
+                        { "data": "上架時間" },
+                        { "data": "商品名稱" },
+                        { "data": "商品價格", "width": "6%" },
+                        { "data": "商品介紹", "width": "15%" },
+                        { "data": "商品材質", "width": "6%" },
+                        { "data": "商品重量", "width": "6%" },
+                        { "data": "商品成本", "width": "6%" },
+                        { "data": "商品分類", "width": "6%" },
+                        { "data": "商品鞋種", "width": "6%" },
+                        {
+                            data: null,
+                            className: 'create',
+                            render: function (data, type, row) {
+                                return `<button type="button" name="DetailCreate" class="btn btn-primary" data-value="${data.商品編號id}" id="create" title="新增" data-bs-toggle="modal" data-bs-target="#Moda_D_C" ><i class="fas fa-edit"></i>新增</button>`;
+
+                            },
+                            orderable: false,
+                            width: '7.3%'
+                        },
+                        {
+                            data: null,
+                            className: 'edit',
+                            render: function (data, type, row) {
+                                return `<button type="submit" class="btn btn-primary"  data-value="${data.商品編號id}" id="btnEdit" name="P_btnEdit" title="修改" ><i class="fas fa-edit"></i>修改</button>`;
+
+                            },
+                            orderable: false,
+                            width: '7.3%'
+                        },
+                        {
+                            data: null,
+                            className: 'del',
+                            render: function (data, type, row) {
+                                return `<button type="submit" class="btn btn-primary" id="P_btnDel"  data-value="${data.商品編號id}" name="P_btnDel"  title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"></i>刪除</button>`;
+                            },
+                            orderable: false,
+                            width: '7.3%'
+                        }
+                    ],
+                "rowCallback": RowCallBack
+
+            });
+
+    }
+    let RowCallBack = function (row, data, index) {
+        if (index % 2 == 1) { $('td', row).css('background-color', '#F2EFEC'); }
+    }
+    //Table Load Ending==========================
+
+
+    //產品修改ajax
+    let Pro_Edit_Post = () => { $.post("@Url.Content("~/product/EditProduct")", $("#form01").serialize(), (datas) => { test_alert(datas); $("#P_Close").click(); }); }
+    //產品新增ajax
+    let Pro_Create_Post = () => { $.post("@Url.Content("~/product/CreateProduct")", $("#form01").serialize(), (datas) => { test_alert(datas); $("#P_Close").click(); }); }
+
+    //將顯示畫面以Excel下載
+    let Pro_DownLoadFile_Get = (filename,type) => {
+
+        window.location = `@Url.Content("~/product/Downloads")?filename=${filename}&key=${type}`;
+        //window.open( `@Url.Content("~/product/Downloads")?filename=${filename}&key=${type}`);
+    }
+
+
+    //圖表事件
+    //圖表開啟按鈕事件
+    var flag = true;
+    $("#btn_HighchartsControl").on('click', function () {
+        $('#collapseHighcharts').slideToggle(500);
+        const obj = $("#container_col");
+        const objPei = $("#container_pie");
+        Column_Chart(obj, '@Url.Content("~/product/Top10ProSellCol")');
+        Pie_Chart(objPei, '@Url.Content("~/product/Pei_ProSell")');
+    })
+    //Pie圖事件
+    function Pie_Chart(obj, url) {
+        $.getJSON(`${url}`, function (data) {
+
+            Highcharts.chart('container_pie', {
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45,
+                        beta: 0
+                    }
+                },
+                title: {
+                    text: `${data.year}年 Top5 銷售比例`,
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '總銷售額: ' + `${data.allSell} 元整` + `<br>1. ${data.t5Sell[0]}元<br>2. ${data.t5Sell[1]}元<br>3. ${data.t5Sell[2]}元<br>4. ${data.t5Sell[3]}元<br>5. ${data.t5Sell[4]}元`,
+                    align: 'left'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        depth: 35,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.name}'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '銷售佔比',
+                    data: data.pieData
+                }]
+            });
+        });
+
+    }
+
+    //條狀圖事件
+    function Column_Chart(obj, url) {
+        $.getJSON(`${url}`, function (data) {
+            let perName = data.categories;
+            let datas = data.datas;
+            let allSell = data.allSell;
+
+            // Set up the chart
+            const chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container_col',
+                    type: 'column',
+                    options3d: {
+                        enabled: true,
+                        alpha: 15,
+                        beta: 15,
+                        depth: 50,
+                        viewDistance: 25
+                    }
+                },
+                xAxis: {
+                    categories: perName
+                },
+                yAxis: {
+                    title: {
+                        enabled: false
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{point.key}</b><br>',
+                    pointFormat: '商品銷售額: {point.y} 元整'
+                },
+                title: {
+                    text: `${data.year}年 TOP10 商品細項銷售統計`,
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '銷售總額: ' +
+                        `新台幣 ${allSell} 元整`,
+                    align: 'left'
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    column: {
+                        depth: 25
+                    }
+                },
+                series: [{
+                    data: datas,
+                    colorByPoint: true
+                }]
+            });
+
+        });
+
+    }
+    //檔案上傳事件
+    //加入Excel上傳事件btn-Upload
+    $('#btn-Upload').on('click', function () {
+        let formobj = $(this).parent().parent();
+        //console.log(formobj);
+        var formData = new FormData(document.Pro_Upload_form); //from 的名稱
+        SaveData(formData);
+    });
+    //加入Excel上傳事件btn-Upload_PD
+    $('#btn-Upload_PD').on('click', function () {      
+        var formData = new FormData(document.PD_Upload_form); //from 的名稱
+        SaveData(formData);
+    });
+    //送出資料
+    async function SaveData(data) {
+        try {
+            const response = await fetch(`@Url.Content("~/Product/Upload")`, {
+                method: 'POST',
+                body: data,
+            });
+            
+            test_alert("資料送出成功");
+            change_table();
+            change_ProDetailtable();
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    //要輸入檔名才能按按鈕 產品 
+    $("#fileName_Pro").hover(function () {
+        fileInOpCl($(this), $("#btn-download_Pro"));
+    })
+    //$("#fileName_Pro").change(function(){
+    //    fileInOpCl($(this), $("#btn-download_Pro"));
+    //});
+
+     // 要輸入檔名才能按按鈕 產品細項
+    $("#fileName_PD").hover( function () {
+        fileInOpCl($(this), $("#btn-download-PD"));
+    })
+
+    let fileInOpCl =(obj,dowobj)=>{
+       console.log(obj);
+        console.log(dowobj);
+       if ($(obj).val() == "")
+           dowobj.prop("disabled", true);
+        else
+            dowobj.prop("disabled", false);
+    }
+
+    //檔案下載事件 產品
+    $("#btn-download_Pro").on('click', function () {
+        method_Get_Excel($(this), $("#fileName_Pro"));
+
+    });
+     //檔案下載事件 產品細項
+    $("#btn-download-PD").on('click', function () {
+        method_Get_Excel($(this), $("#fileName_PD"));
+    });
+
+    let method_Get_Excel = (thisobj, filenameobj)=>{
+        
+        let filename = filenameobj.val();
+        let type =thisobj.attr("data-type");
+        console.log("type="+type);
+        console.log("filename:"+filename);
+        Pro_DownLoadFile_Get(filename,type);
+        filenameobj.val("");
+        thisobj.prop("disabled", true);
+    
+    }
+
+    //查詢事件綁定
+    $("#btn-Search").on('click', function () {
+        //重新載入
+        //console.log($("#keywork").val());
+        change_table();
+
+    });
+
+    //新增產品表單送出按鈕
+    $("#Moda_P_C #P_Create").on('click', () => {
+        let error = check_ProC_Form();
+        if (error.length == 0)
+            Pro_Create_Edit_Sumit(Pro_Create_Post);
+    });
+
+    //修改產品表單送出按鈕
+    $("#Moda_P_C #P_Edit").on('click', () => {
+        let error = check_ProC_Form();
+        if (error.length == 0)
+            Pro_Create_Edit_Sumit(Pro_Edit_Post);
+    });
+
+
+    //加入按鈕事件(產品刪除) P_btnDel
+    $('#tableAll').on('click', 'button[name="P_btnDel"]', function () {
+        //const row = $(this).parents('tr');
+        //const id = row.find('td:eq(1)').text().trim();
+        const id =$(this).attr("data-value");
+        Send_DatatoDel_Moda("@Url.Content("~/product/DeleteProduct")", id)
+    });
+    //刪除資料送入刪除Moda
+    function Send_DatatoDel_Moda(url, id) {
+        let moda = $("#Moda_D_D");
+        moda.find("input[name='id']").val(id);
+        moda.find("input[name='url']").val(url);
+        moda.find("#DeleteModal-label").text("警告!請問是否要刪除此筆資料?")
+    }
+    //確認刪除事件
+    $("#Moda_D_D").find("#D_D_Delete").on('click', function () {
+        let moda = $("#Moda_D_D");
+        let id = moda.find("input[name='id']").val();
+        let url = moda.find("input[name='url']").val();
+        moda.find("#btn_Close_D").click();
+        $.get(url, { "id": `${id}` }, (datas) => { test_alert(datas); });
+        //重新載入
+        change_table();
+        change_ProDetailtable()
+    });
+
+    //Modal關閉監聽 hide.bs.modal
+    $("#Moda_P_C").on('hide.bs.modal', function () {
+        change_table();
+        change_ProDetailtable()
+    })
+
+
+    //加入按鈕事件(產品編輯)
+    $('#tableAll').on('click', 'button[name="P_btnEdit"]', function () {
+        var row = $(this).parents('tr');
+
+        $("#btn_ProForm").click();
+        $("#Moda_P_C input[name='id']").parent().show();
+        //$("#Moda_P_C input[name='id']").val(row.find('td:eq(1)').text().trim())  //  const id = $(this).attr("data-value");
+        $("#Moda_P_C input[name='id']").val($(this).attr("data-value").trim())
+        $("#Moda_P_C input[name='time']").val(row.find('td:eq(2)').text().trim())
+        $("#Moda_P_C input[name='name']").val(row.find('td:eq(3)').text().trim())
+        $("#Moda_P_C input[name='price']").val(row.find('td:eq(4)').text().trim())
+        //_introduce
+        $("#Moda_P_C #_introduce").val(row.find('td:eq(5)').text().trim())
+        //material
+        $("#Moda_P_C input[name='material']").val(row.find('td:eq(6)').text().trim())
+        //weight
+        $("#Moda_P_C input[name='weight']").val(row.find('td:eq(7)').text().trim())
+        //cost
+        $("#Moda_P_C input[name='cost']").val(row.find('td:eq(8)').text().trim())
+        //_商品分類id
+        //$("#Moda_P_C #_商品分類id option:selected").text(row.find('td:eq(9)').text().trim())
+        const cel9 = row.find('td:eq(9)').text().trim();
+        //setTimeout(function () { $(`#Moda_P_C #_商品分類id option[data-text=${cel9}]`).prop("selected", true); }, 400);
+        $(`#Moda_P_C #_商品分類id option[data-text=${cel9}]`).prop("selected", true);
+        //_商品鞋種id
+        const cel10 = row.find('td:eq(10)').text().trim();
+        //setTimeout(function () { $(`#Moda_P_C #_商品鞋種id option[data-text=${cel10}]`).prop("selected", true); }, 500);
+        $(`#Moda_P_C #_商品鞋種id option[data-text=${cel10}]`).prop("selected", true);
+        //$("#Moda_P_C #_商品鞋種id option:selected").text(row.find('td:eq(10)').text().trim())
+        //$("#_商品分類id option:eq(3)").attr('selected', 'selected');
+
+        //id=P_Create 隱藏Create 按鍵
+        $("#Moda_P_C").find('[id^="P_Create"]').hide();
+        //id=P_Edit 顯示Edit按鍵
+        //$("#Moda_P_C #P_Edit ").show();
+        $("#Moda_P_C").find('[id^="P_Edit"]').show();
+        //console.log(row.find('td:eq(3)').text().trim());
+        //修改moda的title
+        $("#Moda_P_C #myModal-label").text("修改商品");
+    })
+
+    //新增產品 Form表單顯示按鈕事件
+    $("#btn_ProForm").on('click', () => {
+
+        ClearPro_Edit_Creater_form(); //清空欄位
+        //顯示新增按鈕
+        //$("#Moda_P_C #P_Create ").show();
+        $("#Moda_P_C").find("[id^='P_Create']").show();
+        //隱藏Edit按鈕
+        //$("#Moda_P_C #P_Edit ").hide();
+        $("#Moda_P_C").find("[id^='P_Edit']").hide();
+        //產品id顯示
+        $("#Moda_P_C input[name='id']").parent().hide();
+
+        //修改moda的title
+        $("#Moda_P_C #myModal-label").text("新增商品");
+
+        $.ajaxSettings.async = false;
+        $.get("@Url.Content("~/Product/GetTyteD")", (datas) => {
+            //console.log(datas);
+            //新增產品類別select
+            var options = datas.map(data => {
+                const { 商品分類id, 商品分類名稱 } = data;
+                return (`<option value="${商品分類id}" data-text="${商品分類名稱}">${商品分類名稱}</option>`);
+            });
+            $("#_商品分類id").html(options);
+        });
+
+        $.get("@Url.Content("~/Product/GetShoe")", (datas) => {
+            //新增鞋種select
+            var S_options = datas.map(data => {
+                const { 商品鞋種id, 鞋種 } = data;
+                return (`<option value="${商品鞋種id}" data-text="${鞋種}">${鞋種}</option>`);
+            });
+            $("#_商品鞋種id").html(S_options);
+        });
+        $.ajaxSettings.async = true;
+    });
+
+    //=============產品明細事件S=========================
+    //明細新建_關閉重整
+    $("#Moda_D_C #btn_Close_D").on('click', function () {
+        //change_table();
+    });
+
+    //Modal關閉監聽 hide.bs.modal
+    $("#Moda_D_C").on('hide.bs.modal', function () {
+        change_table();
+        change_ProDetailtable()
+    })
+
+
+    //加入按鈕事件(新增明細)
+    $('#tableAll').on('click', 'button[name="DetailCreate"]', function () {
+        //const row = $(this).parents('tr');
+        //const id = row.find('td:eq(1)').text().trim();
+       // console.log($(this).attr("data-value"));
+        const id = $(this).attr("data-value");
+        $("#Moda_D_C #myModal-label").text("新增細項商品");
+        $("#Moda_D_C .modal-body").load(`@Url.Content("~/Product/_CreateDetail")/?id=${id}&imgid=&colid=`);
+    })
+
+    //加入按鈕事件(新增尺寸)name=Btn_Creat_PD_Size
+    $('#tableAll').on('click', 'button[name="Btn_Creat_PD_Size"]', function () {
+        const colid = $(this).attr("data-color");
+        const id = $(this).attr("data-proid");
+        const imgid = $(this).attr("data-imgid");
+        console.log(`${id},${imgid},${colid}`);
+        $("#Moda_D_C #myModal-label").text("新增細項尺寸");
+        $("#Moda_D_C .modal-body").load(`@Url.Content("~/Product/_CreateDetail")/?id=${id}&imgid=${imgid}&colid=${colid}`);
+    })
+
+
+    //加入按鈕事件(明細展開與關閉)Btn_Pro_Show_list
+    $('#tableAll').on('click', 'button[name="Btn_Pro_Show_list"]', function () {
+        const value = $(this).attr("data-value");
+        const thisgroup = $(this).parent().parent().parent();
+        thisgroup.find(` tr[data-color='${value}']`).toggle(300);
+        $(this).parent().parent().find("[name='batch_Delete']").parent().toggle(300);
+
+    });
+    //加入批量全選 name=check_All_delete
+    $("#tableAll").on('click', 'input[name="check_All_delete"]', function () {
+        const color = $(this).val();
+        const thisgroup = $(this).parent().parent().parent().parent();
+        if ($(this).prop('checked') == true) {
+            thisgroup.find(`tr[data-color="${color}"] input[name="check_delete"]`).each(function () {
+                $(this).prop("checked", true);
+            });
+        } else {
+            thisgroup.find(`tr[data-color="${color}"] input[name="check_delete"]`).each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+
+
+    });
+    //加入批量刪除事件
+    $('#tableAll').on('click', 'button[name="batch_Delete"]', function () {
+        console.log("批量刪除");
+        const color = $(this).parents("tr[name='tr_de']").find('td:eq(1)').text().trim();
+        // console.log(color);
+        const thisgroup = $(this).parent().parent().parent().parent();
+        //取得組數
+        let checkedId = new Array();
+        thisgroup.find(`tr[data-color="${color}"] input[name="check_delete"]:checked`).each(function () {
+            if (!isNaN($(this).val())) {
+                checkedId.push($(this).val());
+            } else {
+                console.log("lost value");
+            }
+        });
+        console.log(checkedId);
+        console.log(checkedId.length);
+        if (checkedId.length == 0) {
+            test_alert("請選擇要刪除的資料!");
+            return false;
+        }
+        //  console.log("陣列：" + checkedId);
+        //  console.log("id串：" + checkedId.toString());   Moda_D_D
+        const id = checkedId.toString();
+        Send_DatatoDel_Moda("@Url.Content("~/product/DeleteProDetail")", id);
+        $('#Moda_D_D').modal('toggle');
+
+    });
+    //加入按鈕事件(明細刪除) P_btnDel
+    $('#tableAll').on('click', 'button[name="PD_btnDelete"]', function () {
+        //const row = $(this).parents("tr[name='tr_de']");
+        //const id = row.find('td:eq(0)').text().trim();
+        const id = $(this).attr("data-value");
+        Send_DatatoDel_Moda("@Url.Content("~/product/DeleteProDetail")", id)
+    });
+
+    //加入按鈕事件(明細修改) P_btnDel
+    $('#tableAll').on('click', 'button[name="PD_btnEdit"]', function () {
+        //const row = $(this).parents("tr[name='tr_de']");
+        //const id = row.find('td:eq(0)').text().trim();
+        const id = $(this).attr("data-value");
+        $("#Moda_D_C #myModal-label").text("修改細項商品");
+        //顯示Moda_D_C相應資料load _EditDetial
+        $("#Moda_D_C .modal-body").load(`@Url.Content("~/Product/_EditDetial")/?id=${id}`);
+    });
+
+    //產品預覽圖事件
+    $('#tableAll').on('click', 'img[name="P_D_img"]', function () {
+        const url = $(this).prop("src");
+        console.log(url);
+        $('#Moda_Img_View').modal('show');
+        $("#Moda_Img_View").find("img").prop("src", url);
+    });
+    //=============產品明細事件End=======================
+    //清空Product 新增與修改Form表單的欄位
+    let ClearPro_Edit_Creater_form = () => {
+        $("form[name='ProC_Form'] input").val("");
+        $("form[name='ProC_Form'] input").prop("class", "form-control");
+        $("form[name='ProC_Form'] textarea").val("");
+        $("form[name='ProC_Form'] textarea").prop("class", "form-control");
+        $("form[name='ProC_Form'] span").html("");
+    }
+
+    //Modal表單 Sumit事件
+    function Pro_Create_Edit_Sumit(_Post) {
+        //取得是否有貨的值寫入instock
+        $("input[name='instock']").val($("#_有貨").prop("checked"));
+        //取得是否上架的值寫入onshelves
+        $("input[name='onshelves']").val($("#_上架").prop("checked"));
+        //取得鞋種寫入shoeid
+        $("input[name='typeid']").val($("#_商品分類id").val());
+        //取得分類寫入typeid
+        $("input[name='shoeid']").val($("#_商品鞋種id").val());
+        //取得產品資訊
+        $("input[name='introduce']").val($("#_introduce").val());
+
+        _Post();
+        //重新載入
+        change_table();
+
+    }
+
+    //重新加載
+    function change_table() {
+        table.destroy();
+        funcLoad();
+    }
+    //每一行明細的點擊事件
+    $('#tableAll>tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+
+        if (row.child.isShown()) {
+            //如果該行已打開, 則關閉
+            row.child.hide(); //隱藏row.child的節點
+            tr.removeClass('shown'); //移除tr的類別
+            tr.children('td.details-control').html('<i class="bi bi-plus-circle-fill"></i>');//顯示子table
+        }
+        else {
+            //如果這行是關閉狀態
+            var rowchild = row.child(details(row.data()));; //觸發detail事件
+            rowchild.show(); //觸發format事件，並將字串以HTML秀出
+            tr.addClass('shown');
+            tr.children('td.details-control').html('<i class="bi bi-x-circle-fill"></i>');
+        }
+    });
+
+    //取得json數量
+    function JSONLength(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+    //子表單 details
+    function details(d) {
+        //使用資料庫存取
+        var CdData = d;
+        //使用連結
+        var CDataID = d.商品編號id;
+        //console.log("CDID=" +CDataID);
+        //let jsondata = JSON.stringify({ id : CDataID });
+        let dUrl = '@Url.ActionLink("showDetail","Product")';
+        let appH = "";
+        let gg = "";
+        let Json_count = 0;
+        //console.log(dUrl);
+        //console.log(CDataID)
+        //用ajax抓Detail的資料
+        $.ajax({
+            url: dUrl,
+            type: "Get",
+            dataType: 'json',
+            cache: false,
+            async: false,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                "id": `${CDataID}`
+            }
+        }).done(function (data) {
+            for (var item of data) {
+                //console.log(item.name);
+                let mast_temptr = `<tr name="tr_de" >` +
+                    `<td colspan="2"><button class="btn btn-primary" data-value="${item.name}" name="Btn_Pro_Show_list" title="開關"><i class="fas fa-edit">+</i></button></td>` +
+                    `<td>${item.name}</td>` +
+                    `<td colspan="4"><div style="display:flex">` +
+                    `<img src="@Url.Content("~/images")/${item.img1}" width = "100" name = "P_D_img" '/>` +
+                    `<img src="@Url.Content("~/images")/${item.img2}" width = "100" name = "P_D_img" '/>` +
+                    `<img src="@Url.Content("~/images")/${item.img3}" width = "100" name = "P_D_img" '/>` +
+                    `</td>` +
+                    `<td ><button class="btn btn-primary" name="Btn_Creat_PD_Size" data-color="${item.colid}" data-proid="${item.proid}" data-imgid="${item.imgid}" data-bs-toggle="modal" data-bs-target="#Moda_D_C">新增尺寸</button></td>` +
+                    `<td ><div class="conflexbetween"  style="display:none"><button class="btn btn-primary" name="batch_Delete"><i class="bi bi-trash3-fill"  >批次刪除</i></button> <input type="checkbox" name="check_All_delete"  value="${item.name}" > </div></td>` +
+                    `</tr>`;
+                    var PD_count =0;
+                for (var item2 of item.thisdata) {
+                    PD_count++;
+                    let temptr = `<tr name="tr_de" data-color="${item2.顏色}" style="display: none;">` +
+                        `<td>${(PD_count)}</td>` +
+                        `<td>${item2.明細尺寸}</td>` +
+                        `<td>${item2.顏色}</td>` +
+                        `<td>${item2.數量}</td>` +
+                        `<td>${item2.圖片位置id}</td>` +
+                        //`<td><img src="@Url.Content("~/images")/${item.商品圖片1}" width="100" name="P_D_img" '/></td>`+
+                        //`<td><img src="@Url.Content("~/images")/${item.商品圖片2}" width="100" name="P_D_img" '/></td>` +
+                        //`<td><img src="@Url.Content("~/images")/${item.商品圖片3}" width="100" name="P_D_img" '/></td>` +
+                        `<td>${item2.商品是否上架}</td>` +
+                        `<td>${item2.商品是否有貨}</td>` +
+                        `<td><button type="submit" class="btn btn-primary" id="E_${item2.明細編號}"   data-value="${item2.明細編號}"  name="PD_btnEdit" title="修改"  data-bs-toggle="modal" data-bs-target="#Moda_D_C"><i class="fas fa-edit" >修改</i></button></td>` +
+                        `<td ><div class="conflexbetween" ><button type="submit" class="btn btn-primary" id="D_${item2.明細編號}" data-value="${item2.明細編號}" name="PD_btnDelete" title="刪除" data-bs-toggle="modal" data-bs-target="#Moda_D_D" ><i class="fa fa-minus-square"> 刪除</i></button>  <input type="checkbox" name="check_delete"  value="${item2.明細編號}" ></div></td>` +
+                        `</tr>`;
+                    mast_temptr += temptr;
+                }
+                appH += mast_temptr;
+                // console.log(appH);
+                //計算data筆數
+                Json_count = JSONLength(data);
+            }
+            // alert("成功");
+        }).fail(function () {
+            test_alert("失敗");
+        });
+
+        let DE_table =
+            '<table id="tableDetail" class="table table-borded tabale-info">' +
+            '<thead>' +
+            '<tr >' +
+            '<th >序</th>' +
+            '<th >尺寸</th>' +
+            '<th >顏色</th>' +
+            '<th >數量</th>' +
+            '<th >圖組編號</th>' +
+            //'<th >圖1</th>' +
+            //'<th >圖2</th>' +
+            //'<th >圖3</th>' +
+            '<th >上架</th>' +
+            '<th >有貨</th>' +
+            '<th >修改</th>' +
+            '<th >刪除</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            appH
+        '</tbody>' +
+            '</table>'
+            ;
+        if (Json_count == 0)
+            DE_table = "<div>沒有細項商品</div>";
+        //console.log(DE_table)
+        //cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;
+        return DE_table;
+    }
+    function showphoto(detailsRecord) {
+        if (detailsRecord.Photo != null) {
+            //return "<div><img style='width:200px;' src='" + "@Url.Action("ShowPhoto", "Products")/" + detailsRecord.ProductID + "' title='" + detailsRecord.ProductName + "' /></div>";
+
+        } else {
+            return '<div><img style="display:block; margin:auto;"  src=' + "@Url.Content("~/images/404.png")></div>";
+        }
+    }
+
+    //存資料夾
+    function showphoto_other(detailsRecord) {
+        var n = detailsRecord;
+        //發佈可能會掛掉
+        // var urlword = '<img src="/img/WebsiteOrder/Products/' + n + '.png" width="200" />';
+        var urlword = `<img src="@Url.Content("~/img/WebsiteOrder/Customers")/${n}.jpg" width="200"  />`
+        console.log("圖片狀態=" + urlword.status);
+        console.log("圖片大小=" + urlword.fileSize);
+        //if (urlword.status == 404) {
+        //    return '<div><img style="display:block; margin:auto;"  src=' + '@Url.Content("~/img/404.png")></div>';
+        //} else {
+        //    return `<img src="@Url.Content("~/img/WebsiteOrder/Customers")/${n}.jpg" width="200" />`;
+        //}
+        return urlword;
+
+    }
+
+    //檢查錯誤圖檔
+    document.addEventListener("error", function (e) {
+        var elem = e.target;
+        if (elem.tagName.toLowerCase() == 'img') {
+            elem.src = '@Url.Content("~/images/404.jpg")';
+        }
+    }, true);
+
+   
+
+
+    $(document).ready(function () {
+        funcLoad();
+    });
+
+    //Demo按鍵事件
+    $("#Moda_P_C").find('[id="P_Create_Demo"]').on('click', function () {
+        let intr_Str = "設計團隊延續製作皮革鞋的堅持與工藝 除了價位平實外 致力打造美感、性能都契合品牌精神的作品。";
+        let Pmodal = $("#Moda_P_C");
+        const today = new Date().toISOString().substring(0, 16);  //html5 type="datetime-local"可接收格式
+        Pmodal.find("input[name='time']").val(today);
+        //Pmodal.find("input[name='time']").val("2023-02-15T15:53");
+        Pmodal.find("input[name='name']").val("歐風簡約皮革休閒鞋");
+        Pmodal.find("input[name='price']").val("1999");
+        Pmodal.find("#_introduce").val(intr_Str);
+        Pmodal.find("input[name='material']").val("牛皮");
+        Pmodal.find("input[name='weight']").val("650");
+        Pmodal.find("input[name='cost']").val("255");
+        let cel9 = '女鞋';
+        Pmodal.find(`#_商品分類id option[data-text=${cel9}]`).prop("selected", true);
+        const cel10 = '牛津';
+        Pmodal.find(`#_商品鞋種id option[data-text=${cel10}]`).prop("selected", true);
+        //極簡風格小牛皮革拖鞋
+        //自動填入新建資料
+    });
+
+</script>
+<script src='@Url.Content("~/js/product_index_ProDitail.js")'></script>
+
+}
+

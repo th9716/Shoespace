@@ -1,0 +1,149 @@
+﻿@model dbCompanyTest.Models.ToDoList
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ToDoList</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="交辦事項id" />
+            <div class="form-group">
+                <label asp-for="員工編號" class="control-label"></label>
+                <select asp-for="員工編號" class="form-control" asp-items="ViewBag.員工編號"></select>
+                <span asp-validation-for="員工編號" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="表單類型" class="control-label"></label>
+                <input asp-for="表單類型" class="form-control" />
+                <span asp-validation-for="表單類型" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="表單內容" class="control-label"></label>
+                <input asp-for="表單內容" class="form-control" />
+                <span asp-validation-for="表單內容" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="回覆" class="control-label"></label>
+                <input asp-for="回覆" class="form-control" />
+                <span asp-validation-for="回覆" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="表單狀態" class="control-label"></label>
+                <input asp-for="表單狀態" class="form-control" />
+                <span asp-validation-for="表單狀態" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="起單時間" class="control-label"></label>
+                <input asp-for="起單時間" class="form-control" />
+                <span asp-validation-for="起單時間" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="起單人" class="control-label"></label>
+                <input asp-for="起單人" class="form-control" />
+                <span asp-validation-for="起單人" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="部門主管" class="control-label"></label>
+                <input asp-for="部門主管" class="form-control" />
+                <span asp-validation-for="部門主管" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="部門主管簽核" class="control-label"></label>
+                <input asp-for="部門主管簽核" class="form-control" />
+                <span asp-validation-for="部門主管簽核" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="部門主管簽核意見" class="control-label"></label>
+                <input asp-for="部門主管簽核意見" class="form-control" />
+                <span asp-validation-for="部門主管簽核意見" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="部門主管簽核時間" class="control-label"></label>
+                <input asp-for="部門主管簽核時間" class="form-control" />
+                <span asp-validation-for="部門主管簽核時間" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="協辦部門" class="control-label"></label>
+                <input asp-for="協辦部門" class="form-control" />
+                <span asp-validation-for="協辦部門" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="協辦部門簽核" class="control-label"></label>
+                <input asp-for="協辦部門簽核" class="form-control" />
+                <span asp-validation-for="協辦部門簽核" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="協辦部門簽核人員" class="control-label"></label>
+                <input asp-for="協辦部門簽核人員" class="form-control" />
+                <span asp-validation-for="協辦部門簽核人員" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="協辦部門簽核意見" class="control-label"></label>
+                <input asp-for="協辦部門簽核意見" class="form-control" />
+                <span asp-validation-for="協辦部門簽核意見" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="協辦部門簽核時間" class="control-label"></label>
+                <input asp-for="協辦部門簽核時間" class="form-control" />
+                <span asp-validation-for="協辦部門簽核時間" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="老闆簽核" class="control-label"></label>
+                <input asp-for="老闆簽核" class="form-control" />
+                <span asp-validation-for="老闆簽核" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="老闆簽核意見" class="control-label"></label>
+                <input asp-for="老闆簽核意見" class="form-control" />
+                <span asp-validation-for="老闆簽核意見" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="老闆簽核時間" class="control-label"></label>
+                <input asp-for="老闆簽核時間" class="form-control" />
+                <span asp-validation-for="老闆簽核時間" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="執行人" class="control-label"></label>
+                <input asp-for="執行人" class="form-control" />
+                <span asp-validation-for="執行人" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="執行時間" class="control-label"></label>
+                <input asp-for="執行時間" class="form-control" />
+                <span asp-validation-for="執行時間" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="執行人簽核" class="control-label"></label>
+                <input asp-for="執行人簽核" class="form-control" />
+                <span asp-validation-for="執行人簽核" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="附件" class="control-label"></label>
+                <input asp-for="附件" class="form-control" />
+                <span asp-validation-for="附件" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="附件path" class="control-label"></label>
+                <input asp-for="附件path" class="form-control" />
+                <span asp-validation-for="附件path" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

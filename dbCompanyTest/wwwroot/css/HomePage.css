@@ -1,0 +1,124 @@
+﻿.g-container {
+    color: #000000;
+    font-size: 16px;
+    font-family: 'League Spartan', sans-serif;
+    line-height: 125%;
+    background: #FFFFFF;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10vh 5%;
+    font-family: 'Jacques Francois', serif;
+}
+
+.g-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.collection {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.clt-top {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+}
+
+    .clt-top > * {
+        width: 50%;
+    }
+
+.clt-top2 {
+    text-align: right;
+}
+
+.clt-top1 > img, .clt-top2 > img {
+        display: inline-block;
+        width: auto;
+        height: 20px;
+}
+
+.clt-top3, .clt-top4, .clt-bottom2 {
+    margin: 5% 0;
+}
+
+
+.g-container a > .pic {
+    overflow: hidden;
+}
+.g-container a > .pic img {
+    transition: 0.3s;
+}
+.g-container a:hover > .pic img {
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 819px) {
+    .g-container {
+        font-size: 12px;
+            padding: 6vh 5%;
+        }
+
+
+    .clt-top3 {
+        display: none;
+    }
+
+    .clt-top4 {
+        width: 100%;
+    }
+
+    .clt-top5 {
+        width: 60%;
+        margin: 0 auto 20px auto;
+    }
+
+    .clt-top6 {
+        width: 100%;
+    }
+
+    .clt-bottom3 {
+        display: block;
+        width: 80%;
+        margin: 0 auto 20px auto;
+    }
+
+}
+
+@media (min-width: 820px) {
+
+    .clt-top1 > img, .clt-top2 > img {
+        height: 40px;
+    }
+
+    .clt-top3, .clt-top4, .clt-bottom2 {
+        margin: 30px 0;
+    }
+
+    .clt-top5 {
+        width: 29%;
+        margin-right: 21%;
+    }
+
+    .clt-bottom {
+        margin-top: 10%;
+        display: flex;
+        flex-flow: nowrap;
+        justify-content: space-between;
+    }
+
+    .clt-bottom1 {
+        width: 45%;
+    }
+
+    .clt-bottom3 {
+        width: 40%;
+    }
+
+}

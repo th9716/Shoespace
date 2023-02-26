@@ -1,0 +1,120 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Files\**" />
+    <Compile Remove="wwwroot\NewFolder1\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\Files\**" />
+    <Content Remove="wwwroot\NewFolder1\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\Files\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\Files\**" />
+    <None Remove="wwwroot\NewFolder1\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ViewModels\ClientsCheckData.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\File\00d1e036-f912-4943-bc06-4a729345075e.pdf" />
+    <Content Remove="wwwroot\File\21a79d7b-4521-49cc-8d6a-1529965235fd.pdf" />
+    <Content Remove="wwwroot\File\274dcb60-c508-46d8-804a-b0a35753f5b9.pdf" />
+    <Content Remove="wwwroot\File\2cf6ffc4-6fe3-4e76-bbd7-e2ac7cbfa77b.pdf" />
+    <Content Remove="wwwroot\File\3b8a08aa-d5e5-4564-bb91-ec4fcc2c81f5.pdf" />
+    <Content Remove="wwwroot\File\457f8f9f-fecf-4e06-a4ec-49af7590989b.pdf" />
+    <Content Remove="wwwroot\File\45e4d51d-3ca5-4291-9ca2-4a93518f981c.pdf" />
+    <Content Remove="wwwroot\File\4c8e4bb7-14f5-4985-85be-8b72ec777997.pdf" />
+    <Content Remove="wwwroot\File\559ce27b-b75a-409e-ab76-389ceabcfd21.pdf" />
+    <Content Remove="wwwroot\File\56000cb6-9230-4eb8-bfef-733fe5366b24.pdf" />
+    <Content Remove="wwwroot\File\5bdbe58f-1a79-4266-8ed5-7e8516f49eb2.pdf" />
+    <Content Remove="wwwroot\File\6191bf0d-bc0f-4879-9afb-f1c2db9effc0.pdf" />
+    <Content Remove="wwwroot\File\660021a7-9f2e-4097-90d7-7caf4a550c78.pdf" />
+    <Content Remove="wwwroot\File\67305798-c99f-40a4-851e-f06a0df1d998.pdf" />
+    <Content Remove="wwwroot\File\6953657e-abfa-4465-bb8b-d5c4c43570a9.pdf" />
+    <Content Remove="wwwroot\File\6ed8cc56-0079-4afa-a522-6933038f18c5.pdf" />
+    <Content Remove="wwwroot\File\73e02e28-962e-4074-9cfb-3e7f34371b5d.jpg" />
+    <Content Remove="wwwroot\File\79e2f7cb-2a5f-4ba2-bc79-eb5690573fa4.pdf" />
+    <Content Remove="wwwroot\File\8a4003ec-141a-4fe0-b574-55b18a003392.pdf" />
+    <Content Remove="wwwroot\File\91b87d2c-deb6-4dd9-b607-fbe1f1ea5313.pdf" />
+    <Content Remove="wwwroot\File\9535a392-b0e1-4c0a-bf46-0932e0a4e8a8.pdf" />
+    <Content Remove="wwwroot\File\95bcee3f-b881-4b14-a961-274873ff6c5b.pdf" />
+    <Content Remove="wwwroot\File\984a83ca-7123-476a-bf17-094460d7a2a9.pdf" />
+    <Content Remove="wwwroot\File\a126ec17-4153-460a-a807-b2afaae904aa.docx" />
+    <Content Remove="wwwroot\File\a1ed7556-ba49-4726-b82b-80a77bb1c1e1.pdf" />
+    <Content Remove="wwwroot\File\af31e85b-c4e5-472d-8857-0cc68a36d3ac.pdf" />
+    <Content Remove="wwwroot\File\b45ebc5b-602a-48a0-950f-8c8209f8eb86.pdf" />
+    <Content Remove="wwwroot\File\c48ec389-2c4f-4a88-af90-7e93ebaa08b2.pdf" />
+    <Content Remove="wwwroot\File\d899b5d1-91a1-40e6-b572-94495b62213c.pdf" />
+    <Content Remove="wwwroot\File\e64c15b7-0a9c-40e9-920c-513d7394dd09.pdf" />
+    <Content Remove="wwwroot\File\e87a8e52-5ddc-4ff1-805c-62417c05cd8d.pdf" />
+    <Content Remove="wwwroot\File\eeb860a8-c1dc-426c-a7a1-ddd6c4e7c0f3.pdf" />
+    <Content Remove="wwwroot\File\f1531145-b319-47a0-a62e-28ad6d0474a3.pdf" />
+    <Content Remove="wwwroot\File\fcf7bd4a-72f7-430c-a377-f47235ad44e2.pdf" />
+    <Content Remove="wwwroot\homeImg\cb28915426068cce507ee57e90f73fce.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\staff_login.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\3d\shiba\scene.bin" />
+    <None Include="wwwroot\3d\shiba\scene.gltf" />
+    <None Include="wwwroot\assets\js\config.js" />
+    <None Include="wwwroot\assets\js\dashboards-analytics.js" />
+    <None Include="wwwroot\assets\js\extended-ui-perfect-scrollbar.js" />
+    <None Include="wwwroot\assets\js\form-basic-inputs.js" />
+    <None Include="wwwroot\assets\js\icon_js\app.js" />
+    <None Include="wwwroot\assets\js\icon_js\app.js.map" />
+    <None Include="wwwroot\assets\js\icon_js\js\app.js" />
+    <None Include="wwwroot\assets\js\icon_js\js\app.js.map" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\pages-account-settings-account.js" />
+    <None Include="wwwroot\assets\js\ui-modals.js" />
+    <None Include="wwwroot\assets\js\ui-popover.js" />
+    <None Include="wwwroot\assets\js\ui-toasts.js" />
+    <None Include="wwwroot\assets\vendor\fonts\boxicons\boxicons.svg" />
+    <None Include="wwwroot\assets\vendor\fonts\boxicons\boxicons.woff2" />
+    <None Include="wwwroot\assets\vendor\js\bootstrap.js" />
+    <None Include="wwwroot\assets\vendor\js\helpers.js" />
+    <None Include="wwwroot\assets\vendor\js\menu.js" />
+    <None Include="wwwroot\assets\vendor\libs\apex-charts\apexcharts.js" />
+    <None Include="wwwroot\assets\vendor\libs\highlight\highlight.js" />
+    <None Include="wwwroot\assets\vendor\libs\jquery\jquery.js" />
+    <None Include="wwwroot\assets\vendor\libs\masonry\masonry.js" />
+    <None Include="wwwroot\assets\vendor\libs\perfect-scrollbar\perfect-scrollbar.js" />
+    <None Include="wwwroot\assets\vendor\libs\popper\popper.js" />
+    <None Include="wwwroot\webcam\flash\com\adobe\images\BitString.as" />
+    <None Include="wwwroot\webcam\flash\com\adobe\images\JPGEncoder.as" />
+    <None Include="wwwroot\webcam\flash\com\adobe\images\PNGEncoder.as" />
+    <None Include="wwwroot\webcam\flash\mx\utils\Base64Encoder.as" />
+    <None Include="wwwroot\webcam\flash\Webcam.as" />
+    <None Include="wwwroot\webcam\flash\Webcam.fla" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.3" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.58.0" />
+    <PackageReference Include="itext7.pdfhtml" Version="4.0.5" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.1.0" />
+  </ItemGroup>
+
+</Project>

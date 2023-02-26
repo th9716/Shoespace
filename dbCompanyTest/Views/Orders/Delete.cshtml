@@ -1,0 +1,84 @@
+﻿@model dbCompanyTest.Models.Order
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@{
+    Layout = "_Back_Layout_Sneat";
+}
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.付款方式)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.付款方式)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.送貨地址)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.送貨地址)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.總金額)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.總金額)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.下單時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.下單時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.訂單狀態)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.訂單狀態)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.付款狀態)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.付款狀態)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.收件人名稱)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.收件人名稱)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.收件人電話)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.收件人電話)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.收件人email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.收件人email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.客戶編號Navigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.客戶編號Navigation.客戶編號)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="訂單編號" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

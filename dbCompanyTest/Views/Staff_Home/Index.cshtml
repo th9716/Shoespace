@@ -1,0 +1,120 @@
+﻿@model dbCompanyTest.Models.TestStaff
+@{
+    ViewData["Title"] = "Index";
+}
+@*@section User_info {
+    @ViewBag.acc
+}*@
+@{
+    Layout = "_Back_Layout_Sneat";
+}
+
+<input type="hidden" id="TDLpath" value="@Url.Content("~/Staff_Home/LoadToDoList")" />
+<input type="hidden" id="path" value="@Url.Content("~/Staff_Home/LoadSheeplist")" />
+<input type="hidden" id="TDL_DTpath" value="@Url.Content("~/Staff_Home/DT_TDL")" />
+<input type="hidden" id="StaffNumpath" value="@Url.Content("~/Staff_Home/StaffNum")" />
+<div style="width:85%;margin:20px auto;">
+
+    @*<h1>員工頁面(行政)</h1>*@
+
+    <h2 id="stf_info" style="display:none">@ViewBag.acc</h2>
+
+    <div id="Sheeplist_div" class="en_div" style="padding-top:15px"></div>
+    <br/>
+    <div id="ToDoList_div" class="en_div"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/staffconnect.js"></script>
+    <script>
+        var split = $(`#stf_info`).text().indexOf(' ');
+        var stf = $(`#stf_info`).text().substr(0, split)
+        //serials([LoadSheeplist(), LoadToDoList()], LoadSheeplist_Data(), LoadToDoList_Data())
+       
+        LoadSheeplist();
+        LoadToDoList();
+
+
+        //LoadSheeplist().then(LoadToDoList())
+        //    .then(LoadSheeplist_Data())
+        //    .then(LoadToDoList_Data());
+
+        //new Promise(function(){
+        //    LoadSheeplist();
+        //    LoadToDoList();
+        //}).then(function(){
+        //    LoadSheeplist_Data();
+        //    LoadToDoList_Data();           
+        //})
+
+        //$(window).ready(function () 
+        //{
+        //    LoadToDoList_Data();
+        //    LoadSheeplist_Data()
+        //})
+
+
+      
+
+        
+
+        function LoadSheeplist() {
+            //const promis =
+           $('#Sheeplist_div').load("@Url.Content("~/Staff_Home/PartialSheeplist")");
+           
+            //return promis;
+           
+        }
+         function LoadSheeplist_Data() {
+            $.getScript("@Url.Content("~/js/LoadSheeplist.js")");
+        }
+
+       function LoadToDoList() {
+            //const promis =
+            $('#ToDoList_div').load("@Url.Content("~/Staff_Home/PartialToDoList")");
+
+            //return promis;
+        }
+         function LoadToDoList_Data() {
+            $.getScript("@Url.Content("~/js/LoadToDoList.js")");
+        }
+
+        $(window).ready(function () {
+            if ($(window).width() < 500) {
+                console.log(`1`)
+                $(".tds").removeClass("col-1");
+                $(".tds").addClass("col-12");
+                $(".tdl").removeClass("col-3");
+                $(".tdl").addClass("col-12");
+                $(".tr-border").addClass("border-rwd");
+                $(".tr-border").after(`<p></p>`)
+            }
+        });
+        $(window).on("resize", function (e) {
+            if ($(window).width() < 500) {
+                $(".tds").removeClass("col-1");
+                $(".tds").addClass("col-12");
+                $(".tdl").removeClass("col-3");
+                $(".tdl").addClass("col-12");
+                $(".tr-border").addClass("border-rwd");
+                $(".tr-border").after(`<p></p>`)
+            }
+            else {
+                $(".tds").removeClass("col-12");
+                $(".tds").addClass("col-1");
+                $(".tdl").removeClass("col-12");
+                $(".tdl").addClass("col-3");//border-rwd
+                $(".tr-border").removeClass("border-rwd");
+            }
+        });
+
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

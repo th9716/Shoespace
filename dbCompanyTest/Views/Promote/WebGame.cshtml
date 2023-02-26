@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "WebGame";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+   <link href="~/css/HomePage.css" rel="stylesheet">    
+    <style>
+        .sectionCenter {
+        margin-left: auto;
+         margin-right: auto;
+         width: 45em;
+        }
+        .sectiondiv_01{
+        margin-bottom:2em;
+        }
+       button {
+        background-color:#DA7173;
+        }
+    </style>    
+}
+    <section class="collection g-container">
+        <div class="sectionCenter">
+            <div class="sectiondiv_01">
+                <div class="sectiondiv_01">
+                    <h3>品牌吉祥物推廣小遊戲</h3>
+                </div>                
+                <div class ="sectiondiv_01">
+                    親愛的顧客您好:
+                </div class="sectiondiv_01" >
+                <div class="sectiondiv_01">
+                    遊玩本小遊戲並將遊玩畫面分享臉書，可得折扣優惠巻一張，請與好朋友分享遊玩吧!
+                </div>
+                <div class="sectiondiv_01" >
+                    <ul class="list-side">
+                    <li><button class="btn btn-dark" id="Go"style="background-color: #DA7173;">開始遊玩</button></li>
+                </ul>
+                </div>
+                
+            </div>
+            <div id="_iframe" >
+                <div class="sectiondiv_01">遊戲說明:讓吉祥物Potato君穿越金柱，來獲取高分!</div>
+                <div class="sectiondiv_01" >移動:↑↓←→鍵;Esc可暫停;START 按鈕可開始；space 空白鍵可上飛；SaveHi按鈕可以覆蓋最高分紀錄。</div>                
+            </div>
+        </div>
+        <div lass="sectionCenter" align="center">
+            <iframe id="iframe" width="1000" height="700" src=""></iframe>
+        </div>       
+     </section>
+
+    @section Scripts{
+    <script>
+        $("#Go").on('click', function () {
+            $(this).text("重新開始");
+            $('#iframe').attr('src', "https://skylin8012.github.io/ShoespaceWebGame/");
+            
+        });
+
+
+
+    </script>
+    }

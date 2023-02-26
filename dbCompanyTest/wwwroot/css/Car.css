@@ -1,0 +1,54 @@
+﻿.car_all{
+    margin:0;
+    padding:0
+}
+.car_body {
+    background-color: #fffdfb;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border: solid 1px #C4C4C4
+}
+.car_dital {
+    flex-grow: 1;
+    padding: 5%;
+    overflow-y: auto;
+    height:80%
+}
+.car_dolor {
+    flex-shrink: 0;
+    height: 50px;
+    width: 350px;
+    text-align: center;
+    line-height: 50px;
+    border: solid 1px #bbaa9c
+}
+.car_a {
+    flex-shrink: 0;
+    height: 50px;
+    width: 350px;
+    text-align: center;
+    line-height: 50px;
+    border: solid 1px #bbaa9c;
+    background-color: #bbaa9c;
+}
+
+.purchase-icon-car {
+    width: 25px;
+    height: 25px;
+    background-image: url(https://www.gracegift.com.tw/assets/images/collect-del.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-weight: normal;
+    vertical-align: baseline;
+}
+.car_product{
+    margin-bottom:10px;
+}

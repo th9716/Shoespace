@@ -1,0 +1,88 @@
+﻿
+
+.car {
+    margin:0px 100px;
+    padding:0px 50px;
+    display: flex;
+    /*    justify-content: center;*/
+    /*flex-direction: column;*/
+    /*flex-wrap:wrap;*/
+    align-content: center !important;
+}
+
+.shopping-step {
+    display: flex;
+    justify-content: space-around;
+    color: #9D9D9D;
+    padding: 80px 100px;
+}
+.stepRow {
+    border-top: solid 1px #BEBEBE;
+    width: 20%;
+    transform: translate(0%,50%)
+}
+.active{
+    color:black
+}
+.out_of_cartable {
+    padding: 0px 150px;
+}
+.car_table {
+/*    width: 50%;
+    padding: 0px 100px;*/
+}
+.car_dital {
+    display: none;
+}
+.item-cont {
+    display: flex;
+}
+
+.btn_page1 {
+    border: solid 1px #8E8E8E;
+}
+@media screen and (max-width:1120px) {
+    .car_table {
+        display:none;
+    }
+    .car_dital {
+        display: block;
+    }
+    .shopping-step {
+        padding: 60px 50px;
+    }
+    .car_table {
+        display: none;
+    }
+}
+@media screen and (max-width:960px){
+    .out_of_cartable {
+        padding: 0px 0px;
+    }
+    .shopping-step {
+        padding: 40px 0px;
+    }
+}
+@media screen and (max-width:500px) {
+    .car {
+        margin: 0px 50px;
+        padding: 0px 0px;
+    }
+}
+/*Form*/
+label {
+    float: left;
+    width: 100px;
+}
+
+    .setMargin {
+        margin: 20px
+    }
+
+.slectCar{
+    border:1px solid gray;
+    text-align:center;
+}
+    .slectCar:hover {
+        color: #9D9D9D;
+    }

@@ -1,0 +1,723 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Shoespace</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dbCompanyTest.styles.css" asp-append-version="true" />
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/mychat.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/car.css" rel="stylesheet" />
+    <link rel="icon" href="~/homeImg/icon.ico" />
+    @await RenderSectionAsync("Style", required: false)
+</head>
+<body class="pc-model">
+    <header>
+        <div class="shops-pc">
+            <div class=" d-flex justify-content-between" style="height:95px;">
+                @*============== LOGO =================*@
+                <div class="logo">
+                    <a class="" asp-controller="Home" asp-action="Index"><img src="~/homeImg/Shoespace1.png" /></a>
+                </div>
+                @*============== 搜尋,我的最愛,會員中心,購物車 =================*@
+
+                <div class="d-flex justify-content-end R-Top-tool">
+                    <div class="tool-box d-flex">
+                        <div class="search-box container" id="sb">
+                            <div class="row">
+                                <input class="web-search search_keyword" type="text" placeholder="Search" id="search-box" disabled="disabled">
+                            </div>
+
+                        </div>
+                        <div class="tool-p flex-fill">
+                            <a id="web-search-btn" href=""><img src="~/homeImg/search_header_pc.png"></a>
+                        </div>
+                        <div class="tool-p shortcut flex-fill" style="font-family:'Microsoft YaHei';">
+                            <a class="tool-item memclick">
+                                <img src="~/homeImg/sign_pc.png">
+                            </a>
+                            <div class="shortcut-box" style="display: blcok;">
+                                <div class="shortcut-i">
+                                    <a asp-controller="MemberCenter" asp-action="Index" class="us">MY ACCOUNT</a>
+                                    <a asp-controller="MemberCenter" asp-action="Index" class="cn">會員中心</a>
+                                </div>
+                                <div class="shortcut-i">
+                                    <a asp-controller="MemberCenter" asp-action="orderinfo" class="us">MY ORDERS</a>
+                                    <a asp-controller="MemberCenter" asp-action="orderinfo" class="cn">訂單查詢</a>
+                                </div>
+                                <div class="shortcut-i" style="display: flex;" id="log">
+                                    <a asp-controller="Login" asp-action="Login" class="us">LOGIN</a>
+                                    <a asp-controller="Login" asp-action="Login" class="cn">登入</a>
+                                </div>
+                                <div class="shortcut-i" style="display: none;" id="log2">
+                                    <a href="@Url.Content("~/Login/Logout")" class="us">LOGOUT</a>
+                                    <a href="@Url.Content("~/Login/Logout")" class="cn">登出</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tool-p flex-fill">
+                            <a class="tool-item flex-fill" asp-controller="MyLove" asp-action="Index"><img src="~/homeImg/collect_pc.png"></a>
+                        </div>
+                        <div class="tool-p shopping-cart flex-fill">
+                            <a class="tool-item car_click" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><img src="~/homeImg/shopping_cart_pc.png"><span class="g-nums" id="cart_num_pc">0</span></a>
+                        </div>
+
+                    </div>
+                    <div class="collapse  " style="position:absolute;top:2em;right:2%;z-index:3;width:350px;" id="collapseExample">
+                        <div class="card card-body car_body car_all" style="height:500px">
+                            <div class="car_dital car_all" id="car_iten">
+                            </div>
+                            <div class="car_dolor car_all">
+                                <div class="total_twd">
+                                    TOTAL TWD $0
+                                </div>
+                            </div>
+                            <a href="@Url.Content("~/Shopping")" class="car_a car_all" style="color:white;z-index:3">
+                                CHECK OUT
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            @*TOP*@
+            <div class="web-top" style="display: none;">
+                <div class="icon back-top"></div>
+            </div>
+
+
+            @*================= nav ===================*@
+
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom ">
+                <div class="container-fluid">
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
+                        <ul class="navbar-nav flex-sm-grow-1 justify-content-center navtext" id="nav">
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+
+        <div class="shops">
+            <div class=" shop-header1 "></div>
+            <div class=" d-flex justify-content-between shop-header fixed-top" style="z-index:4">
+                @*============== Menu =================*@
+                <div class="ms-4 head-left">
+                    <a class="sidebar-btn-l" id="menu"><img src="~/homeImg/menu.png"></a>
+                </div>
+                @*============== LOGO =================*@
+                <div class="logo">
+                    <a class="" asp-controller="Home" asp-action="Index"><img src="~/homeImg/Shoespace1.png" /></a>
+                </div>
+                @*============== 搜尋,我的最愛,會員中心,購物車 =================*@
+
+                <div class=" R-Top-tool">
+                    <div class="tool-box ">
+                        <div class="tool-p ">
+                            <a id="web-search-btn1" href=""><img src="~/homeImg/search_header_pc.png"></a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="search-box1 container" id="sb2">
+                    <div class="row">
+                        <input class="web-search search_keyword1" type="text" placeholder="Search" id="search-box1" disabled="disabled">
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="shop-bot fixed-bottom">
+            <ul>
+                <li><a asp-controller="MemberCenter" asp-action="Index"><img src="~/homeImg/sign_bot (1).png"></a></li>
+                <li>
+                    <a href="@Url.Content("~/Shopping")">
+                        <img src="~/homeimg/shopping_cart (1).png" />
+                    </a>
+                </li>
+                <li><a class="tool-item flex-fill" asp-controller="MyLove" asp-action="Index"><img src="~/homeImg/collect_bot (1).png"></a></li>
+                <li><a asp-controller="MemberCenter" asp-action="orderinfo"><img src="~/homeimg/vip_manage_bot (1).png" /></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="sidebar-left" style="left: -100%;">
+        <div class="channel-menu">
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">男鞋</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="1" class="m-2">男鞋全系列</a></li><li> <a href="/ProductWall/type/4?tid=1&type=男鞋" class="m-2">小白鞋</a></li><li> <a href="/ProductWall/type/10?tid=1&type=男鞋" class="m-2">休閒鞋</a></li><li> <a href="/ProductWall/type/1?tid=1&type=男鞋" class="m-2">牛津</a></li><li> <a href="/ProductWall/type/3?tid=1&type=男鞋" class="m-2">馬汀靴</a></li><li> <a href="/ProductWall/type/6?tid=1&type=男鞋" class="m-2">樂福鞋</a></li><li> <a href="/ProductWall/type/11?tid=1&type=男鞋" class="m-2">其他</a></li></ul>
+            </div>
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">女鞋</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="2" class="m-2">女鞋全系列</a></li><li> <a href="/ProductWall/type/1?tid=2&type=女鞋" class="m-2">牛津</a></li><li> <a href="/ProductWall/type/3?tid=2&type=女鞋" class="m-2">馬汀靴</a></li><li> <a href="/ProductWall/type/2?tid=2&type=女鞋" class="m-2">長靴</a></li><li> <a href="/ProductWall/type/6?tid=2&type=女鞋" class="m-2">樂福鞋</a></li><li> <a href="/ProductWall/type/8?tid=2&type=女鞋" class="m-2">猛克鞋</a></li><li> <a href="/ProductWall/type/4?tid=2&type=女鞋" class="m-2">小白鞋</a></li><li> <a href="/ProductWall/type/7?tid=2&type=女鞋" class="m-2">德比鞋</a></li></ul>
+            </div>
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">KOL聯名</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="3" class="m-2">KOL聯名全系列</a></li><li> <a href="/ProductWall/type/10?tid=3&type=KOL聯名" class="m-2">休閒鞋</a></li><li> <a href="/ProductWall/type/2?tid=3&type=KOL聯名" class="m-2">長靴</a></li><li> <a href="/ProductWall/type/7?tid=3&type=KOL聯名" class="m-2">德比鞋</a></li><li> <a href="/ProductWall/type/6?tid=3&type=KOL聯名" class="m-2">樂福鞋</a></li><li> <a href="/ProductWall/type/8?tid=3&type=KOL聯名" class="m-2">猛克鞋</a></li><li> <a href="/ProductWall/type/4?tid=3&type=KOL聯名" class="m-2">小白鞋</a></li></ul>
+            </div>
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">迪士尼</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="4" class="m-2">全系列</a></li></ul>
+            </div>
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">服飾包袋</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="5" class="m-2">全系列</a></li></ul>
+            </div>
+            <div class="menu-item">
+                <a class="m-1 mobile-left-nav" href="#">口罩</a>
+                <ul class="tree-menu" style="display:none;"><li> <a asp-controller="ProductWall" asp-action="Index" asp-route-id="6" class="m-2">全系列</a></li></ul>
+            </div>
+        </div>
+        <div class="sign-out mobile-sign-out" id="l-log1">
+            <a asp-controller="Login" asp-action="Login"><img src="~/homeimg/sign_pc.png" /> 登入</a>
+        </div>
+        <div class="sign-out mobile-sign-out" id="l-log2">
+            <a href="@Url.Content("~/Login/Logout")"><img src="~/homeimg/login_out.png" /> 登出</a>
+        </div>
+    </div>
+
+
+
+    <div @*class="container"*@>
+        <main role="main" @*class="pb-3"*@>
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="chatMain" style="z-index:10;cursor:pointer">
+        <div class="dot eyes-left"></div>
+        <div class="dot eyes-right"></div>
+        <div class="dot mouth"></div>
+    </div>
+    <div class="chatBody" style="z-index:10;">
+        <div id=app style="height:100%">
+            <mochi-box shiba="monaka" mood="content"
+                       left-eye="open" right-eye="open"
+                       left-ear="middle" right-ear="flat"
+                       style="height:100%">
+                <div class="hee">
+                    <div id="cchatClose"><p id="chatClose">X</p></div>
+                    <div class="chatHeader"><div id="connection" style="background-image:url('@Url.Content("~/homeImg/chatlogo.png")')"></div><p id="errorstring" style="color:white;margin:0 auto;padding: 0 39%;">ShoeShop</p></div>
+                    <div class="LineFriend">
+                        <div class="line-it-button" data-lang="zh_Hant" data-type="friend" data-env="REAL" data-count="true" data-home="true" data-lineId="@@401jvrga" style="display:block;width:100px;height:100px;"></div>
+                    </div>
+                    <input id="userName" type="hidden">
+                    <input id="openaikey" type="hidden" />
+                </div>
+                <div class="chatBBody">
+                </div>
+                <div class="chatFooter">
+                    <div style="margin-top:3px">
+                        <img src="~/homeimg/openai_logo.png" id="openAI" style="width:22px;height:22px;cursor:pointer" />
+                        <input type="text" id="message" placeholder="請輸入文字......" style="border-radius:10px;border:0" />
+                        <img src="~/images/send.png" id="send" style="width:22px;height:22px;cursor:pointer" />
+                    </div>
+                    <p>ShoeShop</p>
+                </div>
+            </mochi-box>
+        </div>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - dbCompanyTest - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js'></script>
+    <script src="~/js/script.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>$("#nav").load("@Url.Content("~/Home/nav")")</script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/mychat.js"></script>
+    <script src="~/js/car.js"></script>
+    <script src="~/js/aibot.js"></script>
+    <script>
+        $(`#cchatClose`).on(`click`, function () {
+            $(`.chatBody`).hide(500);
+        })
+        $(`#connection`).css("background-image", "@Url.Content("~/images/dog.jpg")")
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").withAutomaticReconnect().build();
+
+        connection.start().then(function () {
+            var productid = $(`#typeid`).data('productid');
+            var colorid = $(`#typeid`).data('colorid');
+            connection.invoke("JoinRoom", productid, colorid);
+        });
+        $(`#openAI`).on(`click`, function () {
+            if ($(`#openaikey`).val() == ``) {
+                $(`#openaikey`).val(`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`);
+                UpdSystem("OpenAI", "你好");
+            }else{
+                $(`#openaikey`).val(``);
+                UpdSystem("系統", "土豆回來囉~");
+            }
+        });
+        $(`#connection`).on(`click`, async function () {
+            const data = await fetch("@Url.Content("~/Login/getUser")");
+            const uesrName = await data.text();
+            let selfID = $('#SelfID').html();
+            connection.invoke("getName", uesrName);
+            $(`.chatBBody`).append(`<div class="chat">
+                                                                                                                                <div class="otherName">系統</div>
+                                                                                                                                <div class="otherChat">
+                                                                                                                                     親愛的${uesrName},我們很高興為您服務
+                                                                                                                                </div>
+                                                                                                                            </div>`);
+            $(`#userName`).val(userName);
+            resetScrollSite();
+        })
+
+        connection.on("UpdSelfID", function (id) {
+
+        });
+
+        connection.on("UpdSystem", function (user, msg) {
+            UpdSystem(user, msg);
+        });
+
+
+        connection.on("UpdContent", function (msg) {
+            UpdContent(msg);
+        });
+
+        $(`#send`).on(`click`, async function () {
+            sendclick();
+        });
+
+        $(`#message`).on('keyup', async function (evt) {
+            if (evt.keyCode === 13) {
+                sendclick();
+            }
+        })
+
+        async function sendclick() {
+            let message = $('#message').val();
+            if (message.substr(0, 7) == "setting") {
+                $(`#openaikey`).val(message.substr(7, message.length - 1));
+                UpdSystem("系統", "OpenAI's Api keys setting done");
+                $(`#message`).val("");
+            } else {
+                if (!$(`#userName`).val()) {
+                    if (message != "") {
+                        UpdContent(message);
+                        if (!$(`#openaikey`).val()) {
+                            AIBOT(message);
+                        } else {
+                            let OpenAIKey = $(`#openaikey`).val();
+                            let response = await fetch(`@Url.Content("~/OpenAI/Index/")?question=${message}&OpenAIKey=${OpenAIKey}`);
+                            let data = await response.json();
+                            UpdSystem("OpenAI", data);
+                        }
+                    }
+                } else {
+                    let selfID = $('#SelfID').html();
+                    connection.invoke("SendMessage", selfID, message/*, sendToID*/).then(function () {
+                       
+                    });
+                }
+            }
+        }
+
+        function UpdSystem(user, msg) {
+            $(`.chatBBody`).append(`<div class="chat">
+                                                                                                                                <div class="otherName">${user}</div>
+                                                                                                                                <div class="otherChat">
+                                                                                                                                            ${msg}
+                                                                                                                                </div>
+                                                                                                                            </div>`);
+            resetScrollSite();
+        }
+        function AIBOT(msg) {
+            const querydata = Botdata.filter(x => x.key === msg)
+            //console.log(filterValuePart(Botdata, msg));
+            if (querydata.length != 0) {
+                UpdSystem("系統", querydata[0].value);
+            }
+            else {
+                UpdSystem("系統", "我不知道這個問題，可以點擊上方LOGO與客服人員聯繫");
+            }
+        }
+        function resetScrollSite() {
+            let chatList = $(".chatBBody").find(".chat");
+            let TotalH = 0;
+            for (var xh of chatList) {
+                TotalH += xh.scrollHeight;
+            }
+            //console.log(TotalH);
+            $('.chatBBody').animate({
+                scrollTop: $(".chatBBody").offset().top + TotalH
+            }, 500);
+        }
+
+        function filterValuePart(arr, part) {
+            return arr.filter(function (obj) {
+                return Object.keys(obj)
+                    .some(function (k) {
+                        return obj[k].indexOf(part) !== -1;
+                    });
+            });
+        };
+        function UpdContent(msg) {
+            $(`.chatBBody`).append(`<div class="chat">
+                                                                                                                                                       <div class="myName">我</div>
+                                                                                                                                                    <div class="myChat">
+                                                                                                                                                         ${msg}
+                                                                                                                                                  </div>
+                                                                                                                                             </div>`);
+            $(`#message`).val("");
+            resetScrollSite();
+        }
+        //-------購物車----
+        const carjson = document.querySelector('#car_iten');
+        const carHtml = document.querySelector('.car_click');
+        const TotoM = document.querySelector('.total_twd');
+        carHtml.addEventListener('click', () => {
+            SetCar();
+        })
+
+        carCount()
+        async function carCount() {
+            const data = await fetch(`@Url.Content("~/Shopping/CarProductCount/?num=99")`);
+            const nums = await data.json();
+            console.log("CLayout")
+            $('#cart_num_pc').text(nums)
+        }
+
+        async function dele(id, a) {
+            console.log(id);
+            const data = await fetch(`@Url.Content("~/Shopping/DeleteCarSession?id=${id}")`);
+            let count = $('#cart_num_pc').text()
+            count = count - a;
+            $('#cart_num_pc').text(count)
+            const data2 = await fetch(`@Url.Content("~/Shopping/CarProductCount?num=${count}")`);
+            $(`#car_iten`).find(`#${id}`).remove();
+            SetCar()
+        }
+
+        async function joinCarSession() {
+            const reb = await fetch(`@Url.Content("~/Shopping/joinSQLToSession")`)
+            const data = await reb.text();
+            //console.log(data);
+        }
+
+        async function SetCar() {
+            const reb = await fetch(`@Url.Content("~/Shopping/GetCarJson")`)
+            const data = await reb.json();
+            console.log(reb);
+            console.log(data);
+            countM = 0;
+            var countP = 0;
+            if (data != null) {
+                const carOpts = data.map((value) => {
+                    id = value.id
+                    a = value.圖片1檔名
+                    x = value.商品價格
+                    countP = value.訂單數量
+                    x = x * value.訂單數量
+                    countM += x
+                    return (
+                        `<div class="row car_product" id="${id}">
+                                                                                                            <div class="col-3">
+                                                                                            <img  src="@Url.Content("~/images/${a}")" width="70" />
+                                                                                  </div>
+                                                                                                          <div class="col-7">
+                                                                                                                       <div>品名:<a>${value.商品名稱}</a></div>
+                                                                                                                     <div>尺寸:<a>${value.尺寸種類}</a></div>
+                                                                                                                       <div>顏色:<a>${value.商品顏色種類}</a></div>
+                                                                                                                <div>數量:<a>${value.訂單數量}</a></div>
+                                                                                                        <div>價格:<a class="m">${value.商品價格}</a></div>
+
+                                                                                                      </div>
+                                                                                                       <div class="purchase-icon-car col-1">
+                                                                                                                                <input type="hidden" value="${id}" />
+                                                                                                                  </div>
+                                                                                                    <br/>
+                                                                                         </div>  `
+                    );
+                })
+                TOTAL_TWD = `TOTAL TWD $${countM}`
+                carjson.innerHTML = carOpts.join("")
+                TotoM.innerHTML = TOTAL_TWD
+                $('.purchase-icon-car').on('click', () => {
+                    console.log("123");
+                    var a = $(event.currentTarget).find("input").val();
+                    dele(a, countP);
+                });
+            }
+        }
+        //-------購物車結束----
+
+        ////----購物車記數刪除--------
+        //async function carCountDelete(count){
+
+        //    const num = await fetch(`@Url.Content("~/Shopping/CarProductCountDelete?num=${count}")`);
+        //    const nums = await num.json();
+        //    console.log("DLayout")
+        //    $('#cart_num_pc').text(nums)
+        //}
+        //----購物車記數刪除結束-----
+
+        // 會員下拉選單
+        $('body').delegate('.shortcut', 'click', function () {
+            const _this = $(this);
+            const shortcutBox = _this.find('.shortcut-box');
+            if (shortcutBox.is(':hidden')) {
+                shortcutBox.show()
+
+            } else {
+                shortcutBox.hide();
+            }
+            return false;
+        })
+
+        $('body').delegate('.shortcut-box', 'click', function (e) {
+            e.stopPropagation();
+        })
+        // 點擊空白區域關閉下拉框
+        $(document).on('click', function (e) {
+            var cont = $('.shortcut,.shortcut-box');
+            if (!cont.is(e.target) && cont.has(e.target).length === 0) {
+                $('.shortcut-box').hide();
+            }
+        })
+
+        //pc判斷登入狀態
+        const memHtml = document.querySelector('.memclick');
+        memHtml.addEventListener('click', () => {
+            checklog();
+        })
+        async function checklog() {
+            const reb = await fetch(`@Url.Content("~/Home/checkmem")`)
+            const data = await reb.json();
+            if (data != null) {
+                $("#log").css("display", "none");
+                $("#log2").css("display", "flex");
+            }
+            else {
+                $("#log").css("display", "flex");
+                $("#log2").css("display", "none");
+            }
+        }
+
+        //mob判斷登入狀態
+        const sbl = document.querySelector('.sidebar-btn-l');
+        sbl.addEventListener('click', () => {
+            checklog1();
+        })
+        async function checklog1() {
+            const reb = await fetch(`@Url.Content("~/Home/checkmem")`)
+            const data = await reb.json();
+            if (data != null) {
+                $("#l-log1").css("display", "none");
+                $("#l-log2").css("display", "flex");
+            }
+            else {
+                $("#l-log1").css("display", "flex");
+                $("#l-log2").css("display", "none");
+            }
+        }
+
+
+        // 搜索框顯示
+        $('body').delegate('#web-search-btn', 'click', function () {
+            let _this = $(this);
+            let searchBox = _this.closest('.R-Top-tool').find('.search-box');
+            if (searchBox.hasClass('show')) {
+                searchBox.removeClass('show')
+                $('#search-box').attr('disabled', 'disabled');
+            } else {
+                $('#search-box').removeAttr('disabled');
+                searchBox.addClass('show')/*.find('input').focus();*/
+            }
+            return false;
+        })
+
+        // 搜尋
+        $('body').delegate('.search-btn', 'click', function () {
+            let _this = $(this);
+            if (!_this.hasClass('clicked')) {
+                _this.addClass('clicked');
+                $('.search-box').animate({
+                    left: '0.2rem', right: "1.5rem",
+                }, 100);
+            } else {
+                _this.removeClass('clicked');
+                $('.search-box').animate({
+                    left: '7.5rem', right: '7.5rem',
+                }, 100);
+            }
+            return false;
+        })
+
+        $('body').on('keyup', '.search_keyword', function (e) {
+            let sb = $('#sb');
+            if (sb.hasClass('show')) {
+                if (13 == e.keyCode) {
+                    let value = $(this).val().trim();
+                    if ('' == value) {
+                        return;
+                    }
+
+                    location.href = '/ProductWall/search?keyword=' + $('#search-box').val();
+                }
+            } else {
+                if (13 == e.keyCode) {
+                    return;
+                }
+            }
+
+        });
+
+        // mob搜索框顯示
+        $('body').delegate('#web-search-btn1', 'click', function () {
+            console.log("mob")
+            let _this = $(this);
+            let searchBox = $('.search-box1');
+            if (searchBox.hasClass('show')) {
+                searchBox.removeClass('show')
+                $('#search-box1').attr('disabled', 'disabled');
+            } else {
+                $('#search-box1').removeAttr('disabled');
+                searchBox.addClass('show')/*.find('input').focus();*/
+            }
+            return false;
+        })
+
+        // mob搜尋
+        $('body').delegate('.search-btn', 'click', function () {
+            let _this = $(this);
+            if (!_this.hasClass('clicked')) {
+                _this.addClass('clicked');
+                $('.search-box').animate({
+                    left: '0.2rem', right: "1.5rem",
+                }, 100);
+            } else {
+                _this.removeClass('clicked');
+                $('.search-box').animate({
+                    left: '7.5rem', right: '7.5rem',
+                }, 100);
+            }
+            return false;
+        })
+
+        $('body').on('keyup', '.search_keyword1', function (e) {
+            let sb2 = $('#sb2');
+            if (sb2.hasClass('show')) {
+                if (13 == e.keyCode) {
+                    let value = $(this).val().trim();
+                    if ('' == value) {
+                        return;
+                    }
+
+                    location.href = '/ProductWall/search?keyword=' + $('#search-box1').val();
+                }
+            } else {
+                if (13 == e.keyCode) {
+                    return;
+                }
+            }
+
+        });
+
+
+
+        //TOP
+        $(".web-top .back-top").click(function () {
+            if ($('body').hasClass('pc-model')) {
+                $("html,body").animate({ scrollTop: '0px' }, 300); //回到顶部
+            } else {
+                $(".shop-content").animate({ scrollTop: '0px' }, 300); //回到顶部
+            }
+            return false;
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 800) {
+                $(".web-top").css("display", "block");
+            }
+            else {
+                $(".web-top").css("display", "none");
+            }
+        });
+
+
+        // 調起左側邊欄目
+        $('body').delegate('.sidebar-btn-l', 'click', function () {
+            let _this = $(this);
+            if ($('.sidebar-btn-l').hasClass('showSide')) {
+                _this.removeClass('showSide');
+                $('body').removeClass('showSidebar');
+                $('.sidebar-left').animate({
+                    left: '-100%',
+                }, 500)
+            } else {
+                _this.addClass('showSide');
+                $('body').addClass('showSidebar');
+                $('.sidebar-left').animate({
+                    left: 0
+                }, 300)
+                return false;
+
+            }
+        })
+        // 收起側邊欄
+        $("html").delegate(".showSidebar", "click", function (e) {
+            console.log("sss")
+            let _con = null;
+            let diff = 0; //0為左側邊欄  1位關鍵詞篩選側邊欄
+            if ($('.sidebar-btn-l').hasClass('showSide')) {
+                _con = $('.sidebar-left'); // 目标不隐藏区域
+            } else {
+                _con = $('.sidebar-words');
+                diff = 1;
+            }
+            if (!_con.is(e.target) && _con.has(e.target).length === 0) {
+                if (diff == 0) {
+                    _con.animate({
+                        left: '-100%',
+                    }, 500);
+                    $('.sidebar-btn-l').removeClass('showSide')
+                } else {
+                    _con.animate({
+                        right: '-100%',
+                    }, 500);
+                }
+                $('body').removeClass('showSidebar');
+
+            }
+            return;
+        })
+        // 展開欄目
+        $('body').delegate('.sidebar-left .m-1', 'click', function () {
+            let _this = $(this);
+
+            if (_this.hasClass('real-a')) {
+                return true;
+            }
+
+            if (!_this.hasClass('ac') && _this.next('ul').length > 0) {
+                _this.addClass('ac').next('ul').slideDown(300)
+            } else if (_this.hasClass('ac') && _this.next('ul').length > 0) {
+                _this.removeClass('ac').next('ul').slideUp(300);
+            }
+            return false;
+        })
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

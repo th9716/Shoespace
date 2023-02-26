@@ -1,0 +1,103 @@
+﻿@model dbCompanyTest.Models.ProductsColorDetail
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form name="proInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none">
+                <label class="control-label">商品顏色編號</label>
+                <label asp-for="商品顏色id" class="control-label" style="display:none"></label>
+                <input asp-for="商品顏色id" class="form-control" readonly="readonly" />
+                <span asp-validation-for="商品顏色id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="商品顏色種類" class="control-label"></label>
+                <input asp-for="商品顏色種類" class="form-control" />
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="色碼" class="control-label"></label>
+                <input asp-for="色碼" class="form-control" type="color" style="width:5em; height:3em;"/>
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="formFile" class="control-label">商品顏色圖片</label>
+                <input class="form-control" type="file" id="formFile" name="商品顏色圖片" style="margin-bottom:15px;">
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+                @{
+                    string path = "";
+                    var img = Model.商品顏色圖片;
+                    if (string.IsNullOrEmpty(img)) path = "/404.jpg";
+                    else
+                        path = $"/colorimg/{img}";
+                }
+                <img src="@Url.Content("~/images")@path" height="100" id="img1" />
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="修改" class="btn btn-primary" id="btn_submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    //HTML載完才會執行
+    $(document).ready(function () {
+        //圖片預覽
+        $("input[type='file']").on('change', function (event) {
+            const img = $(this).parent().find("img");
+            var input = event.target; //取得上傳檔案
+            var reader = new FileReader(); //建立FileReader物件
+            reader.readAsDataURL(input.files[0]); //以.readAsDataURL將上傳檔案轉換為base64字串
+
+            reader.onload = function () { //FileReader取得上傳檔案後執行以下內容
+                var dataURL = reader.result; //設定變數dataURL為上傳圖檔的base64字串
+                img.prop('src', dataURL); //將img的src設定為dataURL並顯示
+            };
+        });
+
+
+        //送出按鈕事件
+        const btn = document.querySelector('#btn_submit');
+        //console.log(btn);
+        btn.addEventListener("click", (event) => {
+            event.preventDefault();//停止submit預設行為
+            //前端檢測
+            let error = check_ProColor_E();
+            if (error.length == 0) {
+            var formData = new FormData(document.proInfo); //from 的名稱
+            SaveData(formData);
+            }
+        });
+    });
+
+    //送出資料
+    async function SaveData(data) {
+        try {
+            const response = await fetch(`@Url.Content("~/ProductRelevant/ColorEdit")`, {
+                method: 'POST',
+                body: data,
+            });
+            const mess = await response.text();
+            alert(mess);
+            $("#Moda").modal('toggle');
+            //console.log("mess=" + mess);
+            //console.log("sussers", mess);
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,57 @@
+﻿@model dbCompanyTest.Models.商品鞋種
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form name="proInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none">
+                <label class="control-label">商品鞋種編號</label>
+                <label asp-for="商品鞋種id" class="control-label" style="display:none"></label>
+                <input asp-for="商品鞋種id" class="form-control"  readonly="readonly"/>
+                <span asp-validation-for="商品鞋種id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="鞋種" class="control-label"></label>
+                <input asp-for="鞋種" class="form-control" />
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="修改" class="btn btn-primary" id="btn_submit" />
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        //取得送出按鈕
+        const btn = document.querySelector('#btn_submit');
+        //送出按鈕事件
+        btn.addEventListener("click", (event) => {
+            event.preventDefault(); //停止submit預設行為
+
+            let error = check_Shoes();
+            if (error.length == 0) {
+            //ajax送出資料
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", () => {
+                if (xhr.status == 200) {
+                    alert(xhr.responseText);
+                    $("#Moda").modal('toggle');
+                }
+                else {
+                    console.log(xhr.staus);
+                }
+            });
+            var formData = new FormData(document.proInfo);
+            xhr.open("POST", "@Url.Content("~/ProductRelevant/ShoesEdit")");
+            xhr.send(formData);
+            }
+        });
+    });
+</script>

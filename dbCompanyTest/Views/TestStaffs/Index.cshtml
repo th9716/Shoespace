@@ -1,0 +1,215 @@
+﻿@model IEnumerable<dbCompanyTest.Models.TestStaff>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    Layout = "_Back_Layout_Sneat_HR";
+}
+
+<div style="width:85%;margin:20px auto;">
+
+    <div class="en_div">
+
+
+        <h1 style="text-align:center;">員工列表</h1>
+
+        <div style="display:flex">
+            <a asp-action="Create" class="btn btn-primary">新增員工資料</a>
+            <input class="form-control ms-1 w-25" id="userintput" type="search" placeholder="搜尋" aria-label="Search">
+            <button class="btn btn-primary " id="search">搜尋</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工編號)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工姓名)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.員工電話)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.身分證字號)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.縣市)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.區)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.地址)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    @*  <th>
+                    @Html.DisplayNameFor(model => model.緊急聯絡人)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.聯絡人關係)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.聯絡人電話)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.部門)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.主管)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.職稱)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.密碼)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.薪資)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.在職)
+                    </th>
+                    @*<th></th>*@
+                </tr>
+            </thead>
+            <tbody id="tb">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工編號)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工姓名)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.員工電話)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.身分證字號)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.縣市)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.區)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.地址)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        @*<td>
+                    @Html.DisplayFor(modelItem => item.緊急聯絡人)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.聯絡人關係)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.聯絡人電話)
+                    </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.部門)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.主管)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.職稱)
+                        </td>
+                        @* <td>
+                    @Html.DisplayFor(modelItem => item.密碼)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.薪資)
+                    </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.在職)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="TestStaffs" asp-route-id="@item.員工編號" class="btn btn-primary mb-3">修改</a>
+                            <a asp-action="Details" asp-controller="TestStaffs" asp-route-id="@item.員工編號" class="btn btn-primary mb-3">詳情</a>
+                            <a asp-action="Delete" asp-controller="TestStaffs" asp-route-id="@item.員工編號" class="btn btn-danger mb-3">刪除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#search").on("click", async function () {
+            let keyword = $("#userintput").val();
+            let user = new FormData();
+            user.append("keyword", keyword);
+            let response = await fetch("@Url.Content("~/TestStaffs/Search")", {
+                method: "POST",
+                body: user
+            });
+            let data = await response.json();
+            if (data == "nothing") {
+                $("#userintput").text(`沒有找到資料`);
+
+                setTimeout(function () {
+                    $("#userintput").text(``);
+                }, 3000);
+            }
+            else {
+                let newdata = data.map((value, index) => {
+                    return (`<tr>
+
+                                                                                            <td>
+                                                                                                        ${value.員工編號}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.員工姓名}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.員工電話}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.身分證字號}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.縣市}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.區}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.地址}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.EMAIL}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.部門}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.主管}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                        ${value.職稱}
+                                                                                            </td>
+                                                                                           <td>
+                                                                                                        ${value.在職}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                   <a href="/TestStaffs/Edit/${value.客戶編號}" class="btn btn-primary mb-3">修改</a>
+                                                                                                   <a href = "/TestStaffs/Details/${value.客戶編號}" class="btn btn-primary mb-3" > 詳情 </a>
+                                                                                                   <a href = "/TestStaffs/Delete/${value.客戶編號}" class="btn btn-danger mb-3" > 刪除 </a>
+                                                                                            </td>
+                                                                                        </tr>`);
+                });
+                $(`#tb`).html(newdata.join(""));
+                $(`#error`).text("");
+            }
+        });
+    </script>
+}

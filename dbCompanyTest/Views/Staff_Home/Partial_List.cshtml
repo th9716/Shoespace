@@ -1,0 +1,69 @@
+﻿@model IEnumerable<dbCompanyTest.Models.ToDoList>
+
+@{
+    if (ViewBag.dep == "行政" || ViewBag.dep == "執行長室")
+        Layout = "_Back_Layout_Sneat";
+    else if (ViewBag.dep == "人事")
+        Layout = "_Back_Layout_Sneat_HR";
+}
+
+<div style="width:80%;margin:20px auto;">
+    <h4 id="stf_info">@ViewBag.acc</h4>
+    <table class="table1 table table-striped-columns">
+        <thead>
+        </thead>
+        <thead>
+            <tr>
+                <th>已完成表單</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr class="header">
+                <th class="col-1">表單編號</th>
+                <th class="col-1">表單類型</th>
+                <th class="col-3">表單內容</th>
+                <th class="col-1">狀態</th>
+                <th class="col-1"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="collapse1">
+                <td colspan="5" style="padding:0; ">
+                    <div>
+                        <table class="table-inner table table-striped-columns" style="margin:0 !important;">
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="col-1">
+                                            @Html.DisplayFor(c=>item.交辦事項id)
+                                        </td>
+                                        <td class="col-1">
+                                            @Html.DisplayFor(c=>item.表單類型)
+                                        </td>
+                                        <td class="col-3">
+                                            @Html.DisplayFor(c=>item.表單內容)
+                                        </td>
+                                        <td class="col-1">
+                                            @Html.DisplayFor(c=>item.表單狀態)
+                                        </td>
+                                        <td class="col-1">
+                                            <a href="@Url.Content("~/Staff_Home/DT_TDL")/?listNum=@item.交辦事項id">
+                                                <button class="btn btn-primary mb-3 btnTDL_DT">
+                                                    詳細資料
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

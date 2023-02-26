@@ -1,0 +1,54 @@
+﻿@model dbCompanyTest.Models.Order
+
+@{
+    ViewData["Title"] = "OrderFinishView";
+}
+<link href="~/css\orderfinish.css" rel="stylesheet" />
+<link href="~/css/shopping.css" rel="stylesheet" />
+
+<div class="car d-flex flex-column justify-content-center align-content-lg-center">
+    <div class="shopping-step">
+        <div class="step step1 "> 1 購物清單</div>
+        <div class="stepRow"></div>
+        <div class="step step2"> 2 填寫資料</div>
+        <div class="stepRow"></div>
+        <div class="step step3 active"> 3 訂購完成</div>
+    </div>
+
+</div>
+<div class="OrderFinish center">
+
+    @*  <div class="m_50">
+    <img src="~/homeImg/Shoespace1.png" class="" />
+    </div>*@
+    @*  <div class="m_50">
+    <img src="~/homeimg/OK.png" class="OKpng"/>
+    </div>*@
+    <p class="p1">THANK YOU</p>
+    <p>感謝您的購買</p>
+    <br />
+    <img src="~/homeimg/success.png" />
+
+    <p>商品訂購完成</p>
+    <div class="m_10">
+        您的訂單編號為:@Html.DisplayFor(model => model.訂單編號)
+    </div>
+
+
+    <br />
+    <div class="m_10">
+        <a href="@ViewBag.Url">繼續選購</a>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        window.onload = function () {
+            $('#cart_num_pc').text(0)
+        };
+
+        AllCiear()
+        async function AllCiear() {
+            const datas = await fetch(`@Url.Content("~/Shopping/AllCiear")`);
+        }
+    </script>
+}

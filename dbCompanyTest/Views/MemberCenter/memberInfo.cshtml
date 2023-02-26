@@ -1,0 +1,321 @@
+﻿@model dbCompanyTest.Models.TestClient
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Style{
+    <style>
+        .btncolor{
+            background-color:#D5BBA6;
+            font-weight:bold;
+            color:white;
+        }
+        .modal.show .modal-dialog {
+            transform: none;
+            top: 30%;
+            width: 400px;
+        }
+        .modal-body {
+            position: relative;
+            flex: 1 1 auto;
+            padding: 1rem;
+            text-align: center;
+        }
+        .modal-header {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1rem;
+            border-bottom: none;
+            border-top-left-radius: calc(0.3rem - 1px);
+            border-top-right-radius: calc(0.3rem - 1px);
+        }
+        .modal-footer {
+            display: flex;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-top: none;
+            border-bottom-right-radius: calc(0.3rem - 1px);
+            border-bottom-left-radius: calc(0.3rem - 1px);
+        }
+        a:hover {
+            color: #BDAC9F;
+        }
+    </style>
+}
+
+
+
+@{
+    ViewData["Title"] = "memberInfo";
+}
+
+<div class="container">
+    <div class="pb-3 lh-lg">
+        <br />
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-route-id=@ViewBag.id>會員中心</a></li>
+                <li class="breadcrumb-item active" aria-current="page">會員管理</li>
+            </ol>
+        </nav>
+        <hr />
+        <form method="post" asp-controller="MemberCenter">
+            <div class="row ">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="客戶編號" class="form-control" id="UserID" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="客戶姓名" class="control-label"></label>
+                        <input asp-for="客戶姓名" class="form-control" />
+                        <span asp-validation-for="客戶姓名" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="客戶電話" class="control-label"></label>
+                        <input asp-for="客戶電話" class="form-control" />
+                        <span asp-validation-for="客戶電話" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="身分證字號" class="control-label"></label>
+                        <input asp-for="身分證字號" class="form-control" />
+                        <span asp-validation-for="身分證字號" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="縣市" class="control-label"></label>
+                        <select asp-for="縣市" class="form-control" id="city"></select>
+                        <span asp-validation-for="縣市" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="區" class="control-label"></label>
+                        <select asp-for="區" class="form-control" id="town"></select>
+                        <span asp-validation-for="區" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="地址" class="control-label"></label>
+                        <input asp-for="地址" class="form-control" />
+                        <span asp-validation-for="地址" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="性別" class="control-label"></label>
+                        <select asp-for="性別" class="form-control" id="sex"><option>男</option><option>女</option></select>
+                        <span asp-validation-for="性別" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="生日" class="control-label"></label>
+                        <input asp-for="生日" class="form-control" />
+                        <span asp-validation-for="生日" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="button" value="確定修改" class="btn btncolor"  id="infobtn"/>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4" >
+                    <input type="hidden" asp-for="客戶編號" class="form-control" />
+                    <input type="hidden" value=@ViewBag.pass class="form-control" id="old"/>
+                    <div class="form-group">
+                        <label class="control-label">舊密碼</label>
+                        <input type="password" class="form-control" id="oldpassword" />
+                        <span  class="text-danger"  id="validMessage"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="密碼" class="control-label"></label>
+                        <input type="password" asp-for="密碼" class="form-control" value="" id="password" />
+                        <span  class="text-danger" id="validMessage1"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">確認密碼</label>
+                        <input type="password" class="form-control" id="repassword" />
+                        <span class="text-danger" id="validMessage2"></span>
+                    </div>
+                    <br />
+                    <div class="form-group ">
+                        <input type="button" value="確定修改" class="btn  btncolor "  id="updateBtn" />
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+
+
+            </div>
+
+            <!-- Model模板 -->
+            <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+                        </div>
+                        <div class="modal-body">
+                            資料修改成功
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value=" OK " class="btn btncolor" asp-action="memberInfo" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model模板 -->
+            <div class="modal fade" id="exampleModal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+                        </div>
+                        <div class="modal-body">
+                            密碼修改成功
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value=" OK " class="btn  btncolor " asp-action="password" id="updateBtn" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <br />
+    </div>
+</div>
+    <div>
+        <input asp-for="縣市" type="hidden" id="q1" />
+        <input asp-for="區" type="hidden" id="q2" />
+        <input asp-for="性別" type="hidden" id="sexvalue" />
+    </div>
+
+
+
+
+    @section Scripts {
+    <script src="~/datas/taiwan_districts.js"></script>
+    <script src="~/js/city_data.js"></script>
+        <script>
+
+          
+        $(function () {
+                const id= $("#UserID");
+                const btn=document.querySelector("#updateBtn")
+                var passwd = $("#password").val();
+                let special = /[!#$%^&*]/;
+
+            if ($("#oldpassword").val() == "" || $("#password").val() == '' || $("#repassword").val() == '') {
+                btn.setAttribute("disabled", "disabled");
+            } else {
+                if ($("#validMessage").val() == "" || $("#validMessage1").val() == "" || $("#validMessage2").val() == "") {
+                    btn.removeAttribute("disabled", "disabled");
+                }
+            }
+
+            $("#oldpassword").on("blur", function () {
+                //alert("blur");
+                if ($("#oldpassword").val() == "") {
+                    $("#validMessage").html('請輸入舊密碼').show();
+                   // $("#oldpassword").focus();
+                    return false;
+                }
+                $("#validMessage").html('').show();
+                if (!($('#old').val() == $("#oldpassword").val())) {
+                    $("#validMessage").html('舊密碼輸入錯誤').show();
+                    return false;
+                }
+                console.log($('#old').val());
+                $("#validMessage").html('').show();
+            })
+
+            $("#password").on("blur", function () {
+                if ($("#password").val() == '') {
+                    $("#validMessage1").html('請輸入密碼').show();//如果密碼為空值
+                    //$("#password").focus();
+                    return false;
+                }
+                $("#validMessage1").html('').show();
+
+                //if ($("#password").val().length < 6) {
+                //    $("#validMessage1").html('密碼長度需大於6').show();
+                //    console.log($("#password").val().length)
+                //    return false;
+                    
+                //}
+                $("#validMessage1").html('').show();
+
+                if (!(($("#password").val().match(/[a-z]/) != null || $("#password").val().match(/[A-Z]/) != null) && $("#password").val().match(/[!#$%^&*]/) != null && $("#password").val().length > 6)) {
+                    $("#validMessage1").html('密碼格式錯誤，密碼長度需大於6，字母加數字或符號的混合').show();
+                    return false;
+                }
+                $("#validMessage1").html('').show();
+            })
+
+            $("#repassword").on("blur", function () {
+                if ($("#repassword").val() == '') {
+                    $("#validMessage2").html('請輸入確認密碼').show();
+                    //$("#repassword").focus();
+                    return false;
+                }
+                $("#validMessage2").html('').show();
+
+                if ($("#password").val() != $("#repassword").val()) {
+                    $("#validMessage2").html('新密碼與確認密碼不一致').show();
+                    //$("#repassword").focus();
+                    return false;
+                }
+                $("#validMessage2").html('').show();
+
+                if ($("#oldpassword").val() == "" || $("#password").val() == '' || $("#repassword").val() == '') {
+                    btn.setAttribute("disabled", "disabled");
+                } else {
+                    if ($("#validMessage").val() == "" || $("#validMessage1").val() == "" || $("#validMessage2").val() == "") {
+                        btn.removeAttribute("disabled", "disabled");
+                    }
+                }
+
+            })
+
+                let myModal = document.getElementById("myModal");
+                let exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                let exampleModal1 = new bootstrap.Modal(document.getElementById('exampleModal1'));
+
+            $("#infobtn").click(function(){
+                //alert("資料修改成功");
+
+                    exampleModal.show();
+            
+            })
+                $("#updateBtn").click( function () {
+                    //alert("密碼修改成功");
+                    exampleModal1.show();
+
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: "/MemberCenter/password",
+                    //    data: "userid=" + $("#UserID").val() + "&password=" + $("#password").val() ,
+                    //    success: function (msg) {
+                    //        if (validMessage == "True") {
+                    //           alert("密碼修改成功");
+                    //        } else {
+                                
+                    //        }
+                    //    }
+                    //});
+                })
+
+            })
+        </script>
+
+        
+        
+
+
+
+
+    }

@@ -1,0 +1,565 @@
+﻿@model IEnumerable<dbCompanyTest.Models.會員商品暫存>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<input type="text" id="locoUrl" value="@ViewBag.Url" style="display:none" />
+<link href="~/css/shopping.css" rel="stylesheet" />
+<div class="shopping">
+    <div class="car d-flex flex-column justify-content-center align-content-lg-center">
+        <div class="shopping-step">
+            <div class="step step1 active"> 1 購物清單</div>
+            <div class="stepRow"></div>
+            <div class="step step2"> 2 填寫資料</div>
+            <div class="stepRow"></div>
+            <div class="step step3"> 3 訂購完成</div>
+        </div>
+        <a id="btn_slectCar" style="display:none" class=" slectCar">購物清單<div><img src="/homeimg/down_arrow_icon.png" style="height:20px; margin-top: 8px"></div></a>
+        <hr />
+        <div class="out_of_cartable">
+            <table class="table car_table hidaing ">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            商品資訊
+                        </th>
+                        <th>
+                                @Html.DisplayNameFor(model => model.訂單數量)
+                        </th>
+                        <th>
+                                @Html.DisplayNameFor(model => model.商品價格)
+                        </th>
+                            @*<th></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/images/@item.圖片1檔名" width="200" />
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        品名:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        @Html.DisplayFor(modelItem => item.商品名稱)
+                                    </div>
+                                    <div class="col-sm-2">
+                                        尺寸:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        @Html.DisplayFor(modelItem => item.尺寸種類)
+                                    </div>
+                                    <div class="col-sm-2">
+                                        顏色:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        @Html.DisplayFor(modelItem => item.商品顏色種類)
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.訂單數量)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.商品價格)
+                            </td>
+
+                            @*<td>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="car_dital hidaing">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <div class="g-item" id="@item.Id">
+                            <div class="item-cont">
+                                @{
+                                    if (item.圖片1檔名 == null || item.圖片1檔名 == "")
+                                    {
+                                        <div><img src="@Url.Content("~/images/404.jpg")" width="111" height="148" /></div>
+                                    }
+                                    else
+                                    {
+                                        <div><img src="@Url.Content("~/images/"+item.圖片1檔名)" width="111" height="148" /></div>
+                                    }
+                                }
+                                <div class="g-detail">
+                                    @{
+                                        string name = item.商品名稱 + " " + item.商品顏色種類;
+                                    }
+                                    <div><p>@name</p></div>
+                                    <div><span class="val">數量: </span><span>@item.訂單數量</span></div>
+                                    <div><span class="val">顏色: </span><span>@item.商品顏色種類</span></div>
+                                    <div><span class="val">尺寸: </span><span>@item.尺寸種類</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+
+            <dl class="row" id="ChoosePay">
+                <dt class="col-sm-2">付款方式</dt>
+                <dd class="col-sm-10" id="PayCheck">
+
+                    <div class="form-check">
+                        <input class="form-check-input check" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="信用卡">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            信用卡
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input check" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="LinePay" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            LinePay
+                        </label>
+                    </div>
+
+                </dd>
+
+                <dt class="col-sm-2">配送方式</dt>
+                <dd class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example" id="delivery">
+                        <option selected disabled>請選擇配送方式</option>
+                        <option value="60">7-11取貨</option>
+                        <option value="100">宅配</option>
+                        <option value="60">全家取貨</option>
+                    </select>
+                </dd>
+                <hr />
+            </dl>
+
+            @{
+                decimal totomony = 0;
+                foreach (var item in Model)
+                {
+                    totomony += (decimal)item.商品價格;
+                }
+                <div class="hidaing">
+                    <div>
+                        <div>
+                            <span>總金額</span>
+                            <span>TWD $@totomony</span>
+                        </div>
+                        <div>
+                            <span>運費</span>
+                            <span id="TxtDeliverymony">TWD $0</span>
+                        </div>
+                        <hr />
+                        <div>
+                            <span>結帳金額</span>
+                            <span id="paymony">TWD $0</span>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            }
+            <br />
+            <input class="m_10 btn btn_page1" id="btn_page1" type="button" value="結帳" disabled />
+            <br />
+            <br />
+            <br />
+        </div>
+        <div id="clientDital" style="display:none">
+
+            <form id="orderForm" name="userInfo" action="@Url.Content("~/Shopping/TestforPay")">
+                <input type="text" id="pay" name="總金額" style="display:none" />
+                <input type="text" id="userID" name="客戶編號" style="display:none" />
+                <input type="text" id="howToPay" name="付款方式" value="LinePay" style="display:none" />
+                <input type="text" id="orderID" name="訂單編號" style="display:none" />
+                <input type="text" id="orderTime" name="下單時間" style="display:none" />
+                <fieldset>
+                    <legend>訂購資訊</legend>
+                    <hr />
+                    <div class="setMargin">
+                        <label>姓名</label>
+                        <input type="text" class="userName" id="OrderNameText" />
+                    </div>
+                    <div class="setMargin">
+                        <label>手機號碼</label>
+                        <input type="text" class="userPhone" id="OrderPhoneText" />
+                    </div>
+                    <div class="setMargin">
+                        <label>電子郵件</label>
+                        <input type="text" class="userEmail" id="OrderEmailText" />
+                    </div>
+                    <div class="setMargin">
+                        <label>地址</label>
+                        <select class="userAddress" id="city">
+                        </select>
+                        <select class="userAddress" id="town">
+                        </select>
+                        <input type="text" class="userAddress" id="OrderDitalText" />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>收件資訊</legend>
+                    <hr />
+                    <div class="setMargin">
+                        <input type="checkbox" class="copyCheckbox" id="copyCkBox" />
+                        <label>同訂購人</label>
+                    </div>
+                    <div class="setMargin">
+                        <label>姓名</label>
+                        <input type="text" name="收件人名稱" class="userName" id="RrceiveNameText" />
+                    </div>
+                    <div class="setMargin">
+                        <label>手機號碼</label>
+                        <input type="text" name="收件人電話" class="userPhone" id="RrceivePhoneText" />
+                    </div>
+                    <div class="setMargin">
+                        <label>電子郵件</label>
+                        <input type="text" name="收件人email" class="userEmail" id="RrceiveEmailText" />
+                    </div>
+                    <div class="setMargin" id="SelectAdd">
+                        <label>地址</label>
+                        <select class="userAddress" id="city2">
+                        </select>
+                        <select class="userAddress" id="town2">
+                        </select>
+                        <input type="text" class="userAddress" id="RrceiveDitalText" />
+                        <input type="text" id="Address" name="送貨地址" style="display:none" />
+                    </div>
+                    <div class="setMargin" id="pickUp">
+                        <label class="whoToGet">7-11取貨</label>
+                        <a class="m_10 btn btn_page1" href="@ViewBag.MAP" id="selectStoreAddress">選擇門市</a>
+                        @*<input type="button" value="選擇門市" id="SelectShop" />*@
+                        <input type="text" style="visibility: hidden" value="@ViewBag.IfRe" id="storeaddress" />
+                    </div>
+                </fieldset>
+
+                <div class="setMargin">
+                    <input class="m_10 btn btn_page1" type="button" value="確認購買" id="btn_page2" />
+                </div>
+
+            </form>
+        </div>
+        <div class="text-center"style="display:none" id="loding">
+            <h3>資料導向中，請勿關閉網頁</h3>
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/datas/taiwan_districts.js"></script>
+    <script>
+        const deliverymony = document.querySelector('#delivery')
+        const txtdeliverymony = document.querySelector('#TxtDeliverymony')
+        const paymony = document.querySelector('#paymony')
+        const btn1 = document.querySelector('#btn_page1')
+        const btn2 = document.querySelector('#btn_page2')
+        const slectCar = document.querySelector('#btn_slectCar')
+
+        var ordertime = "";
+        var orderId = "";
+
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener(`load`, () => {
+            const data = xhr.responseText;
+            txtdeliverymony.innerHTML = `TWD $${data}`;
+            const mony = parseInt(data) + @totomony;
+            paymony.innerHTML = `TWD $${mony}`;
+            $('#pay').val(mony)
+            $('#btn_page1').attr('disabled', false);
+        })
+        deliverymony.addEventListener(`change`, () => {
+            xhr.open('GET', `/Shopping/GetDeliveryMony?OPvalue=${deliverymony.value}`);
+            xhr.send();
+        })
+
+        //----付費方式選擇----
+        let checkValue;
+        $('.check').click(function () {
+            checkValue = $(this).val();
+            $('#howToPay').val(checkValue);
+        });
+        //----付費方式選擇結束----
+
+        //----載入門市位址後重新載入的頁面-----
+        LoadClientDital()
+        function REFormShop() {
+            var storeaddress = $('#storeaddress').val();
+            if ($('#storeaddress').val() != '') {
+                $('#ChoosePay').hide();
+                $('.hidaing').hide();
+                $("#btn_page1").hide();
+                $('.step1').removeClass("active")
+                $('.step2').addClass("active")
+                $('#btn_slectCar').attr("style", "display:block;");
+                $('#clientDital').attr("style", "display:block;");
+                $('#delivery').select().val(60)
+                $('#howToPay').val("信用卡")
+                if ($('#delivery').select().val() == 60) {
+                    $('#SelectAdd').hide();
+                }
+                $('#pay').val(@totomony+60)
+                $('#Address').val(storeaddress);
+                $('#storeaddress').attr("style", "display:block;");
+                $('#selectStoreAddress').attr("style", "display:none;");
+            }
+        }
+        //----載入門市位址後重新載入的頁面結束-----
+
+
+        //----購物清單頁面上的結帳按鈕
+        btn1.addEventListener('click', function () {
+            $('#ChoosePay').hide();
+            $('.hidaing').hide();
+            $(this).hide();
+            $('.step1').removeClass("active")
+            $('.step2').addClass("active")
+            $('#btn_slectCar').attr("style", "display:block;");
+            $('#clientDital').attr("style", "display:block;");
+            $('.car_dital').attr('style', "display:none")
+            if ($('#delivery').select().val() == 100) {
+                $('#pickUp').hide();
+            }
+            if ($('#delivery').select().val() == 60) {
+                $('#SelectAdd').hide();
+            }
+
+
+            //這裡因該要寫載入會員資料的function
+            //LoadClientDital();
+            //----------------------------------
+        })
+
+        //----訂單品項RWD
+        let oldsize;
+        $(window).ready(function () {
+            oldsize = $(window).width();
+            if (oldsize < 500) {
+                $(`.car_table`).removeClass("hidaing");
+                $('.car_dital').addClass("hidaing")
+            }
+            else if (oldsize > 500) {
+                $(`.car_dital`).removeClass("hidaing");
+                $('.car_table').addClass("hidaing")
+            }
+        });
+
+
+        //----填寫資料頁面上的訂單資料按鈕
+        slectCar.addEventListener('click', function () {
+            $('.hidaing').toggle();
+        })
+
+        //----選擇門市按鈕------
+        //$('#SelectShop').on('coick', function(){
+        //    window.location.href = "https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=https://localhost:7100/Shopping/SlectShop";
+        //})
+
+
+        //----填寫資料頁面上的確認購買按鈕
+
+        btn2.addEventListener('click', function () {
+            $('.step2').removeClass("active")
+            $('.step3').addClass("active")
+            $('#btn_slectCar').attr("style", "display:none;");
+            $('#clientDital').attr("style", "display:none;");
+            //$('#finish').attr("style", "display:block;");
+            var mydate = new Date();
+            ordertime = mydate.toLocaleString();
+            orderId = mydate.getTime();
+            $('#orderID').val(orderId)
+            $('#orderTime').val(ordertime)
+            console.log(orderId)
+            TestForAPI();
+            addToOrderSQL();
+            addToOrderDitalSQL()
+            //AllCiear()
+            var howToPay = $('#howToPay').val();
+            if (howToPay == '信用卡') {
+                $('#orderForm').submit();
+            }
+            else {
+                $('#loding').attr("style", "display:block;");
+                requestPayment()
+            }
+
+
+        })
+
+
+        //----LinePay-------
+        //let baseLoginPayUrl = $('#locoUrl').val()+'/api/LinePay/';
+        let baseLoginPayUrl = $('#locoUrl').val() + "/api/LinePay/";
+        function requestPayment() {
+            var price = $('#pay').val() + ''
+            var orderID = $('#orderID').val() + ''
+            // 交易訂單假資料
+            payment = {
+                amount: price,
+                currency: "TWD",
+                //orderId: Date.now().toString(), //使用 Timestamp 當作 orderId
+                orderId: orderID,
+                packages: [
+                    {
+                        id: orderID,
+                        amount: price,
+                        name: "Test",
+                        products: [
+                            {
+                                name: "TestPrducts",
+                                quantity: 1,
+                                price: price
+                            }
+                        ]
+                    }
+                ],
+                redirectUrls: {
+                    confirmUrl: $('#locoUrl').val() + `/Shopping/OrderFinishView/?orderId=${orderID}`,
+                    cancelUrl: $('#locoUrl').val() + "/Home"
+                }
+            };
+            //送出 交易申請至商家 server
+            $.post({
+                url: baseLoginPayUrl + "Create",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(payment),
+                success: (res) => {
+                    console.log(res);
+                    window.location = res.info.paymentUrl.web;
+
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
+        }
+        //----LinePay結束----
+
+
+        //----讀取縣市區json-----------------------------------------------
+        $.each(data, function (i, i_value) { $("#city2").append(`<option>${i_value.name}</option>`) });
+        $("#city2").change(function () {
+            let Myarea = $(`#city2 option:selected`).index();
+            area2(Myarea);
+            $('#Address').val($("#city2").val() + $("#town2").val() + $("#RrceiveDitalText").val());
+        })
+        $("#town2").change(function () {
+            $('#Address').val($("#city2").val() + $("#town2").val() + $("#RrceiveDitalText").val());
+        })
+        $.each(data[0].districts, function (j, j_value) { $("#town2").append(`<option>${j_value.name}</option>`) })
+        function area2(a) {
+            $("#town2").empty();
+            $.each(data[a].districts, function (j, j_value) { $("#town2").append(`<option>${j_value.name}</option>`) })
+        }
+
+        $.each(data, function (i, i_value) { $("#city").append(`<option>${i_value.name}</option>`) });
+        $("#city").change(function () {
+            let Myarea = $(`#city option:selected`).index();
+            area(Myarea);
+        })
+        $.each(data[0].districts, function (j, j_value) { $("#town").append(`<option>${j_value.name}</option>`) })
+        function area(a) {
+            $("#town").empty();
+            $.each(data[a].districts, function (j, j_value) { $("#town").append(`<option>${j_value.name}</option>`) })
+        }
+        //----讀取縣市區json結束-----------------------------------------------
+
+        //----同訂購人按鈕
+        $('#copyCkBox').change(function () {
+            if (this.checked) {
+                $('#RrceiveNameText').val($('#OrderNameText').val())
+                $('#RrceivePhoneText').val($('#OrderPhoneText').val())
+                $('#RrceiveEmailText').val($('#OrderEmailText').val())
+                $('#city2').val($('#city').val());
+                area2($(`#city2 option:selected`).index());
+                $('#town2').val($('#town').val())
+                $('#RrceiveDitalText').val($('#OrderDitalText').val())
+                $('#Address').val($("#city2").val() + $("#town2").val() + $("#RrceiveDitalText").val());
+            }
+        })
+
+        //----傳遞付款方式data到form中
+        $('input[type=radio]').change(function () {
+            $('#howToPay').val($(this).val());
+        });
+
+        //----購買完成-------
+        async function AllCiear() {
+            const datas = await fetch(`@Url.Content("~/Shopping/AllCiear")`);
+        }
+        //----購買完成結束----
+
+        //----載入會員資料
+        async function LoadClientDital() {
+            const datas = await fetch(`@Url.Content("~/Shopping/LoadClientDital")`);
+            const data = await datas.json();
+            console.log(data)
+            if (data != null) {
+                $('#userID').val(data.客戶編號);
+                $('#OrderNameText').val(data.客戶姓名)
+                $('#OrderPhoneText').val(data.客戶電話)
+                $('#OrderEmailText').val(data.email)
+                $('#city').val(data.縣市);
+                area($(`#city option:selected`).index());
+                $('#town').val(data.區);
+                $('#OrderDitalText').val(data.地址);
+            }
+            if ($('#storeaddress').val() != '') {
+                $('#RrceiveNameText').val($('#OrderNameText').val())
+                $('#RrceivePhoneText').val($('#OrderPhoneText').val())
+                $('#RrceiveEmailText').val($('#OrderEmailText').val())
+                $('#city2').val($('#city').val());
+                area2($(`#city2 option:selected`).index());
+                $('#town2').val($('#town').val())
+                $('#RrceiveDitalText').val($('#OrderDitalText').val())
+            }
+        }
+
+
+        async function TestForAPI() {
+            const FD = new FormData(document.userInfo)
+            const data = await fetch("@Url.Content("~/Shopping/TestForAPI")", {
+                method: "POST",
+                body: FD
+            });
+            const response = await data.json();
+        }
+
+        async function addToOrderSQL() {
+            const FD = new FormData(document.userInfo)
+            FD.append('下單時間', ordertime)
+            FD.append('訂單編號', orderId)
+            FD.append('訂單狀態', '待出貨')
+            FD.append('付款狀態', '已付款')
+            const data = await fetch("@Url.Content("~/Shopping/CreateOrder")", {
+                method: "POST",
+                body: FD
+            });
+            const response = await data.text();
+            console.log(response)
+        }
+        async function addToOrderDitalSQL() {
+            const FD = new FormData()
+            FD.append('訂單編號', orderId)
+            const data = await fetch("@Url.Content("~/Shopping/CreateOrderDital")", {
+                method: "POST",
+                body: FD
+            });
+            const response = await data.text();
+            console.log(response)
+        }
+        REFormShop()
+    </script>
+    @*    <script src="~/js/city_data.js"></script>*@
+    }

@@ -1,0 +1,85 @@
+﻿@model dbCompanyTest.Models.OrderDetail
+
+@{
+    ViewData["Title"] = "EditDetail";
+}
+@{
+    Layout = "_Back_Layout_Sneat";
+}
+<div style="width:80%;margin:20px auto;">
+    <h1>EditDetail</h1>
+
+    <h4>OrderDetail</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditDetail">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="無用id" name="無用id" id="usId" />
+                <div class="form-group">
+                    <label asp-for="訂單編號" class="control-label"></label>
+                    <select asp-for="訂單編號" disabled="disabled" class="form-control" asp-items="ViewBag.訂單編號" id="orderSelectId"></select>
+                    <span asp-validation-for="訂單編號"  class="text-danger"></span>
+                    <input type="hidden" name="訂單編號" id="訂單編號" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <select asp-for="IdNavigation" class="form-control" asp-items="ViewBag.aa" id="IdSelect"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    <input type="hidden" name="Id" id="OrderDetailId"/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="商品價格" class="control-label"></label>
+                    <input asp-for="商品價格" class="form-control" name="商品價格"id="商品價格" />
+                    <span asp-validation-for="商品價格" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="商品數量" class="control-label"></label>
+                    <input asp-for="商品數量" class="form-control" name="商品數量" id="商品數量" />
+                    <span asp-validation-for="商品數量" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btn_Edit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        const btn_Edit = document.querySelector('#btn_Edit')
+        btn_Edit.addEventListener('click', function () {
+            $('#訂單編號').val($('#orderSelectId').val())
+            $('#OrderDetailId').val($('#IdSelect option:selected').val())
+            console.log($('#IdSelect option:selected').val())
+            console.log($('#orderSelectId').val())
+            EditToOrderDitalSQL()
+        })
+
+
+                   async function EditToOrderDitalSQL() {
+                const FD = new FormData()
+            let usid = $('#usId').val()
+            FD.append("無用id", $('#usId').val())
+            FD.append("Id", $('#OrderDetailId').val())
+            FD.append("訂單編號", $('#訂單編號').val())
+            FD.append("商品價格", $('#商品價格').val())
+            FD.append("商品數量", $('#商品數量').val())
+            const data = await fetch("@Url.Content("~/Orders/EditOrderDetailToSQL")", {
+                    method: "POST",
+                    body: FD
+                });
+                const response = await data.text();
+            if (response == "OK")
+                location.href = "@Url.Content("~/Orders/Index")";
+                console.log(response)
+        }
+    </script>
+}

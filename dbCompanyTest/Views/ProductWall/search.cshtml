@@ -1,0 +1,134 @@
+﻿@using X.PagedList
+@using X.PagedList.Web.Common
+@using X.PagedList.Mvc.Core
+@model IPagedList<dbCompanyTest.ViewModels.ProductWallViewModel>
+
+
+@section Style{
+    <link href="~/css/ProductWall.css" rel="stylesheet">
+}
+
+    <div class="container-fluid py-5" style="font-family:'Microsoft YaHei';">
+        <div class="row">
+            <div class="col-lg-3 "></div>
+            <div class=" col-lg-6 ">
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">首頁</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">搜尋</li>
+                        @{
+                        string word = "";
+                        @foreach (var item in Model){
+                            word = item.keyword;
+                        }
+                        <li class="breadcrumb-item active" aria-current="page">@word</li>
+                        }
+                </ol>
+            </nav>
+        </div>
+            <div class="col-lg-2 "></div>
+    </div>
+    <div class="row ">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 d-flex">
+            <div class="col-md-2 row ">
+                <div class="col-md-6">
+                    <ul class="list-inline shop-top-menu pb-3 pt-1" id="sclass">
+
+                        @*@foreach (var item in Model)
+                        {
+                        <li class="list-inline-item">
+                        <a class="h5 text-dark text-decoration-none" asp-action="type" asp-route-id="@item.商品鞋種id" asp-route-tid="@item.商品分類id" asp-route-type="@item.商品分類名稱">@item.鞋種名稱</a>
+                        </li>
+                        }*@
+                    </ul>
+                </div>
+            </div>
+            <div class="row col-md-10" id="f-content">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 p-2 promin">
+                        <a asp-action="Details" asp-route-id="@item.商品id" asp-route-colorID="@item.商品顏色id">
+                            <div class="card mb-4 product-wap rounded-0">
+                                <div class="card rounded-0">
+                                    <div id="proimg">
+                                        @{
+                                            if (@item.產品圖片1 != null)
+                                            {
+                                                <img class="card-img rounded-0 img-fluid" src="~/images/@item.產品圖片1" width="236" height="324"
+                                                 data-hover-src="/images/@item.產品圖片2"
+                                                 data-leave-src="/images/@item.產品圖片1" />
+                                            }
+                                            else
+                                            {
+                                                <img class="card-img rounded-0 img-fluid" src="~/images/404.jpg" width="236" height="324" />
+                                            }
+                                        }
+                                    </div>
+                                    <div class="card-body">
+                                        <a class="g-item" asp-action="Details" asp-route-id="@item.商品id" asp-route-colorID="@item.商品顏色id">@item.商品名稱  @item.顏色名稱</a>
+
+                                        <ul class="w-100 list-unstyled d-flex justify-content-between mb-0 price-box">
+                                            @{
+                                                decimal 價格 = item.商品價格;
+                                                <li>@價格.ToString("###,###,##0")$</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                <nav>
+                    <ul class="pagination justify-content-center ">
+                        @*        <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        </li>
+                        *@        @Html.PagedListPager((IPagedList)Model, page=>Url.Action("search",new {ViewBag.keyword,page}))
+                        @*        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>*@
+                        @*        <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        </li>
+                        *@
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+        <div class="col-lg-2 sidebar-words sidebar-words-pc" style="right: 0px;" id="select">
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+@section Scripts{
+    <script>
+        $("#sclass").load("@Url.Content("~/ProductWall/shoesclass")")
+    </script>
+    <script>
+        $('body').on('mouseenter', '#proimg', function () {
+            let $img = $(this).find('img').first();
+            if (!$img) {
+                return;
+            }
+            $img.attr('src', $img.data('hover-src'));
+        });
+        $('body').on('mouseleave', '#proimg', function () {
+            let $img = $(this).find('img').first();
+            if (!$img) {
+                return;
+            }
+            $img.attr('src', $img.data('leave-src'));
+        });
+    </script>
+}

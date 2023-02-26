@@ -1,0 +1,173 @@
+﻿@model IEnumerable<dbCompanyTest.Models.ToDoList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.表單類型)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.表單內容)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.回覆)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.表單狀態)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.起單時間)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.起單人)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.部門主管)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.部門主管簽核)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.部門主管簽核意見)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.部門主管簽核時間)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.協辦部門)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.協辦部門簽核)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.協辦部門簽核人員)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.協辦部門簽核意見)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.協辦部門簽核時間)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.老闆簽核)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.老闆簽核意見)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.老闆簽核時間)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.執行人)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.執行時間)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.執行人簽核)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.附件)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.附件path)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.員工編號Navigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.表單類型)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.表單內容)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.回覆)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.表單狀態)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.起單時間)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.起單人)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.部門主管)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.部門主管簽核)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.部門主管簽核意見)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.部門主管簽核時間)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.協辦部門)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.協辦部門簽核)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.協辦部門簽核人員)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.協辦部門簽核意見)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.協辦部門簽核時間)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.老闆簽核)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.老闆簽核意見)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.老闆簽核時間)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.執行人)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.執行時間)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.執行人簽核)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.附件)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.附件path)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.員工編號Navigation.員工編號)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.交辦事項id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.交辦事項id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.交辦事項id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

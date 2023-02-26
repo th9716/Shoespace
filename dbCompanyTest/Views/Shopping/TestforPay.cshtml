@@ -1,0 +1,27 @@
+﻿@model System.Collections.Generic.Dictionary<string , string>
+@{
+    ViewData["Title"] = "TestforPay";
+}
+<div class="text-center">
+    <h3>資料導向中，請勿關閉網頁</h3>
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<form style="display:none" id="form" name="form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="POST">
+    @foreach (var key in @Model.Keys.ToList())
+    {
+        @(key) <input type="text" name="@key" value="@Model[key]" />
+
+        <br />
+    }
+</form>
+@section Scripts{
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("form").submit();
+        }
+    </script>
+
+}

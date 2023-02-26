@@ -1,0 +1,380 @@
+﻿@model dbCompanyTest.Models.ProductDetail
+
+
+<hr />
+<div class="row ">
+    <div class="col-md-12">
+        <form name="proInfo" id="Form_ProDe_C">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display: none;">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" name="id"/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <lable class="control-label">商品編號</lable>
+                <label asp-for="商品編號id" class="control-label" style="display:none"></label>
+                <div style="display:flex">
+                    <select id="_商品編號id" class="form-select" aria-label="商品編號">
+                        <option selected>ajax_select商品編號+名稱</option>
+                    </select>
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="關鍵字" aria-label="關鍵字" aria-describedby="btn-Search" id="keywork_Pro_name" >
+                        <button class="btn btn-outline-secondary" type="button" id="btn-Search_Pro_op">查詢</button>
+                    </div>
+                </div>              
+                <input class="form-control" id="t_商品編號id" value="@ViewBag.id" type="hidden">
+                <input asp-for="商品編號id" id="商品編號id" name="商品編號id"   class="form-control" type="hidden" />
+                <span asp-validation-for="商品編號id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <lable class="control-label">商品尺寸</lable>
+                <label asp-for="商品尺寸id" class="control-label" style="display:none"></label>
+                <select id="_商品尺寸id" class="form-select" aria-label="商品尺寸">
+                    <option selected>ajax_select尺寸id+尺寸種類</option>
+                </select>
+                <input asp-for="商品尺寸id" id="商品尺寸id" class="form-control" name="明細尺寸" type="hidden" />
+                <span asp-validation-for="商品尺寸id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <lable class="control-label">商品顏色</lable>
+                <label asp-for="商品顏色id" class="control-label" style="display:none"></label>
+                <div style="display:flex">
+                    <select id="_商品顏色id" class="form-select" aria-label="商品顏色id">
+                        <option selected>ajax_select顏色id+顏色名稱</option>
+                    </select>
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="關鍵字" aria-label="關鍵字" aria-describedby="btn-Search" id="keywork_Color_name" >
+                        <button class="btn btn-outline-secondary" type="button" id="btn-Search_Color_op">查詢</button>
+                    </div>
+                </div>
+                
+                <input class="form-control" id="t_商品顏色id" value="@ViewBag.colid" type="hidden">
+                <input asp-for="商品顏色id" id="商品顏色id"  class="form-control" name="顏色" type="hidden" />
+                <span asp-validation-for="商品顏色id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="商品數量" class="control-label"></label>
+                <input asp-for="商品數量" class="form-control" name="數量" />
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+            </div>
+            <div class="form-group" style="display:none">
+                <label asp-for="商品編號" class="control-label"></label>
+                <input asp-for="商品編號" class="form-control" name="明細編號" />
+                <span asp-validation-for="商品編號" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:display">
+                <lable class="control-label">圖片位置編號</lable>                
+                <div class="row">
+                    <div class="col-md-8">
+                        <select id="_圖片位置id" class="form-select" aria-label="圖片位置id">
+                            <option selected>ajax_select商品編號+名稱</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <lable class="control-label">新建圖片</lable><input type="checkbox" id="create_image" >
+                        <input class="form-control" name="新建圖片" id="新建圖片" type="hidden">
+                    </div>
+                </div>  
+            </div>
+            <div>
+                <label for="formFile" class="form-label">照片1</label>
+                <input class="form-control" type="file" id="formFile1" name="photo1" >
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+                <img src="@Url.Content("~/images")/404.jpg" height="100" id="img1" />
+            </div>
+            <div>
+                <label for="formFile" class="form-label">照片2</label>
+                <input class="form-control" type="file" id="formFile2" name="photo2" >
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+                <img src="@Url.Content("~/images")/404.jpg" height="100" id="img2" />
+            </div>
+            <div>
+                <label for="formFile" class="form-label">照片3</label>
+                <input class="form-control" type="file" id="formFile3" name="photo3" >
+                <div class="invalid-feedback">
+                    <i class="align-middle me-2" data-feather="alert-circle"></i> <span class="align-middle"></span>
+                </div>
+                <img src="@Url.Content("~/images")/404.jpg" height="100" id="img3" />
+            </div>
+           
+            <div class="form-group" style="display:none">
+                <label asp-for="圖片位置id" class="control-label"></label>
+                <input class="form-control" id="t_圖片位置id" value="@ViewBag.imgid">
+                <input asp-for="圖片位置id" class="form-control"  name="圖片位置id" id="圖片位置id" />
+                <span asp-validation-for="圖片位置id" id="圖片位置id" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="row">          
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="商品是否有貨" class="control-label"></label>
+                        <input type="checkbox" id="_有貨" checked>
+                        <input asp-for="商品是否有貨" id="商品是否有貨" class="form-control" name="商品是否有貨" type="hidden" />                        
+                    </div>
+                </div>
+                <div class="col-md-6">         
+                    <div class="form-group">
+                        <label asp-for="商品是否上架" class="control-label"></label>
+                        <input type="checkbox" id="_上架" checked>
+                        <input asp-for="商品是否上架" id="商品是否上架" class="form-control" name="商品是否上架" type="hidden" />                        
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <br>
+                <input type="submit" value="新建品項" class="btn btn-primary" id="btn_submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>      
+        //HTML載完才會執行
+     $(document).ready(function () {
+                                    //清空警告
+                                    let form00 = $("#Form_ProDe_C");
+                                    //clear_check(form);
+                                    //綁定file與圖片
+                                 bind_file_img();
+
+                                 //隱藏所有的type = file
+                                 form00.find("input[type='file']").toggle();
+                               
+                                 //判斷是否要新建圖片
+                                $("#create_image").on("click",function(){
+                                //用toggle()來實現 hide 與 show 互換
+                                let form01 = $("#Form_ProDe_C");
+                                //_圖片位置id
+                                form01.find("#_圖片位置id").toggle();
+                                form01.find("#formFile1").toggle();
+                                form01.find("#formFile2").toggle();
+                                form01.find("#formFile3").toggle();
+                                clearfile("formFile1");
+                                clearfile("formFile2");
+                                clearfile("formFile3");
+                                //重新綁定
+                                bind_file_img();
+                                //清空檢查警告
+                                clear_check(form01);
+                                })
+
+                                //請空file 的方法
+                                let clearfile =(id)=>{
+                               var file = document.getElementById(id);
+                                file.outerHTML = file.outerHTML;                   
+                                }
+
+
+                                //綁定checkbox按鈕
+                                let form01 = $("#Form_ProDe_C");
+                                form01.find("#_有貨").on('change', function () {
+                            
+                                form01.find("#商品是否有貨").val($(this).prop("checked"));  
+                                })
+                                form01.find("#_上架").on('change', function () {
+
+                                form01.find("#商品是否上架").val($(this).prop("checked"));
+                                })
+
+                            //取得產品Id
+                           getProToSelect();
+                         
+                            //提取顏色
+                           getColortoSelet();
+                            
+
+                            //提取尺寸
+                            $.get("@Url.Content("~/Product/GetSize")", (datas) => {
+                            //console.log(datas);
+                            //新增產品類別select
+                            var options = datas.map(data => {
+                            const { 商品尺寸id, 尺寸種類 } = data;
+                            //console.log(商品編號id)
+                            return (`<option value="${商品尺寸id}" data-text="${尺寸種類}">${尺寸種類}</option>`);
+                            });
+                          
+                            $("#_商品尺寸id").html(options);
+                            });
+
+                            //提取圖片
+                           $.get("@Url.Content("~/Product/Get_img_select")", (datas) => {
+                                //console.log(datas);
+                                //新增產品類別select
+                                var options = datas.map(data => {
+                               const { 圖片位置id, 商品圖片1, 商品圖片2, 商品圖片3 } = data;
+                                    //console.log(商品編號id)
+                                return (`<option value="${圖片位置id}" data-img1="${商品圖片1}" data-img2="${商品圖片2}" data-img3="${商品圖片3}">${圖片位置id}</option>`);
+                                });
+                              $("#_圖片位置id").html(options);
+                                if ($("#t_圖片位置id").val()!="")
+                                {
+                                $("#_圖片位置id").val($("#t_圖片位置id").val());
+                                selected_img_change();
+                                }
+                            });
+                            //變更圖片
+                          $("#_圖片位置id").on('change',function(){
+                              var tval = $(this).val();
+                              selected_img_change(tval);
+                          });
+
+                          //搜尋產品
+                      
+                        $("#Form_ProDe_C #btn-Search_Pro_op").on('click',function(){
+                                $.ajaxSettings.async = false;
+                                const key = $("#Form_ProDe_C #keywork_Pro_name").val();
+                                getProToSelect();
+                                //const resurlt = $(`#_商品編號id option[data-text*='${key}']`).first().val();
+                                //$("#_商品編號id").val(resurlt);
+                                let resurlt = $(`#_商品編號id`).find("option");
+                                if (key != "")
+                                    resurlt = $(`#_商品編號id option[data-text*='${key}']`);
+                                $("#_商品編號id").empty();
+                                $("#_商品編號id").append(resurlt);
+                                $.ajaxSettings.async = true;
+                         });
+
+                          //搜尋顏色
+                        $("#Form_ProDe_C #btn-Search_Color_op").on('click',function(){                           
+                        //const resurlt = $(`#_商品顏色id option[data-text*='${key}']`).first().val();
+                        //$("#_商品顏色id").val(resurlt);
+                        $.ajaxSettings.async = false;
+                        const key = $("#Form_ProDe_C #keywork_Color_name").val();
+                        getColortoSelet();
+                        //const resurlt = $(`#_商品編號id option[data-text*='${key}']`).first().val();
+                        //$("#_商品編號id").val(resurlt);
+                        let resurlt = $(`#_商品顏色id`).find("option");
+                        if (key != "")
+                        resurlt = $(`#_商品顏色id option[data-text*='${key}']`);
+                        $("#_商品顏色id").empty();
+                        $("#_商品顏色id").append(resurlt);
+                        $.ajaxSettings.async = true;
+                        });
+                       
+                            
+                            function selected_img_change(val)
+                            {
+                                // console.log($('#_圖片位置id option:selected').attr("data-img1"));
+                                const img1 = $('#_圖片位置id option:selected').attr("data-img1");
+                                const img2 = $('#_圖片位置id option:selected').attr("data-img2");
+                                const img3 = $('#_圖片位置id option:selected').attr("data-img3");
+                                $("#img1").prop("src", `@Url.Content("~/images")/${img1}`);
+                                $("#img2").prop("src", `@Url.Content("~/images")/${img2}`);
+                                $("#img3").prop("src", `@Url.Content("~/images")/${img3}`);
+                                //與#圖片位置id連動
+                                $("#圖片位置id").val(val);
+                            }
+                            
+                            //送出按鈕事件
+                            const btn = document.querySelector('#btn_submit');
+                            //console.log(btn);
+                            btn.addEventListener("click", (event) =>
+                            {
+                             event.preventDefault();//停止submit預設行為
+                             //將select 資料寫入對應的name欄位內
+                             formwrite();
+                             //前端檢測
+                            let error = check_ProDetail_Create();
+                            if(error.length==0)
+                            {
+                                    //ajax送出資料
+                                    const xhr = new XMLHttpRequest();
+                                    xhr.addEventListener("load", () => {
+                                        if (xhr.status == 200) {
+                        test_alert(xhr.responseText);
+                                            //console.log('新建成功');
+                                 $("#Moda_D_C").find("#btn_Close_D").click();
+                                        }
+                                        else {
+                                            console.log(xhr.staus);
+                                        }
+                                    });
+                                    var formData = new FormData(document.proInfo); //from 的名稱
+                                    xhr.open("POST", "@Url.Content("~/Product/CreateProDetail")");
+                                    //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');  //可省略
+                                    xhr.send(formData);                            
+                            }   
+                            });
+     })
+
+     //資料送出前將select 資料寫入有name 欄位
+    function formwrite(){
+        let form = $("#Form_ProDe_C");
+        form.find("#商品編號id").val(form.find("#_商品編號id").val());
+        form.find("#商品尺寸id").val(form.find("#_商品尺寸id").val());
+        form.find("#商品顏色id").val(form.find("#_商品顏色id").val());
+        form.find("#圖片位置id").val(form.find("#_圖片位置id").val());
+        form.find("#商品是否有貨").val(form.find("#_有貨").prop("checked"));
+        form.find("#商品是否上架").val(form.find("#_上架").prop("checked"));
+        form.find("#新建圖片").val(form.find("#create_image").prop("checked"));
+    }
+
+    function getProToSelect()
+    {
+        //取得產品Id
+        $.get("@Url.Content("~/Product/GetProName")", (datas) => {
+
+            //新增產品類別select
+            var options = datas.map(data => {
+                const { 商品編號id, 商品名稱 } = data;
+                //console.log(商品編號id)
+                return (`<option value="${商品編號id}" data-text="${商品名稱}">${商品編號id} ${商品名稱}</option>`);
+            });
+            $("#_商品編號id").html(options);
+            $("#_商品編號id").val($("#t_商品編號id").val());
+        });
+    }
+
+    function getColortoSelet()
+    {
+          $.get("@Url.Content("~/Product/GetColor")", (datas) => {                           
+                            //新增產品類別select
+                            var options = datas.map(data => {
+                            const { 商品顏色id, 商品顏色種類 } = data;
+                            //console.log(商品編號id)
+                            return (`<option value="${商品顏色id}" data-text="${商品顏色種類}">${商品顏色id} ${商品顏色種類}</option>`);
+                            });
+                           $("#_商品顏色id").html(options);
+                            if ($("#t_商品顏色id").val()!="")
+                            {
+                                $("#_商品顏色id").val($("#t_商品顏色id").val());
+                            }
+                            });
+    }
+
+   
+
+    function bind_file_img()
+    {
+        //圖片預覽
+        $("input[type='file']").on('change', function (event) {
+            const img = $(this).parent().find("img");
+            var input = event.target; //取得上傳檔案
+            var reader = new FileReader(); //建立FileReader物件
+            reader.readAsDataURL(input.files[0]); //以.readAsDataURL將上傳檔案轉換為base64字串
+
+            reader.onload = function () { //FileReader取得上傳檔案後執行以下內容
+                var dataURL = reader.result; //設定變數dataURL為上傳圖檔的base64字串
+                img.prop('src', dataURL); //將img的src設定為dataURL並顯示
+            };
+        });
+    }
+
+      
+
+    </script>
+
+
+  
+
+
+
+
+

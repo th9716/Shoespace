@@ -1,0 +1,60 @@
+﻿@model IEnumerable<dbCompanyTest.ViewModels.ProductWallViewModel>
+
+
+
+@section Style{
+    <link href="~/css/ProductWall.css" rel="stylesheet">
+
+}
+
+<div class="words-statis">
+    <div class="num">- 篩選條件 | <span>1</span> |</div>
+    <a href="" class="clear-words">清除</a>
+</div>
+<div class="words-content">
+    <div class="w-item">
+        <div class="w-title">尺寸</div>
+        <ul>
+            @*@foreach (var item in Model){
+                <li class="dpnone"id="sel"><a href=""> @item.尺寸名稱 </a> <img src="/homeimg/checked.png" /></li>
+            }*@
+
+                                    <li class=" "><a href=""> 36 </a> <img src="/homeimg/checked.png" /></li>
+                                    <li class=""><a href=""> 37 </a><img src="/homeimg/checked.png" /></li>
+                                    <li class="dpnone"><a href=""> 38 </a><img src="/homeimg/checked.png" /></li>
+                                    <li class="dpnone"><a href=""> 39 </a><img src="/homeimg/checked.png" /></li>
+                                    <li class="dpnone"><a href=""> 40 </a><img src="/homeimg/checked.png" /></li>
+                                    <li class="dpnone"><a href=""> 41 </a><img src="/homeimg/checked.png" /></li>
+      
+        </ul>
+        <a href="" class="watch-more">+ 查看更多</a>
+    </div>
+    <div class="w-item">
+        <div class="w-title">顏色</div>
+        <ul>
+            @*@foreach (var item in Model)
+            {
+                <li class="dpnone" id="sel"><a href=""> @item.顏色名稱 </a> <img src="/homeimg/checked.png" /></li>
+            }*@
+                <li class=" "><a href=""> 黑色 </a> <img src="/homeimg/checked.png" /></li>
+                <li class=""><a href=""> 棕色 </a><img src="/homeimg/checked.png" /></li>
+                <li class="dpnone"><a href=""> 紅色 </a><img src="/homeimg/checked.png" /></li>
+                <li class="dpnone"><a href=""> 白色 </a><img src="/homeimg/checked.png" /></li>
+        </ul>
+        <a href="" class="watch-more">+ 查看更多</a>
+    </div>
+    <div class="w-item">
+        <div class="w-title">顏色</div>
+        <ul>
+            @*@foreach (var item in Model)
+            {
+                <li class="dpnone" id="sel"><a href=""> @item.材質名稱 </a> <img src="/homeimg/checked.png" /></li>
+            }*@
+                <li class=" "><a href=""> 牛皮 </a> <img src="/homeimg/checked.png" /></li>
+                <li class=""><a href=""> 合成皮 </a><img src="/homeimg/checked.png" /></li>
+                <li class="dpnone"><a href=""> 帆布 </a><img src="/homeimg/checked.png" /></li>
+                <li class="dpnone"><a href=""> 緞布 </a><img src="/homeimg/checked.png" /></li>
+        </ul>
+        <a href="" class="watch-more">+ 查看更多</a>
+    </div>
+</div>

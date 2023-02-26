@@ -1,0 +1,373 @@
+﻿<table class="table table-striped-columns" id="GR_table">
+    <thead>
+        <tr>
+            <th>階段</th>
+            <th>部門</th>
+            <th>簽核人員</th>
+            <th>簽核時間</th>
+            <th>輸入意見</th>
+            <th>簽核</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*起單*@
+        <tr>
+            <td>起單</td>
+            <td id="dpm_str"></td>
+            <td id="man_str"></td>
+            <td id="time_str"></td>
+            <td id="com_str">
+                <input class="form-control" id="inp_com_str" />
+            </td>
+            <td id="sin_str">
+                <span id="span_sin_str"></span>
+                <select class="form-control" id="list_stu">
+                    <option>未啟動</option>
+                    <option>敬陳</option>
+                </select>
+            </td>
+        </tr>
+        @*部門主管*@
+        <tr>
+            <td>部門主管</td>
+            <td id="dpm_spv"></td>
+            <td id="man_spv"></td>
+            <td id="time_spv"></td>
+            <td id="com_spv">
+                <input class="form-control" id="inp_com_spv" />
+                <span id="span_com_spv"></span>
+            </td>
+            <td id="sin_spv">
+                <span id="span_sin_spv"></span>
+                <select class="form-control" id="list_stu_spv">
+                    <option>待簽</option>
+                    <option>敬陳</option>
+                    <option>退回起單人</option>
+                </select>
+            </td>
+        </tr>
+        @*協辦部門*@
+        <tr>
+            <td>協辦部門</td>
+            <td id="dpm_cod"></td>
+            <td id="man_cod"></td>
+            <td id="time_cod"></td>
+            <td id="com_cod">
+                <input class="form-control" id="inp_com_cod" />
+                <span id="span_com_cod"></span>
+            </td>
+            <td id="sin_cod">
+                <span id="span_sin_cod"></span>
+                <select class="form-control" id="list_stu_cod">
+                    <option>待簽</option>
+                    <option>敬陳</option>
+                    <option>退回上階段</option>
+                    <option>退回起單人</option>
+                </select>
+            </td>
+        </tr>
+        @*老闆簽核*@
+        <tr>
+            <td>老闆</td>
+            <td id="dpm_bos"></td>
+            <td id="man_bos"></td>
+            <td id="time_bos"></td>
+            <td id="com_bos">
+                <input class="form-control" id="inp_com_bos" />
+                <span id="span_com_bos"></span>
+            </td>
+            <td id="sin_bos">
+                <span id="span_sin_bos"></span>
+                <select class="form-control" id="list_stu_bos">
+                    <option>待簽</option>
+                    <option>敬陳</option>
+                    <option>退回上階段</option>
+                    <option>退回起單人</option>
+                </select>
+            </td>
+        </tr>
+        @*執行*@
+        <tr>
+            <td>執行</td>
+            <td id="dpm_ecu"></td>
+            <td id="man_ecu"></td>
+            <td id="time_ecu"></td>
+            <td id="com_ecu">
+                <input class="form-control" id="inp_com_ecu" />
+                <span id="span_com_ecu"></span>
+            </td>
+            <td id="sin_ecu">
+                <select class="form-control" id="list_stu_sin_ecu1">
+                    <option>待簽</option>
+                    <option>退回上階段</option>
+                    <option>完成</option>
+                    <option>退回起單人</option>
+                </select>
+                <span id="span_sin_ecu"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+    var i_whostart = $("#inp_whostart").val();
+    var s_executor = $("#sele_executor").val();
+    var i_stu = $("#inp_sta").val();
+    var i_spvs = $("#inp_super_vs").val();
+    var i_co = $("#inp_co_dep_who").val();
+    var i_boss = "ST2-0010170";
+    var Send_To_num;
+    console.log(`get in ${Send_To_num}`);
+    $("#list_stu_sin_ecu1,#list_stu_bos,#list_stu_cod,#list_stu,#list_stu_spv,#lab_stfId").css("display", "none");
+    $("#inp_com_str,#inp_com_spv,#inp_com_cod,#inp_com_bos,#inp_com_ecu").css("display", "none");
+    $("#span_sin_str").css("display", "");
+
+    if (i_stu == `完成`) {
+        $("#inp_start").css("display", "none")
+    }
+
+
+    $("#dpm_str").text(i_whostart);
+    $("#time_str").text($("#inp_starttime").val());
+    $("#com_str").text($("#inp_cont").val());
+    //---簽核狀態
+    $("#span_sin_ecu").text($("#inp_executor_sin").val());
+    $("#span_sin_spv").text($("#inp_super_vs_sin").val());
+    $("#span_sin_cod").text($("#inp_co_dep_sin").val());
+    $("#span_sin_bos").text($("#inp_boss_sin").val());
+    //---回復
+    $("#inp_com_spv").text($("#inp_super_vs_opn").val());
+    $("#inp_com_cod").text($("#inp_co_dep_opn").val());
+    $("#inp_com_bos").text($("#inp_boss_opn").val());
+    $("#inp_com_ecu").text($("#inp_ans").val());
+    //com
+    $("#span_com_ecu").text($("#inp_ans").val());
+    $("#span_com_bos").text($("#inp_boss_opn").val());
+    $("#span_com_cod").text($("#inp_co_dep_opn").val());
+    $("#span_com_spv").text($("#inp_super_vs_opn").val());
+    //t
+    $("#time_spv").text($("#inp_super_vs_time").val());
+    $("#time_cod").text($("#inp_co_dep_time").val());
+    $("#time_bos").text($("#inp_boss_time").val());
+    $("#time_ecu").text($("#inp_execut_time").val());
+
+    $.ajax({
+        url: `@Url.Content("~/Staff_Home/stf_info1")`,
+        type: "GET",
+        data: { "i_whostart": i_whostart, "s_executor": s_executor, "i_spvs": i_spvs, "i_co": i_co, "i_boss": i_boss },
+        dataType: "json"
+    })
+        .done(data => {
+            $("#dpm_str").text(data[0].部門); $("#dpm_spv").text(data[1].部門);
+            $("#dpm_cod").text(data[2].部門); $("#dpm_bos").text(data[3].部門);
+            $("#dpm_ecu").text(data[4].部門);
+            $("#man_str").text(`${data[0].員工編號} ${data[0].員工姓名}`);
+            $("#man_spv").text(`${data[1].員工編號} ${data[1].員工姓名}`);
+            $("#man_cod").text(`${data[2].員工編號} ${data[2].員工姓名}`);
+            $("#man_bos").text(`${data[3].員工編號} ${data[3].員工姓名}`);
+            $("#man_ecu").text(`${data[4].員工編號} ${data[4].員工姓名}`);
+        });
+
+
+
+    if (i_stu != `未啟動` || i_stu != `退回起單人` || i_stu == `完成`) {
+        $("#span_sin_str").text("敬陳")
+    }
+
+
+    if (i_whostart == splitstf) {//起單
+        if (i_stu == `未啟動` || i_stu == `退回起單人`) {
+            $("#list_stu").css("display", "");
+            $("#inp_com_str").css("display", "");
+            $("#inp_com_str").text($("#inp_cont").val());
+            $("#list_stu").val("未啟動");
+            $("#span_sin_str").css("display", "none");
+            $("#div_Attached_File").css("display", "");
+        }
+        else {
+            $("#span_sin_str").css("display", "");
+            $("#span_sin_str").text("敬陳")
+        }
+    }
+
+
+    if (i_spvs == splitstf) {
+        if (i_stu == `部門主管 待簽`) {
+            $("#span_sin_spv").css("display", "none");
+            $("#span_com_spv").css("display", "none");
+            $("#list_stu_spv").css("display", "");
+            $("#inp_com_spv").css("display", "");
+            $("#span_sin_str").text("敬陳");
+        }
+    }
+
+    if (i_co == splitstf) {
+        if (i_stu == `協辦部門 待簽`) {
+            $("#span_sin_cod").css("display", "none");
+            $("#list_stu_cod").css("display", "");
+            $("#inp_com_cod").css("display", "");
+            $("#span_sin_str").text("敬陳")
+        }
+    }
+
+    if (i_boss == splitstf) {
+        if (i_stu == `執行長 待簽`) {
+            $("#span_sin_bos").css("display", "none");
+            $("#list_stu_bos").css("display", "");
+            $("#inp_com_bos").css("display", "");
+            $("#span_sin_str").text("敬陳")
+        }
+    }
+
+    if (s_executor == splitstf) {
+        if ($("#inp_sta").val() == `執行 待簽`) {
+            $("#inp_com_ecu").css("display", "");
+            $("#list_stu_sin_ecu1").css("display", "");
+            $("#span_sin_ecu").css("display", "none");
+            $("#span_sin_str").text("敬陳")
+        }
+    }
+
+    $("#list_stu,#list_stu_spv,#list_stu_cod,#list_stu_bos,#list_stu_sin_ecu1").val(``);
+    //---回復
+    $("#inp_com_str").on('blur', function () {
+        $("#inp_cont").val($("#inp_com_str").val())
+    });
+    $("#inp_com_spv").on('blur', function () {
+        $("#inp_super_vs_opn").val($("#inp_com_spv").val())
+    });
+    $("#inp_com_cod").on('blur', function () {
+        $("#inp_co_dep_opn").val($("#inp_com_cod").val())
+    });
+    $("#inp_com_bos").on('blur', function () {
+        $("#inp_boss_opn").val($("#inp_com_bos").val())
+    });
+    $("#inp_com_ecu").on('blur', function () {
+        $("#inp_ans").val($("#inp_com_ecu").val())
+    });
+    //簽核
+    $("#list_stu").on("change", function () {
+        if (i_whostart == splitstf) {
+            if ($(`#list_stu option:selected`).val() == "未啟動")
+                $("#inp_sta").val("未啟動");
+            else {
+                $("#inp_sta").val("部門主管 待簽");
+                $("#inp_super_vs_sin").val("待簽");
+                Send_To_num = $("#inp_super_vs").val();//連線收件spv
+            }
+
+        }
+    });
+
+    $("#list_stu_spv").on("change", function () {
+        if (i_spvs == splitstf) {
+            if ($(`#list_stu_spv option:selected`).val() == "待簽")
+                $("#inp_sta").val("部門主管 待簽");
+            else if ($(`#list_stu_spv option:selected`).val() == "敬陳") {
+                $("#inp_sta").val("協辦部門 待簽");
+                $("#inp_co_dep_sin").val("待簽");
+                Send_To_num = $("#inp_co_dep_who").val();//連線收件co_dep
+                console.log(`star ${Send_To_num}`);
+            }
+            else if ($(`#list_stu_spv option:selected`).val() == "退回起單人") { //todo other
+                $("#inp_sta").val("退回起單人");
+                Send_To_num = $("#inp_whostart").val();//連線收件str
+            }
+            $("#inp_super_vs_opn").val($("#inp_com_spv").val());
+            $("#inp_super_vs_sin").val($(`#list_stu_spv option:selected`).val());
+        }
+    });
+
+    $("#list_stu_cod").on("change", function () {
+        if (i_co == splitstf) {
+            if ($(`#list_stu_cod option:selected`).val() == "待簽")
+                $("#inp_sta").val("協辦部門 待簽");
+            else if ($(`#list_stu_cod option:selected`).val() == "敬陳") {
+                $("#inp_sta").val("執行長 待簽");
+                $("#inp_boss_sin").val("待簽");
+                Send_To_num = i_boss;
+            }
+            else if ($(`#list_stu_cod option:selected`).val() == "退回上階段") {
+                $("#inp_sta").val("部門主管 待簽");
+                $("#inp_super_vs_sin").val("待簽");
+                Send_To_num = $("#inp_super_vs").val();//連線收件spv
+            }
+            else if ($(`#list_stu_cod option:selected`).val() == "退回起單人") {
+                $("#inp_sta").val("退回起單人");
+                Send_To_num = $("#inp_whostart").val();//連線收件str
+            }
+            $("#inp_co_dep_sin").val($(`#list_stu_cod option:selected`).val());
+        }
+    });
+
+    $("#list_stu_bos").on("change", function () {
+        if (i_boss == splitstf) {
+            if ($(`#list_stu_bos option:selected`).val() == "待簽")
+                $("#inp_sta").val("執行長 待簽");
+            else if ($(`#list_stu_bos option:selected`).val() == "敬陳") {
+                $("#inp_sta").val("執行 待簽");
+                $("#inp_executor_sin").val("待簽");
+                Send_To_num = $("#sele_executor").val();//連線收件exc
+            }
+            else if ($(`#list_stu_bos option:selected`).val() == "退回上階段") {
+                $("#inp_sta").val("協辦部門 待簽");
+                $("#inp_co_dep_sin").val("待簽");
+                Send_To_num = $("#inp_co_dep_who").val();//連線收件co_dep
+
+            }
+            else if ($(`#list_stu_bos option:selected`).val() == "退回起單人") {
+                $("#inp_sta").val("退回起單人");
+                Send_To_num = $("#inp_whostart").val();//連線收件str
+            }
+            $("#inp_boss_sin").val($(`#list_stu_bos option:selected`).val());
+        }
+    });
+
+    $("#list_stu_sin_ecu1").on("change", function () {
+        if (s_executor == splitstf) {
+            if ($(`#list_stu_sin_ecu1 option:selected`).val() == "待簽")
+                $("#inp_sta").val("執行 待簽");
+            else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "完成") {
+                $("#inp_sta").val("完成");
+                Send_To_num = $("#inp_whostart").val();//連線收件str
+            }
+            else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "退回上階段") {
+                $("#inp_sta").val("執行長 待簽");
+                $("#inp_boss_sin").val("待簽");
+                Send_To_num = i_boss;
+            }
+            else if ($(`#list_stu_sin_ecu1 option:selected`).val() == "退回起單人") {
+                $("#inp_sta").val("退回起單人");
+                Send_To_num = $("#inp_whostart").val();//連線收件str
+            }
+            $("#inp_executor_sin").val($(`#list_stu_sin_ecu1 option:selected`).val());
+        }
+    });
+
+
+
+    $("#inp_start").on('click', function () {
+        let dt = new Date();
+        let datestring = `${dt.getFullYear()}/${dt.getMonth() + 1}/${dt.getDate()} ${dt.getHours()}:${dt.getMinutes()}:${dt.getSeconds()}`
+        if (i_whostart == splitstf) {
+            $("#inp_starttime").val(datestring);
+        }
+        else if (i_spvs == splitstf) {
+            $("#inp_super_vs_time").val(datestring);
+            $("#inp_super_vs_opn").val($("#inp_com_spv").val());
+        }
+        else if (i_co == splitstf) {
+            $("#inp_co_dep_opn").val($("#inp_com_cod").val());
+            $("#inp_co_dep_time").val(datestring);
+        }
+        else if (i_boss == splitstf) {
+            $("#inp_boss_opn").val($("#inp_com_bos").val());
+            $("#inp_boss_time").val(datestring);
+        }
+        else if (s_executor == splitstf) {
+            $("#inp_ans").val($("#inp_com_ecu").val());
+            $("#inp_execut_time").val(datestring);
+        }
+    });
+
+</script>

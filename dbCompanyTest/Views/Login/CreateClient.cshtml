@@ -1,0 +1,258 @@
+﻿@model dbCompanyTest.Models.TestClient
+<div><button id="demo">DEMO GAAYRY</button><input type="hidden" id="democheck"></div>
+<div id="createPage">
+    <form name="userForm" method="post">
+        <input type="hidden" name="客戶編號" />
+        <input type="text" name="客戶姓名" id="客戶姓名" class="Linput" placeholder="姓名" /><br />
+        <input type="text" name="客戶電話" id="客戶電話" class="Linput" placeholder="電話" /><br />
+        <input type="text" name="身分證字號" id="身分證字號" class="Linput" placeholder="身分證字號" /><br />
+        <select name="縣市" id="city" class="Linput"></select><br />
+        <select name="區" id="town" class="Linput"></select><br />
+        <input type="text" name="地址" id="地址" class="Linput" placeholder="地址" /> <br />
+        <input asp-for="Email" type="text" name="Email" class="Linput" placeholder="Email" /><br />
+        <input type="password" name="密碼" id="密碼" class="Linput" placeholder="密碼" /> <br />
+        <select name="性別" id="sex" class="Linput"><option>男</option><option>女</option></select><br />
+        <input type="date" name="生日" id="生日" class="Linput" placeholder="生日" /><br />
+        <input type="submit" value="註冊" id="checkcreate" />
+        <p id="createAlert" style="color:salmon;"></p>
+    </form>
+</div>
+
+<script src="~/datas/taiwan_districts.js"></script>
+<script src="~/js/city_data.js"></script>
+<script>
+    var check = [false, false, false, false, false];
+    $(`#demo`).on(`click`, function () {
+        $(`#客戶姓名`).val("GAAYRY");
+        $(`#客戶電話`).val("0945614548");
+        $(`#身分證字號`).val("F123654874");
+        $(`#地址`).val("南京東路");
+        $(`#Email`).val("aland821206@@gmail.com");
+        $(`#密碼`).val("qwe123456!");
+        $(`#democheck`).val("OK");
+        $(`input[name=Email],input[name=客戶電話],input[name=身分證字號],input[name=密碼],input[name=客戶姓名]`).blur();
+    })
+    $(`input[name=Email],input[name=客戶電話],input[name=身分證字號],input[name=密碼],input[name=客戶姓名]`).on(`blur`, function () {
+        const checkInput = $(this);
+        const EIP = checkInput.val();
+        const name = $(this).attr("name");
+        if ($(this).attr("name") != "密碼" && $(this).attr("name") != "客戶姓名") {
+            if (EIP) {
+                $.post("@Url.Content("~/TestClients/checkJoindata")", { "EIP": EIP }, function (bool) {
+                    if (bool == "True") {
+                        toggleErro(checkInput, false, `已經有人使用`);
+                        userArray(name, false);
+                    }
+                    else {
+                        switch (name) {
+                            case `Email`: {
+                                userEmail(checkInput);
+                                break;
+                            }
+                            case `客戶電話`: {
+                                userphone(checkInput);
+                                break;
+                            }
+                            case `身分證字號`: {
+                                userIDCARD(checkInput);
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+            else {
+                toggleErro(checkInput, false, `不可是空白`);
+                userArray(name, false);
+            }
+        }
+        else {
+            if (EIP) {
+                if (checkInput.next().text()) {
+                    toggleErro(checkInput, true, ``);
+                }
+                userArray(name, true);
+            }
+            else {
+                toggleErro(checkInput, false, `不可是空白`);
+                userArray(name, false);
+            }
+        }
+    });
+
+    $(`#checkcreate`).on(`click`, async function (event) {
+        event.preventDefault();
+        let canAdd = 0;
+        $.each(check, function (index, value) {
+            if($(`#democheck`).val()=="OK"){
+                value = true;
+            }
+            if (value) {
+                canAdd++;
+            }
+        });
+        if (canAdd == 5) {
+            const userdata = new FormData(document.userForm);
+            const response = await fetch("@Url.Content("~/Login/CheckClient")", {
+                method: "POST",
+                body: userdata
+            });
+            const data = await response.text();
+            if ("OK") {
+                window.location.assign("@Url.Content("~/Home/Index")");
+            }
+        }
+        else {
+            $(`#createAlert`).text(`請輸入完整資料`);
+        }
+    });
+
+    function userArray(name, Bool) {
+        switch (name) {
+            case `Email`: {
+                check[0] = Bool;
+                break;
+            }
+            case `客戶電話`: {
+                check[1] = Bool;
+                break;
+            }
+            case `身分證字號`: {
+                check[2] = Bool;
+                break;
+            }
+            case `密碼`: {
+                check[3] = Bool;
+                break;
+            }
+            case `客戶姓名`: {
+                check[4] = Bool;
+                break;
+            }
+        }
+        let checkstate = 0;
+        $.each(check,function(index,value){
+            if(value){
+                checkstate++;
+            }
+        })
+        if (checkstate < 5) {
+             $(`#createAlert`).text(`請輸入完整資料`);
+        }
+        else{
+            $(`#createAlert`).text(``);
+        }
+    }
+
+    function toggleErro(checkInput, onoff, text) {
+        checkInput.next().remove();
+        if (onoff) {
+            checkInput.after($(`<br/>`));
+        }
+        else {
+            checkInput.after($(`<p style="color:salmon;margin:0;" name="democheck">${text}</p>`));
+        }
+    }
+
+    function userEmail(value) {
+        let checkInput = value;
+        let re = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        const name = checkInput.attr("name");
+        if (re.test(checkInput.val())){
+            userArray(name, true);
+            toggleErro(checkInput, true, ``);
+        }
+        else{
+            userArray(name, false);
+            toggleErro(checkInput, false, `不符合Email格式`);
+        }
+    };
+
+    function userphone(value) {
+        let checkInput = value;
+        let re = /^[0]{1}[9]{1}[0-9]{8}$/, a = [false, false];
+        const name = checkInput.attr("name");
+        if (checkInput.val().length == 10) {
+            if (re.test(checkInput.val())) {
+                a[0] = true;
+            }
+            else {
+                a[0] = false;
+            }
+            a[1] = true;
+        } else {
+            a[1] = false;
+        }
+        if (a[0] && a[1]) {
+            userArray(name, true);
+            toggleErro(checkInput, true, ``);
+        }
+        else {
+            userArray(name, false);
+            toggleErro(checkInput, false, `不符合電話格式(09xxxxxxxx)`);
+        }
+    };
+
+    function userIDCARD(value) {
+        let checkInput = value;
+        let re = /^[A-Z]{1}[1-2,8-9]{1}[0-9]{8}$/, a = [false, false];
+        const name = checkInput.attr("name");
+        if (checkInput.val().length == 10) {
+            if (re.test(checkInput.val())) {
+                a[0] = true;
+            }
+            else {
+                a[0] = false;
+            }
+            a[1] = true;
+        }
+        else {
+            a[1] = false;
+        }
+
+        if (a[0] && a[1]) {
+            userArray(name, true);
+            toggleErro(checkInput, true, ``);
+        }
+        else {
+            userArray(name, false);
+            toggleErro(checkInput, false, `不符合身分證格式`);
+        }
+    };
+
+
+
+    $(`input[name=密碼]`).on(`blur`, function () {
+        let checkInput = $(this);
+        let CPchar, a = [false, false, false, false];
+        let special = "!#$%^&*";
+        const name = checkInput.attr("name");
+        if (checkInput.val().length > 6) {
+            a[3] = true;
+        }
+        for (let i = 0; i < checkInput.val().length; i++) {
+            CPchar = checkInput.val().charAt(i).toUpperCase();
+            if (CPchar >= "A" && CPchar <= "Z") {
+                a[0] = true;
+            }
+            if (CPchar >= "0" && CPchar <= "9") {
+                a[1] = true;
+            }
+            for (let j = 0; j < special.length; j++) {
+                specialchar = special.charAt(j);
+                if (CPchar == specialchar) {
+                    a[2] = true;
+                }
+            }
+        }
+        if (a[0] && a[1] && a[2] && a[3]) {
+            userArray(name, true);
+            toggleErro(checkInput, true, ``);
+        }
+        else {
+            toggleErro(checkInput, false, `密碼要包含英、數字、特殊符號(!#$%^&*)且長度需大於6`);
+            userArray(name, false);
+        }
+    });
+
+</script>

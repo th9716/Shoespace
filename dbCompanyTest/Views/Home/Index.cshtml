@@ -1,0 +1,106 @@
+﻿@model IEnumerable<dbCompanyTest.Models.ProductsTypeDetail>
+@section Style{
+   <link href="~/css/HomePage.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacques+Francois&display=swap" rel="stylesheet">
+    
+
+}
+    @*==============輪播牆=================*@
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="/ProductWall/Index/1">
+                    <img src="~/homeimg/pc01_1.jpg" class="d-block w-100">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/ProductWall/Index/1">
+                    <img src="~/homeimg/pc01_2.jpg" class="d-block w-100">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/ProductWall/Index/1">
+                    <img src="~/homeImg/pc01_3.jpg" class="d-block w-100">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="/ProductWall/Index/1">
+                    <img src="~/homeImg/pc01_4.jpg" class="d-block w-100">
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+
+    <section class="collection g-container">
+        <div class="clt-top">
+            <div class="clt-top1"><img src="~/homeimg/idecide.svg" /></div>
+            <div class="clt-top2"><img src="~/homeimg/myvibe.svg" /></div>
+            <div class="clt-top3"></div>
+            <div class="clt-top4">
+                Style is a way to say who you are <br />
+                without having to speak
+            </div>
+
+
+            <a class="clt-top5" href="/ProductWall/Index/1">
+                <div class="pic"><img src="~/homeimg/clt1.jpg" /></div>
+            </a>
+
+            <a class="clt-top6" href="/ProductWall/Index/2">
+                <div class="pic"><img src="~/homeimg/clt2.jpg" /></div>
+            </a>
+        </div>
+        <div class="clt-bottom">
+            <div class="clt-bottom1">
+                <a href="/ProductWall/Index/3">
+                    <div class="pic"><img src="~/homeimg/clt3.jpg" /></div>
+                </a>
+                <div class="clt-bottom2">
+                    You've got the outfits ready,beauty prep <br>
+                    is well underway, now all that's left to do is to decide <br>
+                    which pair of shoes you're going out with.<br>
+                </div>
+            </div>
+
+            <a class="clt-bottom3" href="/ProductWall/Index/4">
+                <div class="pic"><img src="~/homeimg/clt4.jpg" /></div>
+            </a>
+        </div>
+    </section>
+
+    <a href="/ProductWall/Index/4">
+        <img src="~/homeImg/h3.png" style="width:100%">
+    </a>
+
+    @section Scripts{
+    
+        <script>
+            const myNode = document.querySelector('.carousel');
+            const loki = new bootstrap.Carousel(myNode,{
+            pause: false,
+            touch: true
+            });
+
+        
+
+        </script>
+    }

@@ -1,0 +1,162 @@
+﻿@model dbCompanyTest.Models.ToDoList
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ToDoList</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.表單類型)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.表單類型)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.表單內容)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.表單內容)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.回覆)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.回覆)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.表單狀態)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.表單狀態)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.起單時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.起單時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.起單人)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.起單人)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.部門主管)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.部門主管)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.部門主管簽核)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.部門主管簽核)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.部門主管簽核意見)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.部門主管簽核意見)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.部門主管簽核時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.部門主管簽核時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.協辦部門)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.協辦部門)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.協辦部門簽核)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.協辦部門簽核)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.協辦部門簽核人員)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.協辦部門簽核人員)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.協辦部門簽核意見)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.協辦部門簽核意見)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.協辦部門簽核時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.協辦部門簽核時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.老闆簽核)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.老闆簽核)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.老闆簽核意見)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.老闆簽核意見)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.老闆簽核時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.老闆簽核時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.執行人)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.執行人)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.執行時間)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.執行時間)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.執行人簽核)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.執行人簽核)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.附件)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.附件)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.附件path)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.附件path)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.員工編號Navigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.員工編號Navigation.員工編號)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.交辦事項id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
